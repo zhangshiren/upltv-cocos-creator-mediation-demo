@@ -1,0 +1,134 @@
+2019-07-18T07:17:33.447Z - normal: Load ~/.CocosCreator/settings.json
+2019-07-18T07:17:33.533Z - normal: Initializing Asset Database
+2019-07-18T07:17:33.536Z - normal: checking language setting...
+2019-07-18T07:17:33.536Z - normal: Language: zh
+2019-07-18T07:17:34.497Z - success: preview server running at http://localhost:7456
+2019-07-18T07:17:34.546Z - success: protocol editor-framework registered
+2019-07-18T07:17:34.546Z - success: protocol app registered
+2019-07-18T07:17:34.546Z - success: protocol theme registered
+2019-07-18T07:17:34.546Z - success: protocol packages registered
+2019-07-18T07:17:34.546Z - success: protocol uuid registerred
+2019-07-18T07:17:34.546Z - success: protocol db registerred
+2019-07-18T07:17:34.546Z - success: protocol thumbnail registerred
+2019-07-18T07:17:34.547Z - success: protocol unpack registerred
+2019-07-18T07:17:34.547Z - success: protocol disable-commonjs registerred
+2019-07-18T07:17:34.661Z - normal: connected!
+2019-07-18T07:17:34.663Z - normal: Check project /Users/upltv/Documents/CocosProject/creator/CocosCreater
+2019-07-18T07:17:34.664Z - normal: Initializing project /Users/upltv/Documents/CocosProject/creator/CocosCreater
+2019-07-18T07:17:35.473Z - normal: Initializing Cocos2d
+2019-07-18T07:17:36.515Z - normal: Initializing engine extends
+2019-07-18T07:17:36.519Z - normal: Loading editor/builtin packages from /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin
+2019-07-18T07:17:36.561Z - normal: Loading builtin packages from /Applications/CocosCreator.app/Contents/Resources/builtin
+2019-07-18T07:17:37.528Z - success: assets loaded
+2019-07-18T07:17:37.529Z - success: asset-db-debugger loaded
+2019-07-18T07:17:37.609Z - success: builder loaded
+2019-07-18T07:17:37.610Z - success: color-picker loaded
+2019-07-18T07:17:37.800Z - success: cocos-analytics loaded
+2019-07-18T07:17:37.800Z - success: google-play-instant loaded
+2019-07-18T07:17:37.821Z - success: console loaded
+2019-07-18T07:17:37.821Z - success: jsb-adapter loaded
+2019-07-18T07:17:38.023Z - success: fb-instant-games loaded
+2019-07-18T07:17:38.028Z - success: oppo-runtime loaded
+2019-07-18T07:17:38.052Z - success: google-instant-games loaded
+2019-07-18T07:17:38.053Z - success: package-manager loaded
+2019-07-18T07:17:38.260Z - success: hierarchy loaded
+2019-07-18T07:17:38.261Z - success: qqplay-adapter loaded
+2019-07-18T07:17:38.288Z - success: inspector loaded
+2019-07-18T07:17:38.289Z - success: sdkbox loaded
+2019-07-18T07:17:38.313Z - success: keystore loaded
+2019-07-18T07:17:38.314Z - success: tester loaded
+2019-07-18T07:17:38.337Z - success: node-library loaded
+2019-07-18T07:17:38.338Z - success: ui-grid loaded
+2019-07-18T07:17:38.484Z - success: package-asset loaded
+2019-07-18T07:17:38.485Z - success: ui-kit-preview-extra loaded
+2019-07-18T07:17:38.498Z - success: preferences loaded
+2019-07-18T07:17:38.498Z - success: ui-kit-preview loaded
+2019-07-18T07:17:38.517Z - success: project-exporter loaded
+2019-07-18T07:17:38.517Z - success: ui-kit loaded
+2019-07-18T07:17:38.558Z - success: project-importer loaded
+2019-07-18T07:17:38.559Z - success: ui-tree loaded
+2019-07-18T07:17:38.583Z - success: project-settings loaded
+2019-07-18T07:17:38.584Z - success: vivo-runtime loaded
+2019-07-18T07:17:38.598Z - success: scene loaded
+2019-07-18T07:17:38.599Z - success: weapp-adapter loaded
+2019-07-18T07:17:38.602Z - success: simulator-debugger loaded
+2019-07-18T07:17:38.604Z - success: sprite-editor loaded
+2019-07-18T07:17:38.622Z - success: store loaded
+2019-07-18T07:17:38.636Z - success: timeline loaded
+2019-07-18T07:17:40.104Z - normal: Loading packages
+2019-07-18T07:17:40.121Z - normal: Watching packages
+2019-07-18T07:17:40.239Z - normal: Run Application
+2019-07-18T07:18:35.529Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:1420
+2019-07-18T07:22:52.525Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:4293
+2019-07-18T07:30:06.869Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:9398
+2019-07-18T07:30:25.878Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:9471
+2019-07-18T07:30:25.889Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:9473
+2019-07-18T07:32:21.274Z - error: TypeError: Cannot read property 'asset' of null
+    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
+    at Array.map (native)
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
+    at Array.map (native)
+    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
+    at HTMLElement.query-animation-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:2538)
+    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
+    at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
+    at emitMany (events.js:127:13)
+    at EventEmitter.emit (events.js:204:7)
+2019-07-18T07:32:21.433Z - error: TypeError: Cannot read property 'asset' of null
+    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
+    at Array.map (native)
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
+    at Array.map (native)
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
+    at Array.map (native)
+    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
+    at HTMLElement.query-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:679)
+    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
+2019-07-18T07:32:42.145Z - error: TypeError: Cannot read property 'asset' of null
+    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
+    at Array.map (native)
+    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
+    at HTMLElement.query-animation-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:2538)
+    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
+    at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
+    at emitMany (events.js:127:13)
+    at EventEmitter.emit (events.js:204:7)
+2019-07-18T07:32:42.245Z - error: TypeError: Cannot read property 'asset' of null
+    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:5531
+    at Object.module.exports [as getNodeDump] (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:6264)
+    at Object.dumpNode (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/index.js:1:7718)
+    at HTMLElement.query-node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:948)
+    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
+    at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
+    at emitMany (events.js:127:13)
+    at EventEmitter.emit (events.js:204:7)
+2019-07-18T07:32:42.247Z - error: TypeError: Cannot read property 'asset' of null
+    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:5531
+    at Object.module.exports [as getNodeDump] (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:6264)
+    at Object.dumpNode (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/index.js:1:7718)
+    at HTMLElement.query-node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:948)
+    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
+    at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
+    at emitMany (events.js:127:13)
+    at EventEmitter.emit (events.js:204:7)
+2019-07-18T07:32:43.839Z - error: TypeError: Cannot read property 'sync' of null
+    at Object.deactivate (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/index.js:1:8349)
+    at HTMLElement.deactivated (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/selection.js:1:518)
+    at EventEmitter.e.on.t (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ui/utils/polymer-utils.js:1:606)
+    at emitThree (events.js:121:20)
+    at EventEmitter.emit (events.js:197:7)
+2019-07-18T07:33:24.192Z - error: TypeError: Cannot read property 'asset' of null
+    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
+    at Array.map (native)
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
+    at Array.map (native)
+    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
+    at Array.map (native)
+    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
+    at HTMLElement.query-animation-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:2538)
+    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
+2019-07-18T07:34:49.893Z - info: shutdown preview server

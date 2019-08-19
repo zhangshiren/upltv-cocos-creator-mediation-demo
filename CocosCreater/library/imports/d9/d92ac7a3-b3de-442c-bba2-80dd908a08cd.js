@@ -44,11 +44,8 @@ cc.Class({
 
         bannerPlaceId: "sample_banner",
 
-        //icon相关
-        IconIdShow: cc.Button,
-        IconIdRemove: cc.Button,
-
-        iconPlaceId: "testIcon",
+        IsLogOpened: cc.Button,
+        setIsChild: cc.Button,
 
         label: {
             default: null,
@@ -73,9 +70,6 @@ cc.Class({
 
         //Banner相关
         this.bannerViewFunc();
-
-        //Icon相关
-        this.iconViewFunc();
     },
 
     //初始化相关
@@ -93,6 +87,20 @@ cc.Class({
                 self.label.string = "js intSdk result:" + r;
             });
         });
+
+        this.IsLogOpened.node.on("click", function (i) {
+            var b = upltv.isLogOpened();
+            cc.log("===> js IsLogOpened result:, %s", b);
+            self.label.string = "js IsLogOpened result:" + b;
+        });
+
+        //初始化之后调用
+        this.setIsChild.node.on("click", function (i) {
+            var b = upltv.setIsChild(true);
+            cc.log("===> js setIsChild result:, %s", b);
+            self.label.string = "js setIsChild true";
+        });
+
         this.initGDPR.node.on('click', function (event) {
             cc.log("===> js GDPR start");
             var e = upltv.getAccessPrivacyInfoStatus();
@@ -285,34 +293,6 @@ cc.Class({
         this.removeAllBanner.node.on('click', function (event) {
             upltv.removeBannerAdAt(self.bannerPlaceId);
             self.label.string = "移除展示";
-        });
-    },
-    //Icon相关
-    iconViewFunc: function iconViewFunc() {
-        var self = this;
-        this.IconIdShow.node.on('click', function (event) {
-            var iconCall = function iconCall(type, cpadid) {
-                var event = "unknown";
-                if (type == upltv.AdEventType.ICON_EVENT_DID_LOAD) {
-                    event = "Did_loadSuccessful";
-                } else if (type == upltv.AdEventType.ICON_EVENT_DID_LOADFAIL) {
-                    event = "Did_loadFailed";
-                } else if (type == upltv.AdEventType.ICON_EVENT_DID_SHOW) {
-                    event = "Did_Show";
-                } else if (type == upltv.AdEventType.ICON_EVENT_DID_CLICK) {
-                    event == "Did_click";
-                }
-                cc.log("====> IconAd event:%s,at :%s", event, cpadid);
-                self.label.string = "IconAd event: " + cpadid;
-            };
-            upltv.setIconCallback(self.iconPlaceId, iconCall);
-            upltv.showIconAd(100, 100, 200, 200, 10, self.iconPlaceId);
-            self.label.string = "Icon 展示";
-        });
-
-        this.IconIdRemove.node.on('click', function (event) {
-            upltv.removeIconAd(self.iconPlaceId);
-            self.label.string = "Icon 移除";
         });
     },
 

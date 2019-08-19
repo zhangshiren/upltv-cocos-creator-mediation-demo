@@ -230,14 +230,9 @@
     "relativePath": "Scene"
   },
   "4734c20c-0db8-4eb2-92ea-e692f4d70934": {
-    "asset": 1547798209411,
+    "asset": 1564046793331,
     "meta": 1543763168000,
     "relativePath": "Script"
-  },
-  "2d2f792f-a40c-49bb-a189-ed176a246e49": {
-    "asset": 1547806819979,
-    "meta": 1547806819998,
-    "relativePath": "Scene/helloworld.fire"
   },
   "7b81d4e8-ec84-4716-968d-500ac1d78a54": {
     "asset": 1543763168000,
@@ -253,21 +248,6 @@
     "asset": 1543763168000,
     "meta": 1547798210525,
     "relativePath": "Texture/HelloWorld.png"
-  },
-  "8ae4a0c9-3248-4198-8383-1ba98aa9ab56": {
-    "asset": 1543763168000,
-    "meta": 1547798210495,
-    "relativePath": "Script/UPLTVAndroid.js"
-  },
-  "65bba236-571e-4f3b-893d-32c7346301d0": {
-    "asset": 1543763168000,
-    "meta": 1547798210495,
-    "relativePath": "Script/UPLTVIos.js"
-  },
-  "b35df9af-d6ab-4868-af1a-b8cd2ff3da74": {
-    "asset": 1543763168000,
-    "meta": 1547798210432,
-    "relativePath": "Script/UPLTV.js"
   },
   "edd215b9-2796-4a05-aaf5-81f96c9281ce": {
     "asset": 1543305034000,
@@ -289,9 +269,29 @@
     "meta": 1563434258709,
     "relativePath": "prefab/tiledtile.prefab"
   },
+  "2d2f792f-a40c-49bb-a189-ed176a246e49": {
+    "asset": 1565774981116,
+    "meta": 1565774981125,
+    "relativePath": "Scene/helloworld.fire"
+  },
+  "65bba236-571e-4f3b-893d-32c7346301d0": {
+    "asset": 1543763168000,
+    "meta": 1565774716812,
+    "relativePath": "Script/UPLTVIos.js"
+  },
+  "b35df9af-d6ab-4868-af1a-b8cd2ff3da74": {
+    "asset": 1565695122000,
+    "meta": 1565774836604,
+    "relativePath": "Script/UPLTV.js"
+  },
+  "8ae4a0c9-3248-4198-8383-1ba98aa9ab56": {
+    "asset": 1565695122000,
+    "meta": 1565774836618,
+    "relativePath": "Script/UPLTVAndroid.js"
+  },
   "d92ac7a3-b3de-442c-bba2-80dd908a08cd": {
-    "asset": 1558953555944,
-    "meta": 1563434259524,
+    "asset": 1565774971740,
+    "meta": 1565774973067,
     "relativePath": "Script/HelloWorld.js"
   }
 }

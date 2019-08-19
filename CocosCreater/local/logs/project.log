@@ -1,134 +1,386 @@
-2019-07-18T07:17:33.447Z - normal: Load ~/.CocosCreator/settings.json
-2019-07-18T07:17:33.533Z - normal: Initializing Asset Database
-2019-07-18T07:17:33.536Z - normal: checking language setting...
-2019-07-18T07:17:33.536Z - normal: Language: zh
-2019-07-18T07:17:34.497Z - success: preview server running at http://localhost:7456
-2019-07-18T07:17:34.546Z - success: protocol editor-framework registered
-2019-07-18T07:17:34.546Z - success: protocol app registered
-2019-07-18T07:17:34.546Z - success: protocol theme registered
-2019-07-18T07:17:34.546Z - success: protocol packages registered
-2019-07-18T07:17:34.546Z - success: protocol uuid registerred
-2019-07-18T07:17:34.546Z - success: protocol db registerred
-2019-07-18T07:17:34.546Z - success: protocol thumbnail registerred
-2019-07-18T07:17:34.547Z - success: protocol unpack registerred
-2019-07-18T07:17:34.547Z - success: protocol disable-commonjs registerred
-2019-07-18T07:17:34.661Z - normal: connected!
-2019-07-18T07:17:34.663Z - normal: Check project /Users/upltv/Documents/CocosProject/creator/CocosCreater
-2019-07-18T07:17:34.664Z - normal: Initializing project /Users/upltv/Documents/CocosProject/creator/CocosCreater
-2019-07-18T07:17:35.473Z - normal: Initializing Cocos2d
-2019-07-18T07:17:36.515Z - normal: Initializing engine extends
-2019-07-18T07:17:36.519Z - normal: Loading editor/builtin packages from /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin
-2019-07-18T07:17:36.561Z - normal: Loading builtin packages from /Applications/CocosCreator.app/Contents/Resources/builtin
-2019-07-18T07:17:37.528Z - success: assets loaded
-2019-07-18T07:17:37.529Z - success: asset-db-debugger loaded
-2019-07-18T07:17:37.609Z - success: builder loaded
-2019-07-18T07:17:37.610Z - success: color-picker loaded
-2019-07-18T07:17:37.800Z - success: cocos-analytics loaded
-2019-07-18T07:17:37.800Z - success: google-play-instant loaded
-2019-07-18T07:17:37.821Z - success: console loaded
-2019-07-18T07:17:37.821Z - success: jsb-adapter loaded
-2019-07-18T07:17:38.023Z - success: fb-instant-games loaded
-2019-07-18T07:17:38.028Z - success: oppo-runtime loaded
-2019-07-18T07:17:38.052Z - success: google-instant-games loaded
-2019-07-18T07:17:38.053Z - success: package-manager loaded
-2019-07-18T07:17:38.260Z - success: hierarchy loaded
-2019-07-18T07:17:38.261Z - success: qqplay-adapter loaded
-2019-07-18T07:17:38.288Z - success: inspector loaded
-2019-07-18T07:17:38.289Z - success: sdkbox loaded
-2019-07-18T07:17:38.313Z - success: keystore loaded
-2019-07-18T07:17:38.314Z - success: tester loaded
-2019-07-18T07:17:38.337Z - success: node-library loaded
-2019-07-18T07:17:38.338Z - success: ui-grid loaded
-2019-07-18T07:17:38.484Z - success: package-asset loaded
-2019-07-18T07:17:38.485Z - success: ui-kit-preview-extra loaded
-2019-07-18T07:17:38.498Z - success: preferences loaded
-2019-07-18T07:17:38.498Z - success: ui-kit-preview loaded
-2019-07-18T07:17:38.517Z - success: project-exporter loaded
-2019-07-18T07:17:38.517Z - success: ui-kit loaded
-2019-07-18T07:17:38.558Z - success: project-importer loaded
-2019-07-18T07:17:38.559Z - success: ui-tree loaded
-2019-07-18T07:17:38.583Z - success: project-settings loaded
-2019-07-18T07:17:38.584Z - success: vivo-runtime loaded
-2019-07-18T07:17:38.598Z - success: scene loaded
-2019-07-18T07:17:38.599Z - success: weapp-adapter loaded
-2019-07-18T07:17:38.602Z - success: simulator-debugger loaded
-2019-07-18T07:17:38.604Z - success: sprite-editor loaded
-2019-07-18T07:17:38.622Z - success: store loaded
-2019-07-18T07:17:38.636Z - success: timeline loaded
-2019-07-18T07:17:40.104Z - normal: Loading packages
-2019-07-18T07:17:40.121Z - normal: Watching packages
-2019-07-18T07:17:40.239Z - normal: Run Application
-2019-07-18T07:18:35.529Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:1420
-2019-07-18T07:22:52.525Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:4293
-2019-07-18T07:30:06.869Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:9398
-2019-07-18T07:30:25.878Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:9471
-2019-07-18T07:30:25.889Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:9473
-2019-07-18T07:32:21.274Z - error: TypeError: Cannot read property 'asset' of null
-    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
-    at Array.map (native)
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
-    at Array.map (native)
-    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
-    at HTMLElement.query-animation-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:2538)
+2019-08-14T09:25:21.940Z - normal: Load ~/.CocosCreator/settings.json
+2019-08-14T09:25:22.013Z - normal: Initializing Asset Database
+2019-08-14T09:25:22.016Z - normal: checking language setting...
+2019-08-14T09:25:22.016Z - normal: Language: zh
+2019-08-14T09:25:22.916Z - success: preview server running at http://localhost:7456
+2019-08-14T09:25:22.982Z - success: protocol editor-framework registered
+2019-08-14T09:25:22.982Z - success: protocol app registered
+2019-08-14T09:25:22.982Z - success: protocol theme registered
+2019-08-14T09:25:22.983Z - success: protocol packages registered
+2019-08-14T09:25:22.983Z - success: protocol uuid registerred
+2019-08-14T09:25:22.983Z - success: protocol db registerred
+2019-08-14T09:25:22.983Z - success: protocol thumbnail registerred
+2019-08-14T09:25:22.984Z - success: protocol unpack registerred
+2019-08-14T09:25:22.984Z - success: protocol disable-commonjs registerred
+2019-08-14T09:25:23.105Z - normal: connected!
+2019-08-14T09:25:23.107Z - normal: Check project /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater
+2019-08-14T09:25:23.109Z - normal: Initializing project /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater
+2019-08-14T09:25:23.920Z - normal: Initializing Cocos2d
+2019-08-14T09:25:24.702Z - normal: Initializing engine extends
+2019-08-14T09:25:24.705Z - normal: Loading editor/builtin packages from /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin
+2019-08-14T09:25:24.711Z - normal: Loading builtin packages from /Applications/CocosCreator.app/Contents/Resources/builtin
+2019-08-14T09:25:25.561Z - success: assets loaded
+2019-08-14T09:25:25.562Z - success: asset-db-debugger loaded
+2019-08-14T09:25:25.639Z - success: builder loaded
+2019-08-14T09:25:25.640Z - success: color-picker loaded
+2019-08-14T09:25:25.815Z - success: cocos-analytics loaded
+2019-08-14T09:25:25.815Z - success: google-play-instant loaded
+2019-08-14T09:25:25.839Z - success: console loaded
+2019-08-14T09:25:25.839Z - success: jsb-adapter loaded
+2019-08-14T09:25:25.906Z - success: fb-instant-games loaded
+2019-08-14T09:25:25.906Z - success: oppo-runtime loaded
+2019-08-14T09:25:25.964Z - success: google-instant-games loaded
+2019-08-14T09:25:25.965Z - success: package-manager loaded
+2019-08-14T09:25:26.170Z - success: hierarchy loaded
+2019-08-14T09:25:26.170Z - success: qqplay-adapter loaded
+2019-08-14T09:25:26.198Z - success: inspector loaded
+2019-08-14T09:25:26.199Z - success: sdkbox loaded
+2019-08-14T09:25:26.214Z - success: keystore loaded
+2019-08-14T09:25:26.215Z - success: tester loaded
+2019-08-14T09:25:26.235Z - success: node-library loaded
+2019-08-14T09:25:26.235Z - success: ui-grid loaded
+2019-08-14T09:25:26.256Z - success: package-asset loaded
+2019-08-14T09:25:26.256Z - success: ui-kit-preview-extra loaded
+2019-08-14T09:25:26.269Z - success: preferences loaded
+2019-08-14T09:25:26.269Z - success: ui-kit-preview loaded
+2019-08-14T09:25:26.656Z - normal: Loading packages
+2019-08-14T09:25:26.659Z - success: project-exporter loaded
+2019-08-14T09:25:26.660Z - success: ui-kit loaded
+2019-08-14T09:25:26.694Z - success: project-importer loaded
+2019-08-14T09:25:26.694Z - success: ui-tree loaded
+2019-08-14T09:25:26.713Z - success: project-settings loaded
+2019-08-14T09:25:26.714Z - success: vivo-runtime loaded
+2019-08-14T09:25:26.727Z - success: scene loaded
+2019-08-14T09:25:26.727Z - success: weapp-adapter loaded
+2019-08-14T09:25:26.729Z - success: simulator-debugger loaded
+2019-08-14T09:25:26.731Z - success: sprite-editor loaded
+2019-08-14T09:25:26.747Z - success: store loaded
+2019-08-14T09:25:26.764Z - normal: Watching packages
+2019-08-14T09:25:26.773Z - success: timeline loaded
+2019-08-14T09:25:26.876Z - normal: Run Application
+2019-08-14T09:27:25.992Z - warn: Error: ipc timeout. message: scene:query-node, session: scene@renderer:2232
+2019-08-14T09:30:15.813Z - normal: Simulator: WORKAREA WIDTH 1440.00, HEIGHT 855.00
+2019-08-14T09:30:15.815Z - normal: Simulator: FRAME SCALE = 0.75
+2019-08-14T09:30:15.931Z - normal: Simulator: GLFWError #65544 Happen, Cocoa: Failed to retrieve display name
+2019-08-14T09:30:15.931Z - normal: Simulator: 
+2019-08-14T09:30:15.933Z - normal: Simulator: {
+2019-08-14T09:30:15.933Z - normal: Simulator: 	build_type: DEBUG
+2019-08-14T09:30:15.934Z - normal: Simulator: 	gl.vendor: Intel Inc.
+2019-08-14T09:30:15.934Z - normal: Simulator: 	gl.supports_PVRTC: false
+2019-08-14T09:30:15.934Z - normal: Simulator: 	gl.renderer: Intel(R) Iris(TM) Graphics 540
+2019-08-14T09:30:15.935Z - normal: Simulator: 	gl.supports_ATITC: false
+2019-08-14T09:30:15.938Z - normal: Simulator: 	gl.supports_discard_framebuffer: false
+2019-08-14T09:30:15.938Z - normal: Simulator: 	gl.supports_NPOT: true
+2019-08-14T09:30:15.939Z - normal: Simulator: 	gl.max_texture_units: 16
+2019-08-14T09:30:15.939Z - normal: Simulator: 	gl.supports_ETC1: false
+2019-08-14T09:30:15.940Z - normal: Simulator: 	gl.max_texture_size: 16384
+2019-08-14T09:30:15.941Z - normal: Simulator: 	gl.supports_BGRA8888: false
+2019-08-14T09:30:15.941Z - normal: Simulator: 	gl.supports_vertex_array_object: true
+2019-08-14T09:30:15.942Z - normal: Simulator: 	gl.supports_OES_map_buffer: false
+2019-08-14T09:30:15.942Z - normal: Simulator: 	compiled_with_gl_state_cache: true
+2019-08-14T09:30:15.943Z - normal: Simulator: 	gl.supports_OES_packed_depth_stencil: false
+2019-08-14T09:30:15.943Z - normal: Simulator: 	gl.version: 2.1 INTEL-12.4.7
+2019-08-14T09:30:15.944Z - normal: Simulator: 	gl.supports_S3TC: true
+2019-08-14T09:30:15.945Z - normal: Simulator: 	compiled_with_profiler: false
+2019-08-14T09:30:15.945Z - normal: Simulator: 	gl.supports_OES_depth24: false
+2019-08-14T09:30:15.946Z - normal: Simulator: }
+2019-08-14T09:30:15.949Z - normal: Simulator: Project Config:
+2019-08-14T09:30:15.949Z - normal: Simulator:     project dir: /Applications/CocosCreator.app/Contents/Resources/cocos2d-x/simulator/mac/Simulator.app/Contents/Resources/
+2019-08-14T09:30:15.950Z - normal: Simulator:     writable path: $(PROJDIR)/
+2019-08-14T09:30:15.951Z - normal: Simulator:     script file: $(PROJDIR)/main.js
+2019-08-14T09:30:15.951Z - normal: Simulator:     frame size: 640 x 960
+2019-08-14T09:30:15.952Z - normal: Simulator:     frame scale: 0.75
+2019-08-14T09:30:15.952Z - normal: Simulator:     show console: NO
+2019-08-14T09:30:15.953Z - normal: Simulator:     write debug log: NO ()
+2019-08-14T09:30:15.956Z - normal: Simulator:     listen: 
+2019-08-14T09:30:15.957Z - normal: Simulator:     debugger: none
+2019-08-14T09:30:15.957Z - normal: Simulator:     add searching path:
+2019-08-14T09:30:15.958Z - normal: Simulator: resetDesignResolution request
+2019-08-14T09:30:15.959Z - normal: Simulator: ------------------------------------------------
+2019-08-14T09:30:15.959Z - normal: Simulator: LOAD Js FILE: jsb-adapter/jsb-builtin.js
+2019-08-14T09:30:15.959Z - normal: Simulator: ------------------------------------------------
+2019-08-14T09:30:15.960Z - normal: Simulator: Initializing V8, version: 6.0.286.52
+2019-08-14T09:30:16.374Z - normal: Simulator: libuv version: 1.23.1-dev
+2019-08-14T09:30:16.381Z - normal: Simulator: Debugger listening..., visit [ chrome-devtools://devtools/bundled/inspector.html?v8only=true&ws=0.0.0.0:5086/00010002-0003-4004-8005-000600070008 ] in chrome browser to debug!
+2019-08-14T09:30:16.381Z - normal: Simulator: For help see https://nodejs.org/en/docs/inspector
+2019-08-14T09:30:16.438Z - normal: Simulator: JS: Enable batch GL commands optimization!
+2019-08-14T09:30:16.438Z - normal: Simulator: resetDesignResolution request
+2019-08-14T09:30:16.439Z - normal: Simulator: ------------------------------------------------
+2019-08-14T09:30:16.439Z - normal: Simulator: LOAD Js FILE: main.js
+2019-08-14T09:30:16.439Z - normal: Simulator: ------------------------------------------------
+2019-08-14T09:30:16.840Z - normal: Simulator: iShow!
+2019-08-14T09:30:16.980Z - normal: Simulator: glGetIntegerv: pname: 0x8b4c
+2019-08-14T09:30:17.005Z - normal: Simulator: JS: Cocos Creator v2.1.0
+2019-08-14T09:30:24.980Z - normal: Simulator: JS: ===> js IsLogOpened result:, false
+2019-08-14T09:30:26.454Z - normal: Simulator: ScriptEngine::cleanup begin ...
+2019-08-14T09:30:26.454Z - normal: Simulator: GC begin ..., (js->native map) size: 43, all objects: 82
+2019-08-14T09:30:26.500Z - normal: Simulator: GC end ..., (js->native map) size: 43, all objects: 82
+2019-08-14T09:30:26.500Z - normal: Simulator: GC begin ..., (js->native map) size: 43, all objects: 82
+2019-08-14T09:30:26.540Z - normal: Simulator: GC end ..., (js->native map) size: 43, all objects: 82
+2019-08-14T09:30:26.540Z - normal: Simulator: Destroy WebGLProgram (3) by GC
+2019-08-14T09:30:26.540Z - normal: Simulator: Destroy WebGLTexture (27) by GC
+2019-08-14T09:30:26.541Z - normal: Simulator: Destroy WebGLTexture (26) by GC
+2019-08-14T09:30:26.542Z - normal: Simulator: Destroy WebGLTexture (25) by GC
+2019-08-14T09:30:26.542Z - normal: Simulator: Destroy WebGLFramebuffer (1) by GC
+2019-08-14T09:30:26.542Z - normal: Simulator: Destroy WebGLTexture (23) by GC
+2019-08-14T09:30:26.542Z - normal: Simulator: Destroy WebGLTexture (22) by GC
+2019-08-14T09:30:26.543Z - normal: Simulator: Destroy WebGLTexture (21) by GC
+2019-08-14T09:30:26.545Z - normal: Simulator: Destroy WebGLTexture (17) by GC
+2019-08-14T09:30:26.547Z - normal: Simulator: Destroy WebGLTexture (16) by GC
+2019-08-14T09:30:26.548Z - normal: Simulator: Destroy WebGLTexture (8) by GC
+2019-08-14T09:30:26.548Z - normal: Simulator: Destroy WebGLTexture (10) by GC
+2019-08-14T09:30:26.549Z - normal: Simulator: Destroy WebGLTexture (7) by GC
+2019-08-14T09:30:26.549Z - normal: Simulator: Destroy WebGLTexture (4) by GC
+2019-08-14T09:30:26.549Z - normal: Simulator: Destroy WebGLBuffer (7) by GC
+2019-08-14T09:30:26.549Z - normal: Simulator: Destroy WebGLTexture (2) by GC
+2019-08-14T09:30:26.550Z - normal: Simulator: Destroy WebGLTexture (14) by GC
+2019-08-14T09:30:26.551Z - normal: Simulator: Destroy WebGLTexture (6) by GC
+2019-08-14T09:30:26.551Z - normal: Simulator: Destroy WebGLTexture (1) by GC
+2019-08-14T09:30:26.554Z - normal: Simulator: Destroy WebGLBuffer (6) by GC
+2019-08-14T09:30:26.555Z - normal: Simulator: Destroy WebGLTexture (20) by GC
+2019-08-14T09:30:26.555Z - normal: Simulator: Destroy WebGLBuffer (4) by GC
+2019-08-14T09:30:26.556Z - normal: Simulator: Destroy WebGLBuffer (3) by GC
+2019-08-14T09:30:26.557Z - normal: Simulator: Destroy WebGLTexture (24) by GC
+2019-08-14T09:30:26.557Z - normal: Simulator: Destroy WebGLTexture (18) by GC
+2019-08-14T09:30:26.557Z - normal: Simulator: Destroy WebGLBuffer (5) by GC
+2019-08-14T09:30:26.557Z - normal: Simulator: Destroy WebGLTexture (12) by GC
+2019-08-14T09:30:26.557Z - normal: Simulator: Destroy WebGLTexture (3) by GC
+2019-08-14T09:30:26.557Z - normal: Simulator: Destroy WebGLBuffer (1) by GC
+2019-08-14T09:30:26.557Z - normal: Simulator: Destroy WebGLTexture (13) by GC
+2019-08-14T09:30:26.558Z - normal: Simulator: Destroy WebGLTexture (9) by GC
+2019-08-14T09:30:26.558Z - normal: Simulator: Destroy WebGLTexture (15) by GC
+2019-08-14T09:30:26.558Z - normal: Simulator: Destroy WebGLBuffer (8) by GC
+2019-08-14T09:30:26.558Z - normal: Simulator: Destroy WebGLTexture (5) by GC
+2019-08-14T09:30:26.559Z - normal: Simulator: Destroy WebGLTexture (19) by GC
+2019-08-14T09:30:26.559Z - normal: Simulator: Destroy WebGLBuffer (2) by GC
+2019-08-14T09:30:26.560Z - normal: Simulator: Destroy WebGLTexture (11) by GC
+2019-08-14T09:30:26.560Z - normal: Simulator: GC begin ..., (js->native map) size: 0, all objects: 0
+2019-08-14T09:30:26.592Z - normal: Simulator: GC end ..., (js->native map) size: 0, all objects: 0
+2019-08-14T09:30:26.599Z - normal: Simulator: ScriptEngine::cleanup end ...
+2019-08-14T09:30:26.666Z - error: Simulator: Received signal 11 SEGV_MAPERR 000000000000
+
+==== C stack trace ===============================
+
+ [0x0001098b6444]
+ [0x7fff6322fb3d]
+ [0x7fff61f693e7]
+ [0x7fff35e5b632]
+ [0x7fff35e5b5ac]
+ [0x7fff35e34c37]
+ [0x7fff35df7c6d]
+ [0x7fff35df736b]
+ [0x7fff35df6c64]
+ [0x7fff3508dab5]
+ [0x7fff3508d6f4]
+ [0x7fff3508d568]
+ [0x7fff33348363]
+ [0x7fff33347102]
+ [0x7fff3367ef73]
+ [0x7fff3354f95d]
+ [0x000108aa4c22]
+ [0x000108a9fd5d]
+ [0x7fff35e5b632]
+ [0x7fff35e5b5ac]
+ [0x7fff35e5b4cd]
+ [0x7fff35e63929]
+ [0x7fff35dcb0ca]
+ [0x7fff35dca48d]
+ [0x7fff38152a7b]
+ [0x7fff3334f64a]
+ [0x7fff3334ef6e]
+ [0x7fff3334c8c8]
+ [0x7fff3334c517]
+ [0x7fff3819d144]
+ [0x7fff3819cfc0]
+ [0x7fff37082b93]
+ [0x7fff370823fd]
+ [0x7fff370822d5]
+ [0x7fff3509710e]
+ [0x7fff33348644]
+ [0x7fff33347102]
+ [0x7fff33341165]
+ [0x7fff333308a3]
+ [0x000108aba272]
+ [0x7fff63044ed9]
+ [0x000000000009]
+[end of stack trace]
+    at HTMLElement.print-simulator-log (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene.js:1:1653)
     at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
     at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
     at emitMany (events.js:127:13)
     at EventEmitter.emit (events.js:204:7)
-2019-07-18T07:32:21.433Z - error: TypeError: Cannot read property 'asset' of null
-    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
-    at Array.map (native)
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
-    at Array.map (native)
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
-    at Array.map (native)
-    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
-    at HTMLElement.query-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:679)
-    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
-2019-07-18T07:32:42.145Z - error: TypeError: Cannot read property 'asset' of null
-    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
-    at Array.map (native)
-    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
-    at HTMLElement.query-animation-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:2538)
-    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
-    at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
-    at emitMany (events.js:127:13)
-    at EventEmitter.emit (events.js:204:7)
-2019-07-18T07:32:42.245Z - error: TypeError: Cannot read property 'asset' of null
-    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:5531
-    at Object.module.exports [as getNodeDump] (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:6264)
-    at Object.dumpNode (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/index.js:1:7718)
-    at HTMLElement.query-node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:948)
-    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
-    at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
-    at emitMany (events.js:127:13)
-    at EventEmitter.emit (events.js:204:7)
-2019-07-18T07:32:42.247Z - error: TypeError: Cannot read property 'asset' of null
-    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:5531
-    at Object.module.exports [as getNodeDump] (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/get-node-dump.js:1:6264)
-    at Object.dumpNode (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/index.js:1:7718)
-    at HTMLElement.query-node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:948)
-    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
-    at EventEmitter.o.on.s (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ipc.js:1:2917)
-    at emitMany (events.js:127:13)
-    at EventEmitter.emit (events.js:204:7)
-2019-07-18T07:32:43.839Z - error: TypeError: Cannot read property 'sync' of null
-    at Object.deactivate (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/index.js:1:8349)
-    at HTMLElement.deactivated (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/selection.js:1:518)
-    at EventEmitter.e.on.t (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/ui/utils/polymer-utils.js:1:606)
-    at emitThree (events.js:121:20)
-    at EventEmitter.emit (events.js:197:7)
-2019-07-18T07:33:24.192Z - error: TypeError: Cannot read property 'asset' of null
-    at /Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:281
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:326)
-    at Array.map (native)
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
-    at Array.map (native)
-    at n (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:394)
-    at Array.map (native)
-    at Object.node (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/page/scene-utils/dump/hierarchy.js:1:654)
-    at HTMLElement.query-animation-hierarchy (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor/builtin/scene/panel/messages/scene-query.js:1:2538)
-    at Object.e._dispatch (/Applications/CocosCreator.app/Contents/Resources/app.asar/editor-framework/lib/renderer/panel.js:1:1941)
-2019-07-18T07:34:49.893Z - info: shutdown preview server
+2019-08-14T09:30:47.608Z - normal: Start building with options : {
+  "actualPlatform": "android",
+  "android-instant": {
+    "REMOTE_SERVER_ROOT": "",
+    "host": "",
+    "pathPattern": "",
+    "recordPath": "",
+    "scheme": "https",
+    "skipRecord": false
+  },
+  "apiLevel": "android-26",
+  "appABIs": [
+    "armeabi-v7a"
+  ],
+  "appKey": "",
+  "appSecret": "",
+  "buildPath": "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build",
+  "debug": false,
+  "dest": "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link",
+  "embedWebDebugger": false,
+  "encryptJs": false,
+  "excludeScenes": [],
+  "excludedModules": [],
+  "fb-instant-games": {},
+  "includeAnySDK": false,
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": false,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "adam.lean.foreign",
+  "platform": "android",
+  "previewHeight": "720",
+  "previewWidth": "1280",
+  "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
+  "scenes": [
+    "2d2f792f-a40c-49bb-a189-ed176a246e49"
+  ],
+  "sourceMaps": false,
+  "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
+  "template": "link",
+  "title": "hello_world",
+  "useDebugKeystore": true,
+  "vsVersion": "auto",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
+  },
+  "xxteaKey": "7f318857-1ed8-4d",
+  "zipCompressJs": true,
+  "project": "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater",
+  "projectName": "hello_world",
+  "debugBuildWorker": false
+}
+2019-08-14T09:30:47.613Z - normal: Building /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater
+2019-08-14T09:30:47.613Z - normal: Destination /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link
+2019-08-14T09:30:47.948Z - normal: Delete /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link/res/**/*,/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link/src/*/
+2019-08-14T09:30:47.987Z - normal: Checked Python Version [2.7.10]
+2019-08-14T09:30:54.874Z - normal: Start building assets
+2019-08-14T09:30:54.876Z - normal: Start spawn build-worker
+2019-08-14T09:30:55.744Z - normal: Finish spawn build-worker
+2019-08-14T09:30:55.744Z - normal: Start init build-worker
+2019-08-14T09:30:59.694Z - normal: Finish init build-worker
+2019-08-14T09:30:59.694Z - normal: Start build-assets in worker
+2019-08-14T09:30:59.918Z - info: Enable "内联所有 SpriteFrame" in native platform will increase the package size used in hot update.
+2019-08-14T09:31:00.087Z - normal: Finish build-assets in worker
+2019-08-14T09:31:00.090Z - normal: Finish building assets
+2019-08-14T09:31:00.096Z - normal: Start building plugin scripts
+2019-08-14T09:31:00.160Z - normal: Generating main.js from /Applications/CocosCreator.app/Contents/Resources/static/build-templates/shares/main.js
+2019-08-14T09:31:00.209Z - normal: Built to "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link" successfully
+2019-08-14T09:31:02.293Z - normal: Start building with options : {
+  "actualPlatform": "android",
+  "android-instant": {
+    "REMOTE_SERVER_ROOT": "",
+    "host": "",
+    "pathPattern": "",
+    "recordPath": "",
+    "scheme": "https",
+    "skipRecord": false
+  },
+  "apiLevel": "android-28",
+  "appABIs": [
+    "armeabi-v7a"
+  ],
+  "appKey": "",
+  "appSecret": "",
+  "buildPath": "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build",
+  "debug": false,
+  "dest": "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link",
+  "embedWebDebugger": false,
+  "encryptJs": false,
+  "excludeScenes": [],
+  "excludedModules": [],
+  "fb-instant-games": {},
+  "includeAnySDK": false,
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": false,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "adam.lean.foreign",
+  "platform": "android",
+  "previewHeight": "720",
+  "previewWidth": "1280",
+  "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
+  "scenes": [
+    "2d2f792f-a40c-49bb-a189-ed176a246e49"
+  ],
+  "sourceMaps": false,
+  "startScene": "2d2f792f-a40c-49bb-a189-ed176a246e49",
+  "template": "link",
+  "title": "hello_world",
+  "useDebugKeystore": true,
+  "vsVersion": "auto",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
+  },
+  "xxteaKey": "7f318857-1ed8-4d",
+  "zipCompressJs": true,
+  "project": "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater",
+  "projectName": "hello_world",
+  "debugBuildWorker": false
+}
+2019-08-14T09:31:02.294Z - normal: Building /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater
+2019-08-14T09:31:02.295Z - normal: Destination /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link
+2019-08-14T09:31:02.297Z - normal: Delete /Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link/res/**/*,/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link/src/*/
+2019-08-14T09:31:02.338Z - normal: Checked Python Version [2.7.10]
+2019-08-14T09:31:06.288Z - normal: Start building assets
+2019-08-14T09:31:06.289Z - normal: Start spawn build-worker
+2019-08-14T09:31:06.979Z - normal: Finish spawn build-worker
+2019-08-14T09:31:06.979Z - normal: Start init build-worker
+2019-08-14T09:31:09.906Z - normal: Finish init build-worker
+2019-08-14T09:31:09.906Z - normal: Start build-assets in worker
+2019-08-14T09:31:10.002Z - info: Enable "内联所有 SpriteFrame" in native platform will increase the package size used in hot update.
+2019-08-14T09:31:10.139Z - normal: Finish build-assets in worker
+2019-08-14T09:31:10.142Z - normal: Finish building assets
+2019-08-14T09:31:10.145Z - normal: Start building plugin scripts
+2019-08-14T09:31:10.196Z - normal: Generating main.js from /Applications/CocosCreator.app/Contents/Resources/static/build-templates/shares/main.js
+2019-08-14T09:31:10.225Z - normal: Built to "/Users/upltv/upltv-cocos-creator-mediation-demo/CocosCreater/build/jsb-link" successfully
+2019-08-14T09:36:56.437Z - info: shutdown preview server

@@ -36,9 +36,6 @@
 -keep public class com.anysdk.** { *; }
 -dontwarn com.anysdk.**
 
-# 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。
--dontpreverify
-
 # avidly
 -keep class com.avidly.ads.** {*;}
 -keep class com.up.ads.** {*;}
@@ -58,8 +55,6 @@
 -dontwarn com.avidly.**
 -dontwarn com.up.**
 -keep class com.statistics.channel.* {*;}
--keep class com.google.ads.mediation.** {*;}
--dontwarn com.google.ads.mediation.**
 # avidly end
 
 # support
@@ -143,18 +138,6 @@
 -keeppackagenames 'retrofit2'
 # vungle end
 
-# mintegral
--keepattributes Signature
--keepattributes *Annotation*
--keep class com.mintegral.** {*;}
--keep interface com.mintegral.** {*;}
--keep class android.support.v4.** { *; }
--dontwarn com.mintegral.**
--keep class **.R$* { public static final int mintegral*; }
--keep class com.alphab.** {*; }
--keep interface com.alphab.** {*; }
-# mintegral end
-
 # unity
 -keepattributes SourceFile,LineNumberTable
 -keepattributes JavascriptInterface
@@ -218,47 +201,7 @@
 -dontnote net.nend.android.**
 # nend end
 
-# oneway
--keepattributes *Annotation*
--keep enum mobi.oneway.sdk.* {*;}
--keep class mobi.oneway.sdk.** {*;}
-# oneway end
-
-# gdt
--keep class com.qq.e.** {*;}
--keep class android.support.v4.** {public *;}
--keep class android.support.v7.** {public *;}
-# gdt end
-
-# toutiao
--keep class com.bytedance.sdk.openadsdk.** { *; }
--keep class com.androidquery.callback.** {*;}
--dontwarn com.bytedance.sdk.**
--dontwarn com.androidquery.**
--dontwarn com.ss.android.**
-# toutiao end
-
 # amazon
 -keep class com.amazon.device.ads.** { *; }
 # amazon end
-
-# sigmob
--dontwarn android.support.v4.**
--keep class android.support.v4.** { *; }
--keep interface android.support.v4.** { *; }
--keep public class * extends android.support.v4.**
--keep class sun.misc.Unsafe { *; }
--dontwarn com.sigmob.**
--keep class com.sigmob.**.**{*;}
-# sigmob end
-
-# baidumob
--keep class com.baidu.mobad.*.** { *; }
--keep class com.baidu.mobads.*.** { *; }
--keepclassmembers class * extends android.app.Activity {public void *(android.view.View);}
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
-# baidumob end
 

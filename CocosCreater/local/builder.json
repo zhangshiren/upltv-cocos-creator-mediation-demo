@@ -1,6 +1,6 @@
 {
   "actualPlatform": "android",
-  "apiLevel": "android-26",
+  "apiLevel": "android-28",
   "appABIs": [
     "armeabi-v7a"
   ],

@@ -110,6 +110,20 @@ var functionNames = {
                 printLog("===> rewardLoadSuccessCall is null or not function");
             }
         }
+        else if (functionNames.Function_Reward_WillOpen == callname) {
+            var call = ltvMap.rewardShowCall;
+            if (call != null && typeof call == "function") {
+                call(upltv.AdEventType.VIDEO_EVENT_WILL_SHOW, cpadid);
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs did run callback on video willopen event.");
+                }
+            }
+            else {
+                if (canreport) {
+                    onlineReportCall(callname, "CocosJs not run callback on video willopen event.");
+                }
+            }
+        }
         else if (functionNames.Function_Reward_DidOpen == callname) {
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
@@ -205,6 +219,23 @@ var functionNames = {
             }
             else {
                 printLog("===> interstitial_didloadsuccess v is null at key:" + k);
+            }
+        }
+        else if (functionNames.Function_Interstitial_Willshow == callname) {
+            var v = ltvMap.get(cpadid);
+            var callReport = false;
+            if (null != v) {
+                var call = v.interstitialShowCall;
+                if (null != call && typeof call == "function") {
+                    call(upltv.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW, cpadid);
+                    if (canreport) {
+                        callReport = true;
+                        onlineReportCall(callname, "CocosJs did run callback on il ad willshown event at " + cpadid, cpadid);
+                    }
+                }
+            }
+            if (canreport && callReport == false) {
+                onlineReportCall(callname, "CocosJs not run callback on il ad willshown event at " + cpadid, cpadid);
             }
         }
         else if (functionNames.Function_Interstitial_Didshow == callname) {
@@ -361,12 +392,14 @@ var functionNames = {
 };
 functionNames.Function_Receive_Callback    = "receive_callback";
 
+functionNames.Function_Reward_WillOpen    = "reward_willopen";
 functionNames.Function_Reward_DidOpen    = "reward_didopen";
 functionNames.Function_Reward_DidClick   = "reward_didclick";
 functionNames.Function_Reward_DidClose   = "reward_didclose";
 functionNames.Function_Reward_DidGivien  = "reward_didgiven";
 functionNames.Function_Reward_DidAbandon = "reward_didabandon";
 
+functionNames.Function_Interstitial_Willshow  = "interstitial_willshow";
 functionNames.Function_Interstitial_Didshow  = "interstitial_didshow";
 functionNames.Function_Interstitial_Didclose = "interstitial_didclose";
 functionNames.Function_Interstitial_Didclick = "interstitial_didclick";
@@ -497,6 +530,9 @@ var loadJsBridgeObject = function() {
 var bridgeInterface = {
     initSdkSuccessed : false,
     initVokeCall : null,
+
+    gdprcallbak : null,
+
     // 加载异步回调
     initSdkCallback : function (msg1) {
 
@@ -1135,6 +1171,10 @@ var upltv = upltv || {
                 printLog("===> showIconAd(), the cpPlaceId can't be undefined or null.");
                 return;
             }
+            
+            if (cc.sys.os === cc.sys.OS_ANDROID) {
+                this.upltvbridge.showAndroidIconAdAt(x,y,width,height,rotationAngle,cpPlaceId);
+            }
 
             if (cc.sys.os === cc.sys.OS_IOS) {
                 this.upltvbridge.showIosIconAdAt(x,y,width,height,rotationAngle,cpPlaceId);
@@ -1149,6 +1189,11 @@ var upltv = upltv || {
                 printLog("===> removeIconAd(), the cpPlaceId can't be undefined or null.");
                 return;
             }
+			
+            if (cc.sys.os === cc.sys.OS_ANDROID) {
+                this.upltvbridge.removeAndroidIconAdAt(cpPlaceId);
+            }
+			
             if (cc.sys.os === cc.sys.OS_IOS) {
                 this.upltvbridge.removeIosIconAdAt(cpPlaceId);
             }
@@ -1333,11 +1378,11 @@ var upltv = upltv || {
         }
 
         if (undefined != this.upltvbridge && this.upltvbridge != null) {
-            upltv.GDPRPermissionEnum.functionId = upltv.GDPRPermissionEnum.functionId + 1;
-            var callId = upltv.GDPRPermissionEnum.functionId;
+            bridgeInterface.gdprcallbak.functionId = bridgeInterface.gdprcallbak.functionId + 1;
+                var callId = bridgeInterface.gdprcallbak.functionId;
             var key = "" + callId;
             ltvMap.put(key, callback);
-            var call = "upltv.GDPRPermissionEnum.javaCall";
+            var call = "cc.bridgeInterface.gdprcallbak.javaCall";
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 this.upltvbridge.notifyAndroidAccessPrivacyInfoStatus(call, callId);
             }
@@ -1362,11 +1407,12 @@ var upltv = upltv || {
         }
 
         if (undefined != this.upltvbridge && this.upltvbridge != null) {
-            upltv.GDPRPermissionEnum.functionId = upltv.GDPRPermissionEnum.functionId + 1;
-            var callId = upltv.GDPRPermissionEnum.functionId;
+            bridgeInterface.gdprcallbak.functionId = bridgeInterface.gdprcallbak.functionId + 1;
+            var callId = bridgeInterface.gdprcallbak.functionId;
             var key = "" + callId;
             ltvMap.put(key, callback);
-            var call = "upltv.GDPRPermissionEnum.javaCall";
+            var call = "cc.bridgeInterface.gdprcallbak.javaCall";
+            // var call = "module.exports.upltv.GDPRPermissionEnum.javaCall";
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 this.upltvbridge.isAndroidEuropeanUnionUser(call, callId);
             }
@@ -1393,6 +1439,8 @@ var upltv = upltv || {
                 if (functionNames.Function_Receive_Callback == callname) {
                     this.upltvbridge.reportIvokePluginMethodReceive(msg);
                 }
+                else if (functionNames.Function_Reward_WillOpen == callname) {
+                }
                 else if (functionNames.Function_Reward_DidOpen == callname) {
                     this.upltvbridge.reportRDShowDid(msg);
                 }
@@ -1408,6 +1456,8 @@ var upltv = upltv || {
                 else if (functionNames.Function_Reward_DidAbandon == callname) {
                     this.upltvbridge.reportRDRewardCancel(msg);
                 }
+                else if (functionNames.Function_Interstitial_Willshow == callname) {
+                }
                 else if (functionNames.Function_Interstitial_Didshow == callname) {
                     this.upltvbridge.reportILShowDid(msg, cpid);
                 }
@@ -1418,11 +1468,43 @@ var upltv = upltv || {
                     this.upltvbridge.reportILClose(msg, cpid);
                 }
         }
-    }
+    },
+    
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    // >>>> JS -- SDK Debug接口
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    
+    // 判断SDK是否开启了Debug log
+    // 同步返回boolean结果，true 表示已开启，false表示未开启
+    isLogOpened : function() {
+        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+            
+            if (cc.sys.os === cc.sys.OS_IOS) {
+                return this.upltvbridge.isIosLogOpened();
+            }
+            else if (cc.sys.os === cc.sys.OS_ANDROID) {
+                return this.upltvbridge.isAndroidLogOpened();
+            }
+        }
+        return false;
+    },
 
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    // >>>> JS -- SDK Android平台 特殊接口
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    // 仅用于android平台
+    // 设置用户是否是小于13岁的儿童
+    setIsChild: function (isChild) {
+        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+            if (cc.sys.os === cc.sys.OS_ANDROID) {
+                this.upltvbridge.setAndroidIsChild(isChild);
+            }
+        }
+    }
 };
 
-upltv.GDPRPermissionEnum = {
+bridgeInterface.gdprcallbak = {
     functionId : 0,
     javaCall : function(callId, value) {
         var key = "" + callId;
@@ -1435,7 +1517,7 @@ upltv.GDPRPermissionEnum = {
         }
     }
 };
-
+upltv.GDPRPermissionEnum = {};
 upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown  = 0;
 upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted  = 1;
 upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined  = 2;
@@ -1470,6 +1552,9 @@ upltv.AdEventType.ICON_EVENT_DID_LOAD = 16;
 upltv.AdEventType.ICON_EVENT_DID_LOADFAIL = 17;
 upltv.AdEventType.ICON_EVENT_DID_SHOW = 18;
 upltv.AdEventType.ICON_EVENT_DID_CLICK = 19;
+
+upltv.AdEventType.VIDEO_EVENT_WILL_SHOW = 20;
+upltv.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW = 21;
 
 module.exports.upltv = upltv;
 module.exports.bridgeInterface = bridgeInterface;

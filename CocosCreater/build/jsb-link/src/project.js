@@ -51,9 +51,8 @@ showBottomBanner: cc.Button,
 hideAllBanner: cc.Button,
 removeAllBanner: cc.Button,
 bannerPlaceId: "sample_banner",
-IconIdShow: cc.Button,
-IconIdRemove: cc.Button,
-iconPlaceId: "testIcon",
+IsLogOpened: cc.Button,
+setIsChild: cc.Button,
 label: {
 default: null,
 type: cc.Label
@@ -65,7 +64,6 @@ this.abTestFunc();
 this.rewardViedoFunc();
 this.ilViewFunc();
 this.bannerViewFunc();
-this.iconViewFunc();
 },
 initSDKFunc: function() {
 var t = this;
@@ -79,6 +77,16 @@ n.intSdk(0, function(i) {
 cc.log("===> js intSdk result:, %s", i);
 t.label.string = "js intSdk result:" + i;
 });
+});
+this.IsLogOpened.node.on("click", function(i) {
+var e = n.isLogOpened();
+cc.log("===> js IsLogOpened result:, %s", e);
+t.label.string = "js IsLogOpened result:" + e;
+});
+this.setIsChild.node.on("click", function(i) {
+var e = n.setIsChild(!0);
+cc.log("===> js setIsChild result:, %s", e);
+t.label.string = "js setIsChild true";
 });
 this.initGDPR.node.on("click", function(i) {
 cc.log("===> js GDPR start");
@@ -135,7 +143,7 @@ t.label.string = "js isRewardReady: " + e.toString();
 this.rdShow.node.on("click", function(i) {
 n.setRewardVideoShowCallback(function(i, e) {
 var o = "unkown";
-i == n.AdEventType.VIDEO_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.VIDEO_EVENT_WILL_SHOW ? o = "Will_Show" : i == n.AdEventType.VIDEO_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.VIDEO_EVENT_DID_CLOSE ? o = "Did_Close" : i == n.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD ? o = "Did_Given_Reward" : i == n.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD && (o = "Did_Abandon_Reward");
+i == n.AdEventType.VIDEO_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.VIDEO_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.VIDEO_EVENT_DID_CLOSE ? o = "Did_Close" : i == n.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD ? o = "Did_Given_Reward" : i == n.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD && (o = "Did_Abandon_Reward");
 cc.log("===> js RewardVideo Show Callback, event: %s, at: %s", o, e);
 t.label.string = "js RewardVideo Show Callback: " + o;
 });
@@ -166,13 +174,13 @@ t.label.string = "js il load callback fail: " + i;
 this.ILIsReady.node.on("click", function(i) {
 n.isInterstitialReadyAsyn(t.ilPlaceId, function(i) {
 cc.log("===> js il ad isreadyasyn: %s at placementid:%s", i, t.ilPlaceId);
-t.label.string = "js il ad isreadyasyn: "+i+" at placementid:" + t.ilPlaceId;
+t.label.string = "js il ad isreadyasyn: " + t.ilPlaceId;
 });
 });
 this.ILShow.node.on("click", function(i) {
 n.setInterstitialShowCallback(t.ilPlaceId, function(i, e) {
 var o = "unkown";
-i == n.AdEventType.INTERSTITIAL_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW ? o = "Will_Show" : i == n.AdEventType.INTERSTITIAL_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE && (o = "Did_Close");
+i == n.AdEventType.INTERSTITIAL_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.INTERSTITIAL_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE && (o = "Did_Close");
 cc.log("===> js il ad event: %s, at placementid: %s", o, e);
 t.label.string = "gagah gjahga aghajfgha gjahfgjha jkgahg agjkahga js il ad event: " + o;
 });
@@ -181,6 +189,7 @@ cc.log("===> js il ad isready: %s at placementid:%s", e, t.ilPlaceId);
 t.label.string = "js il ad isready: " + t.ilPlaceId;
 if (1 == e) {
 n.showInterstitialAd(t.ilPlaceId);
+t.label.string = "插屏展示成功";
 }
 });
 },
@@ -191,7 +200,7 @@ n.setBannerShowCallback(t.bannerPlaceId, function(i, e) {
 var o = "unkown";
 i == n.AdEventType.BANNER_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.BANNER_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.BANNER_EVENT_DID_REMOVED && (o = "Did_Removed");
 cc.log("=====> banner event: %s, at : %s", o, e);
-t.label.string = "banner event: " + o;
+t.label.string = "banner event: " + e;
 });
 n.showBannerAdAtTop(t.bannerPlaceId);
 t.label.string = "顶部Banner展示";
@@ -201,7 +210,7 @@ n.setBannerShowCallback(t.bannerPlaceId, function(i, e) {
 var o = "unkown";
 i == n.AdEventType.BANNER_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.BANNER_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.BANNER_EVENT_DID_REMOVED && (o = "Did_Removed");
 cc.log("=====> banner event: %s, at : %s", o, e);
-t.label.string = "banner event: " + o;
+t.label.string = "banner event: " + e;
 });
 n.showBannerAdAtBottom(t.bannerPlaceId);
 t.label.string = "底部Banner展示";
@@ -214,23 +223,6 @@ t.label.string = "隐藏展示";
 this.removeAllBanner.node.on("click", function(i) {
 n.removeBannerAdAt(t.bannerPlaceId);
 t.label.string = "移除展示";
-});
-},
-iconViewFunc: function() {
-var t = this;
-this.IconIdShow.node.on("click", function(i) {
-n.setIconCallback(t.iconPlaceId, function(i, e) {
-var o = "unknown";
-i == n.AdEventType.ICON_EVENT_DID_LOAD ? o = "Did_loadSuccessful" : i == n.AdEventType.ICON_EVENT_DID_LOADFAIL ? o = "Did_loadFailed" : i == n.AdEventType.ICON_EVENT_DID_SHOW ? o = "Did_Show" : n.AdEventType.ICON_EVENT_DID_CLICK;
-cc.log("====> IconAd event:%s,at :%s", o, e);
-t.label.string = "IconAd event: " + e;
-});
-n.showIconAd(100, 100, 200, 200, 10, t.iconPlaceId);
-t.label.string = "Icon 展示";
-});
-this.IconIdRemove.node.on("click", function(i) {
-n.removeIconAd(t.iconPlaceId);
-t.label.string = "Icon 移除";
 });
 },
 update: function(t) {}
@@ -302,6 +294,12 @@ jsb.reflection.callStaticMethod(n, "hideTopBanner", "()V");
 hideAndroidBannerAdAtBottom: function() {
 jsb.reflection.callStaticMethod(n, "hideBottomBanner", "()V");
 },
+showAndroidIconAdAt: function(t, i, e, o, s, l) {
+jsb.reflection.callStaticMethod(n, "showIconAd", "(IIIIILjava/lang/String;)V", t, i, e, o, s, l);
+},
+removeAndroidIconAdAt: function(t) {
+jsb.reflection.callStaticMethod(n, "removeIconAd", "(Ljava/lang/String;)V", t);
+},
 loadAndroidAdsByManual: function() {
 jsb.reflection.callStaticMethod(n, "loadAnroidAdsByManual", "()V");
 },
@@ -358,6 +356,12 @@ jsb.reflection.callStaticMethod(n, "reportILShowDid", "(Ljava/lang/String;Ljava/
 },
 isOnlineDebugReportEnable: function() {
 return jsb.reflection.callStaticMethod(n, "isReportOnlineEnable", "()Z");
+},
+isAndroidLogOpened: function() {
+return jsb.reflection.callStaticMethod(n, "isLogOpened", "()Z");
+},
+setAndroidIsChild: function(t) {
+jsb.reflection.callStaticMethod(n, "setIsChild", "(Z)V", t);
 }
 };
 i.exports = s;
@@ -518,7 +522,12 @@ d.resetRewardLoadCallback();
 } else l(); else if (a.Function_Reward_DidLoadSuccess == o) if (null != d.rewardLoadSuccessCall && "function" == typeof d.rewardLoadSuccessCall) {
 d.rewardLoadSuccessCall(s, r);
 d.resetRewardLoadCallback();
-} else l(); else if (a.Function_Reward_DidOpen == o) {
+} else l(); else if (a.Function_Reward_WillOpen == o) {
+if (null != (p = d.rewardShowCall) && "function" == typeof p) {
+p(f.AdEventType.VIDEO_EVENT_WILL_SHOW, s);
+u && c(o, "CocosJs did run callback on video willopen event.");
+} else u && c(o, "CocosJs not run callback on video willopen event.");
+} else if (a.Function_Reward_DidOpen == o) {
 if (null != (p = d.rewardShowCall) && "function" == typeof p) {
 p(f.AdEventType.VIDEO_EVENT_DID_SHOW, s);
 u && c(o, "CocosJs did run callback on video shown event.");
@@ -556,8 +565,20 @@ if (null != (h = d.get(v))) {
 null != (p = h.interstitialLoadSuccessCall) && "function" == typeof p ? p(s, r) : l();
 d.remove(v);
 } else l();
-} else if (a.Function_Interstitial_Didshow == o) {
+} else if (a.Function_Interstitial_Willshow == o) {
 var I = !1;
+if (null != (h = d.get(s))) {
+if (null != (p = h.interstitialShowCall) && "function" == typeof p) {
+p(f.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW, s);
+if (u) {
+I = !0;
+c(o, "CocosJs did run callback on il ad willshown event at " + s, s);
+}
+}
+}
+u && 0 == I && c(o, "CocosJs not run callback on il ad willshown event at " + s, s);
+} else if (a.Function_Interstitial_Didshow == o) {
+I = !1;
 if (null != (h = d.get(s))) {
 if (null != (p = h.interstitialShowCall) && "function" == typeof p) {
 p(f.AdEventType.INTERSTITIAL_EVENT_DID_SHOW, s);
@@ -628,11 +649,13 @@ null != (p = h.iconEventCall) && "function" == typeof p && p(f.AdEventType.ICON_
 }
 },
 Function_Receive_Callback: "receive_callback",
+Function_Reward_WillOpen: "reward_willopen",
 Function_Reward_DidOpen: "reward_didopen",
 Function_Reward_DidClick: "reward_didclick",
 Function_Reward_DidClose: "reward_didclose",
 Function_Reward_DidGivien: "reward_didgiven",
 Function_Reward_DidAbandon: "reward_didabandon",
+Function_Interstitial_Willshow: "interstitial_willshow",
 Function_Interstitial_Didshow: "interstitial_didshow",
 Function_Interstitial_Didclose: "interstitial_didclose",
 Function_Interstitial_Didclick: "interstitial_didclick",
@@ -709,6 +732,7 @@ cc.sys.os === cc.sys.OS_IOS && null != f ? void 0 != f.upltvbridge && null != f.
 }, u = {
 initSdkSuccessed: !1,
 initVokeCall: null,
+gdprcallbak: null,
 initSdkCallback: function(t) {
 "true" != t && 1 != t || (this.initSdkSuccessed = !0);
 cc.log("===> js initSdkCallback..., %s", t);
@@ -966,6 +990,7 @@ if (void 0 == s || null == s) {
 l();
 return;
 }
+cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidIconAdAt(t, i, e, n, o, s);
 cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.showIosIconAdAt(t, i, e, n, o, s);
 }
 },
@@ -975,6 +1000,7 @@ if (void 0 == t || null == t) {
 l();
 return;
 }
+cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.removeAndroidIconAdAt(t);
 cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.removeIosIconAdAt(t);
 }
 },
@@ -1020,10 +1046,10 @@ notifyAccessPrivacyInfoStatus: function(t) {
 r();
 if (void 0 != t && null != t) if ("function" == typeof t) {
 if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-f.GDPRPermissionEnum.functionId = f.GDPRPermissionEnum.functionId + 1;
-var i = f.GDPRPermissionEnum.functionId, e = "" + i;
+u.gdprcallbak.functionId = u.gdprcallbak.functionId + 1;
+var i = u.gdprcallbak.functionId, e = "" + i;
 d.put(e, t);
-var n = "upltv.GDPRPermissionEnum.javaCall";
+var n = "cc.bridgeInterface.gdprcallbak.javaCall";
 cc.sys.os === cc.sys.OS_ANDROID ? this.upltvbridge.notifyAndroidAccessPrivacyInfoStatus(n, i) : cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.notifyIosAccessPrivacyInfoStatus(n, e);
 }
 } else l(); else l();
@@ -1032,10 +1058,10 @@ isEuropeanUnionUser: function(t) {
 r();
 if (void 0 != t && null != t) if ("function" == typeof t) {
 if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-f.GDPRPermissionEnum.functionId = f.GDPRPermissionEnum.functionId + 1;
-var i = f.GDPRPermissionEnum.functionId, e = "" + i;
+u.gdprcallbak.functionId = u.gdprcallbak.functionId + 1;
+var i = u.gdprcallbak.functionId, e = "" + i;
 d.put(e, t);
-var n = "upltv.GDPRPermissionEnum.javaCall";
+var n = "cc.bridgeInterface.gdprcallbak.javaCall";
 cc.sys.os === cc.sys.OS_ANDROID ? this.upltvbridge.isAndroidEuropeanUnionUser(n, i) : cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.isIosEuropeanUnionUser(n, e);
 }
 } else l(); else l();
@@ -1044,10 +1070,20 @@ isOnlineDebugReportEnable: function() {
 return (cc.sys.os === cc.sys.OS_ANDROID || cc.sys.os === cc.sys.OS_IOS) && this.upltvbridge.isOnlineDebugReportEnable();
 },
 onlineDebugReport: function(t, i, e) {
-cc.sys.os !== cc.sys.OS_ANDROID && cc.sys.os !== cc.sys.OS_IOS || (a.Function_Receive_Callback == t ? this.upltvbridge.reportIvokePluginMethodReceive(i) : a.Function_Reward_DidOpen == t ? this.upltvbridge.reportRDShowDid(i) : a.Function_Reward_DidClick == t ? this.upltvbridge.reportRDRewardClick(i) : a.Function_Reward_DidClose == t ? this.upltvbridge.reportRDRewardClose(i) : a.Function_Reward_DidGivien == t ? this.upltvbridge.reportRDRewardGiven(i) : a.Function_Reward_DidAbandon == t ? this.upltvbridge.reportRDRewardCancel(i) : a.Function_Interstitial_Didshow == t ? this.upltvbridge.reportILShowDid(i, e) : a.Function_Interstitial_Didclick == t ? this.upltvbridge.reportILClick(i, e) : a.Function_Interstitial_Didclose == t && this.upltvbridge.reportILClose(i, e));
+cc.sys.os !== cc.sys.OS_ANDROID && cc.sys.os !== cc.sys.OS_IOS || (a.Function_Receive_Callback == t ? this.upltvbridge.reportIvokePluginMethodReceive(i) : a.Function_Reward_WillOpen == t || (a.Function_Reward_DidOpen == t ? this.upltvbridge.reportRDShowDid(i) : a.Function_Reward_DidClick == t ? this.upltvbridge.reportRDRewardClick(i) : a.Function_Reward_DidClose == t ? this.upltvbridge.reportRDRewardClose(i) : a.Function_Reward_DidGivien == t ? this.upltvbridge.reportRDRewardGiven(i) : a.Function_Reward_DidAbandon == t ? this.upltvbridge.reportRDRewardCancel(i) : a.Function_Interstitial_Willshow == t || (a.Function_Interstitial_Didshow == t ? this.upltvbridge.reportILShowDid(i, e) : a.Function_Interstitial_Didclick == t ? this.upltvbridge.reportILClick(i, e) : a.Function_Interstitial_Didclose == t && this.upltvbridge.reportILClose(i, e))));
+},
+isLogOpened: function() {
+if (void 0 != this.upltvbridge && null != this.upltvbridge) {
+if (cc.sys.os === cc.sys.OS_IOS) return this.upltvbridge.isIosLogOpened();
+if (cc.sys.os === cc.sys.OS_ANDROID) return this.upltvbridge.isAndroidLogOpened();
+}
+return !1;
+},
+setIsChild: function(t) {
+void 0 != this.upltvbridge && null != this.upltvbridge && cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.setAndroidIsChild(t);
 }
 };
-f.GDPRPermissionEnum = {
+u.gdprcallbak = {
 functionId: 0,
 javaCall: function(t, i) {
 var e = "" + t, n = d.get(e);
@@ -1057,6 +1093,7 @@ d.remove(e);
 }
 }
 };
+f.GDPRPermissionEnum = {};
 f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown = 0;
 f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted = 1;
 f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined = 2;
@@ -1081,6 +1118,8 @@ f.AdEventType.ICON_EVENT_DID_LOAD = 16;
 f.AdEventType.ICON_EVENT_DID_LOADFAIL = 17;
 f.AdEventType.ICON_EVENT_DID_SHOW = 18;
 f.AdEventType.ICON_EVENT_DID_CLICK = 19;
+f.AdEventType.VIDEO_EVENT_WILL_SHOW = 20;
+f.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW = 21;
 i.exports.upltv = f;
 i.exports.bridgeInterface = u;
 cc._RF.pop();

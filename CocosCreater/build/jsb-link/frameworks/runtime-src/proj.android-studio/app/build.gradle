@@ -7,7 +7,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId PROP_GLOBALZONE.toInteger() == 1 ? "adam.lean.inland" : "adam.lean.foreign"
+        applicationId "adam.lean.foreign"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
@@ -75,8 +75,7 @@ android {
             jniDebuggable false
             renderscriptDebuggable false
             minifyEnabled false
-            manifestPlaceholders = [app_name: PROP_GLOBALZONE.toInteger() == 0?"广告demo_海外":"广告demo_国内"]
-            buildConfigField 'int', 'globalzone', PROP_GLOBALZONE
+            manifestPlaceholders = [app_name: "广告demo_海外"]
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
@@ -90,8 +89,7 @@ android {
         }
 
         debug {
-            manifestPlaceholders = [app_name: PROP_GLOBALZONE.toInteger() == 0?"广告demo_海外":"广告demo_国内"]
-            buildConfigField 'int', 'globalzone', PROP_GLOBALZONE
+            manifestPlaceholders = [app_name: "广告demo_海外"]
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
@@ -134,7 +132,7 @@ android.applicationVariants.all { variant ->
 
 repositories {
     flatDir {
-        dirs PROP_GLOBALZONE.toInteger() == 1?'ads/domestic':'ads/foreign'
+        dirs 'libs','ads'
     }
 }
 
@@ -153,27 +151,15 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.2'
     implementation(name: 'gson-2.7', ext: 'jar') // for vungle
     implementation(name: 'glide-3.7.0', ext: 'jar')
-    implementation(name: 'UPAdsSdk_CocosCreator_3.0.08.1', ext: 'aar')
-    if (PROP_GLOBALZONE.toInteger() == 1) {
-        implementation(name: 'android-query-full.0.26.7', ext: 'jar')//for toutiao
-        implementation(name: 'android-gif-drawable', ext: 'aar') //for toutiao
-        implementation(name: 'baidu_ads', ext: 'aar')
-        implementation(name: 'gdt_ads', ext: 'aar')
-        implementation(name: 'mintegral_ads', ext: 'aar')
-        implementation(name: 'oneway_ads', ext: 'aar')
-        implementation(name: 'sigmob_ads', ext: 'aar')
-        implementation(name: 'toutiao_ads', ext: 'aar')
-        implementation(name: 'vungle_ads', ext: 'aar')
-    } else {
-        implementation(name: 'adcolony_ads', ext: 'aar')
-        implementation(name: 'applovin_ads', ext: 'aar')
-        implementation(name: 'chartboost_ads', ext: 'aar')
-        implementation(name: 'facebook_ads', ext: 'aar')
-        implementation(name: 'facebook_exo_player', ext: 'aar')
-        implementation(name: 'ironsource_ads', ext: 'aar')
-        implementation 'com.google.android.gms:play-services-ads:17.2.0'
-        implementation(name: 'unity_ads', ext: 'aar')
-        implementation(name: 'vungle_ads', ext: 'aar')
-        implementation(name: 'eventbus-3.1.1', ext: 'jar')//for chartboost
-    }
+    implementation(name: 'UPAdsSdk_CocosCreator_3008.2', ext: 'aar')
+    implementation(name: 'adcolony_ads', ext: 'aar')
+    implementation(name: 'applovin_ads', ext: 'aar')
+    implementation(name: 'chartboost_ads', ext: 'aar')
+    implementation(name: 'facebook_ads', ext: 'aar')
+    implementation(name: 'facebook_exo_player', ext: 'aar')
+    implementation(name: 'ironsource_ads', ext: 'aar')
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+    implementation(name: 'unity_ads', ext: 'aar')
+    implementation(name: 'vungle_ads', ext: 'aar')
+    implementation(name: 'eventbus-3.1.1', ext: 'jar')//for chartboost
 }

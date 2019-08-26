@@ -36,6 +36,9 @@
 -keep public class com.anysdk.** { *; }
 -dontwarn com.anysdk.**
 
+# 不做预校验，preverify是proguard的四个步骤之一，Android不需要preverify，去掉这一步能够加快混淆速度。
+-dontpreverify
+
 # avidly
 -keep class com.avidly.ads.** {*;}
 -keep class com.up.ads.** {*;}
@@ -55,6 +58,8 @@
 -dontwarn com.avidly.**
 -dontwarn com.up.**
 -keep class com.statistics.channel.* {*;}
+-keep class com.google.ads.mediation.** {*;}
+-dontwarn com.google.ads.mediation.**
 # avidly end
 
 # support
@@ -204,4 +209,3 @@
 # amazon
 -keep class com.amazon.device.ads.** { *; }
 # amazon end
-

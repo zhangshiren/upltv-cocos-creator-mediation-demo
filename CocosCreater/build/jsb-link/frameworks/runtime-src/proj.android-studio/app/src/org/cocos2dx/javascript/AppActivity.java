@@ -59,10 +59,6 @@ public class AppActivity extends Cocos2dxActivity {
         SDKWrapper.getInstance().init(this);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
     
     @Override
     public Cocos2dxGLSurfaceView onCreateView() {

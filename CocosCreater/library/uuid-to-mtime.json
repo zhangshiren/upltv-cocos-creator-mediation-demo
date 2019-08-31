@@ -230,7 +230,7 @@
     "relativePath": "Scene"
   },
   "4734c20c-0db8-4eb2-92ea-e692f4d70934": {
-    "asset": 1564046793331,
+    "asset": 1565774772493,
     "meta": 1543763168000,
     "relativePath": "Script"
   },
@@ -280,18 +280,18 @@
     "relativePath": "Script/UPLTVIos.js"
   },
   "b35df9af-d6ab-4868-af1a-b8cd2ff3da74": {
-    "asset": 1565695122000,
-    "meta": 1565774836604,
+    "asset": 1567235680756,
+    "meta": 1567235711294,
     "relativePath": "Script/UPLTV.js"
   },
   "8ae4a0c9-3248-4198-8383-1ba98aa9ab56": {
-    "asset": 1565695122000,
-    "meta": 1565774836618,
+    "asset": 1567235700850,
+    "meta": 1567235711295,
     "relativePath": "Script/UPLTVAndroid.js"
   },
   "d92ac7a3-b3de-442c-bba2-80dd908a08cd": {
-    "asset": 1565774971740,
-    "meta": 1565774973067,
+    "asset": 1567235849373,
+    "meta": 1567235866355,
     "relativePath": "Script/HelloWorld.js"
   }
 }

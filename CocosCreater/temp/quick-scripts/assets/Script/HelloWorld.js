@@ -96,9 +96,11 @@ cc.Class({
 
         //初始化之后调用
         this.setIsChild.node.on("click", function (i) {
-            var b = upltv.setIsChild(true);
-            cc.log("===> js setIsChild result:, %s", b);
-            self.label.string = "js setIsChild true";
+            cc.log("===> js setBirthday ===");
+            upltv.setBirthday(2008, 7);
+            // var b = upltv.setIsChild(true);
+            // cc.log("===> js setIsChild result:, %s", b);
+            // self.label.string = "js setIsChild true";
         });
 
         this.initGDPR.node.on('click', function (event) {

@@ -203,6 +203,10 @@ var upltva = upltva || {
 
     setAndroidIsChild: function (isChild) {
         jsb.reflection.callStaticMethod(classJavaName, "setIsChild", "(Z)V", isChild);
+    },
+
+    setAndroidBirthday: function (year, month) {
+        jsb.reflection.callStaticMethod(classJavaName, "setBirthday", "(II)V", year, month);
     }
 };
 

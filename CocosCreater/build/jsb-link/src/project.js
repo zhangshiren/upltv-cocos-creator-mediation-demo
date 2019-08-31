@@ -83,10 +83,9 @@ var e = n.isLogOpened();
 cc.log("===> js IsLogOpened result:, %s", e);
 t.label.string = "js IsLogOpened result:" + e;
 });
-this.setIsChild.node.on("click", function(i) {
-var e = n.setIsChild(!0);
-cc.log("===> js setIsChild result:, %s", e);
-t.label.string = "js setIsChild true";
+this.setIsChild.node.on("click", function(t) {
+cc.log("===> js setBirthday ===");
+n.setBirthday(2008, 7);
 });
 this.initGDPR.node.on("click", function(i) {
 cc.log("===> js GDPR start");
@@ -362,6 +361,9 @@ return jsb.reflection.callStaticMethod(n, "isLogOpened", "()Z");
 },
 setAndroidIsChild: function(t) {
 jsb.reflection.callStaticMethod(n, "setIsChild", "(Z)V", t);
+},
+setAndroidBirthday: function(t, i) {
+jsb.reflection.callStaticMethod(n, "setBirthday", "(II)V", t, i);
 }
 };
 i.exports = s;
@@ -1081,6 +1083,9 @@ return !1;
 },
 setIsChild: function(t) {
 void 0 != this.upltvbridge && null != this.upltvbridge && cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.setAndroidIsChild(t);
+},
+setBirthday: function(t, i) {
+void 0 != this.upltvbridge && null != this.upltvbridge && cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.setAndroidBirthday(t, i);
 }
 };
 u.gdprcallbak = {

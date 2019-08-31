@@ -1495,10 +1495,22 @@ var upltv = upltv || {
 
     // 仅用于android平台
     // 设置用户是否是小于13岁的儿童
+    // Version 3008.1 and above support this method
     setIsChild: function (isChild) {
         if (undefined != this.upltvbridge && this.upltvbridge != null) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 this.upltvbridge.setAndroidIsChild(isChild);
+            }
+        }
+    },
+
+    // 仅用于android平台
+    // 设置用户出生年月
+    // Version 3008.3 and above support this method
+    setBirthday: function (year, month) {
+        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+            if (cc.sys.os === cc.sys.OS_ANDROID) {
+                this.upltvbridge.setAndroidBirthday(year, month);
             }
         }
     }

@@ -4,17 +4,17 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion '28.0.3'
+    buildToolsVersion PROP_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        applicationId "adam.lean.foreign"
+        applicationId "upltv.android.cocos.demo"
         minSdkVersion PROP_MIN_SDK_VERSION
         targetSdkVersion PROP_TARGET_SDK_VERSION
         versionCode 1
-        multiDexEnabled true
         versionName "1.0"
+        multiDexEnabled true
         ndk {
-            abiFilters 'armeabi-v7a','arm64-v8a','x86'
+            abiFilters 'armeabi-v7a'
         }
 
         externalNativeBuild {
@@ -74,8 +74,8 @@ android {
             debuggable false
             jniDebuggable false
             renderscriptDebuggable false
-            minifyEnabled false
-            manifestPlaceholders = [app_name: "广告demo_海外"]
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             if (project.hasProperty("RELEASE_STORE_FILE")) {
                 signingConfig signingConfigs.release
@@ -89,7 +89,6 @@ android {
         }
 
         debug {
-            manifestPlaceholders = [app_name: "广告demo_海外"]
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
@@ -104,35 +103,42 @@ android {
 
 android.applicationVariants.all { variant ->
     // delete previous files first
-    delete "${buildDir}/intermediates/assets/${variant.dirName}"
+    delete "${buildDir}/intermediates/merged_assets/${variant.dirName}"
 
     variant.mergeAssets.doLast {
+        def sourceDir = "${buildDir}/../../../../.."
+
         copy {
-           from "${buildDir}/../../../../../res"
-           into "${buildDir}/intermediates/assets/${variant.dirName}/res"
+            from "${sourceDir}/res"
+            into "${outputDir}/res"
         }
 
         copy {
-            from "${buildDir}/../../../../../src"
-            into "${buildDir}/intermediates/assets/${variant.dirName}/src"
-        }        
-
-        copy {
-            from "${buildDir}/../../../../../jsb-adapter"
-            into "${buildDir}/intermediates/assets/${variant.dirName}/jsb-adapter"
+            from "${sourceDir}/subpackages"
+            into "${outputDir}/subpackages"
         }
 
         copy {
-            from "${buildDir}/../../../../../main.js"
-            from "${buildDir}/../../../../../project.json"
-            into "${buildDir}/intermediates/assets/${variant.dirName}"
+            from "${sourceDir}/src"
+            into "${outputDir}/src"
+        }
+
+        copy {
+            from "${sourceDir}/jsb-adapter"
+            into "${outputDir}/jsb-adapter"
+        }
+
+        copy {
+            from "${sourceDir}/main.js"
+            from "${sourceDir}/project.json"
+            into outputDir
         }
     }
 }
 
 repositories {
     flatDir {
-        dirs 'libs','ads'
+        dirs 'libs'
     }
 }
 
@@ -140,27 +146,29 @@ dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 //    implementation fileTree(dir: "/Applications/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
-
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.android.support:recyclerview-v7:28.0.0'
-    implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.android.support:support-annotations:28.0.0'
-    implementation 'com.android.support:customtabs:28.0.0'
-    implementation 'com.android.support:cardview-v7:28.0.0'
-    implementation 'com.android.support:multidex:1.0.2'
-
-    implementation(name: 'gson-2.7', ext: 'jar') // for vungle
-    implementation(name: 'glide-3.7.0', ext: 'jar')
-    implementation(name: 'UPAdsSdk_CocosCreator_3008.3', ext: 'aar')
+    implementation(name: 'UPAdsSdk_CocosCreator_3101.1', ext: 'aar')
+//    //networks
     implementation(name: 'adcolony_ads', ext: 'aar')
     implementation(name: 'applovin_ads', ext: 'aar')
     implementation(name: 'chartboost_ads', ext: 'aar')
     implementation(name: 'facebook_ads', ext: 'aar')
     implementation(name: 'facebook_exo_player', ext: 'aar')
     implementation(name: 'ironsource_ads', ext: 'aar')
-    implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation(name: 'unity_ads', ext: 'aar')
     implementation(name: 'vungle_ads', ext: 'aar')
-    implementation(name: 'eventbus-3.1.1', ext: 'jar')//for chartboost
+
+    // admob
+    implementation 'com.google.android.gms:play-services-ads:17.2.0'
+
+    //support-libs
+    implementation(name: 'glide-3.7.0', ext: 'jar')
+    implementation(name: 'gson-2.7', ext: 'jar')
+    implementation(name: 'eventbus-3.1.1', ext: 'jar')
+
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:customtabs:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:multidex:1.0.1'
 }

@@ -19,9 +19,9 @@ var upltva = upltva || {
         }
     },
 
-    initAndroidSDK: function initAndroidSDK(zone, vokecall, callname) {
+    initAndroidSDK: function initAndroidSDK(androidAppKey, vokecall, callname) {
         //cc.log("===> js initAndroidSDK args zone: %d, call:%s", zone, callname);
-        jsb.reflection.callStaticMethod(classJavaName, "initSDKByZone", "(ILjava/lang/String;)V", zone, callname);
+        jsb.reflection.callStaticMethod(classJavaName, "initSDK", "(Ljava/lang/String;Ljava/lang/String;)V", androidAppKey, callname);
         jsb.reflection.callStaticMethod(classJavaName, "setInvokeDelegate", "(Ljava/lang/String;)V", vokecall);
     },
 
@@ -193,9 +193,25 @@ var upltva = upltva || {
 
     setAndroidBirthday: function setAndroidBirthday(year, month) {
         jsb.reflection.callStaticMethod(classJavaName, "setBirthday", "(II)V", year, month);
-    }
-};
+    },
 
+    autoOneKeyInspectByAndroid: function autoOneKeyInspectByAndroid() {
+        jsb.reflection.callStaticMethod(classJavaName, "autoOneKeyInspect", "()V");
+    },
+
+    tellToDoctorByAndroid: function tellToDoctorByAndroid(action, placeid, msg) {
+        jsb.reflection.callStaticMethod(classJavaName, "tellToDoctor", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", action, placeid, msg);
+    },
+
+    setAppsFlyerUIDByAndroid: function setAppsFlyerUIDByAndroid(uid) {
+        jsb.reflection.callStaticMethod(classJavaName, "setAppsflyerUID", "(Ljava/lang/String;)V", uid);
+    },
+
+    setAdjustIdByAndroid: function setAdjustIdByAndroid(ajid) {
+        jsb.reflection.callStaticMethod(classJavaName, "setAdjustID", "(Ljava/lang/String;)V", ajid);
+    }
+
+};
 module.exports = upltva;
 
 cc._RF.pop();

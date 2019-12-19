@@ -3126,6 +3126,11 @@ var HTMLElement = require('./HTMLElement');
 var ImageData = require('./ImageData');
 var DOMRect = require('./DOMRect');
 
+var clamp = function clamp(value) {
+    value = Math.round(value);
+    return value < 0 ? 0 : value < 255 ? value : 255;
+};
+
 var CanvasGradient = function () {
     function CanvasGradient() {
         _classCallCheck(this, CanvasGradient);
@@ -3178,6 +3183,8 @@ var HTMLCanvasElement = function (_HTMLElement) {
         _this._context2D = null;
         _this._data = null;
         _this._alignment = 4; // Canvas is used for rendering text only and we make sure the data format is RGBA.
+        // Whether the pixel data is premultiplied.
+        _this._premultiplied = false;
         return _this;
     }
 
@@ -3251,6 +3258,14 @@ var HTMLCanvasElement = function (_HTMLElement) {
         get: function get() {
             return this._height;
         }
+    }, {
+        key: 'data',
+        get: function get() {
+            if (this._data) {
+                return this._data.data;
+            }
+            return null;
+        }
     }]);
 
     return HTMLCanvasElement;
@@ -3271,39 +3286,7 @@ ctx2DProto.createImageData = function (args1, args2) {
 // void ctx.putImageData(imagedata, dx, dy);
 // void ctx.putImageData(imagedata, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight);
 ctx2DProto.putImageData = function (imageData, dx, dy, dirtyX, dirtyY, dirtyWidth, dirtyHeight) {
-    if (typeof loadRuntime === "function") {
-        var height = imageData.height;
-        var width = imageData.width;
-        var canvasWidth = this._canvas._width;
-        var canvasHeight = this._canvas._height;
-        dirtyX = dirtyX || 0;
-        dirtyY = dirtyY || 0;
-        dirtyWidth = dirtyWidth !== undefined ? dirtyWidth : width;
-        dirtyHeight = dirtyHeight !== undefined ? dirtyHeight : height;
-        var limitBottom = dirtyY + dirtyHeight;
-        var limitRight = dirtyX + dirtyWidth;
-        // shrink dirty rect if next image rect bigger than canvas rect
-        dirtyHeight = limitBottom < canvasHeight ? dirtyHeight : dirtyHeight - (limitBottom - canvasHeight);
-        dirtyWidth = limitRight < canvasWidth ? dirtyWidth : dirtyWidth - (limitRight - canvasWidth);
-        // collect data needed to put
-        dirtyWidth = Math.floor(dirtyWidth);
-        dirtyHeight = Math.floor(dirtyHeight);
-        var imageToFill = new ImageData(dirtyWidth, dirtyHeight);
-        for (var y = dirtyY; y < limitBottom; y++) {
-            for (var x = dirtyX; x < limitRight; x++) {
-                var imgPos = y * width + x;
-                var toPos = (y - dirtyY) * dirtyWidth + (x - dirtyX);
-                imageToFill.data[toPos * 4 + 0] = imageData.data[imgPos * 4 + 0];
-                imageToFill.data[toPos * 4 + 1] = imageData.data[imgPos * 4 + 1];
-                imageToFill.data[toPos * 4 + 2] = imageData.data[imgPos * 4 + 2];
-                imageToFill.data[toPos * 4 + 3] = imageData.data[imgPos * 4 + 3];
-            }
-        }
-        // do image data write operation at Native (only impl on Android)
-        this._fillImageData(imageToFill.data, dirtyWidth, dirtyHeight, dx, dy);
-    } else {
-        this._canvas._data = imageData;
-    }
+    this._canvas._data = imageData;
 };
 
 // ImageData ctx.getImageData(sx, sy, sw, sh);
@@ -3441,6 +3424,7 @@ var HTMLImageElement = function (_HTMLElement) {
             this._src = src;
             jsb.loadImage(src, function (info) {
                 if (!info) {
+                    _this2._data = null;
                     var event = new Event('error');
                     _this2.dispatchEvent(event);
                     return;
@@ -4806,10 +4790,7 @@ gl.texImage2D = function (target, level, internalformat, width, height, border, 
         if (image instanceof HTMLImageElement) {
             _glTexImage2D(target, level, image._glInternalFormat, image.width, image.height, 0, image._glFormat, image._glType, image._data, image._alignment);
         } else if (image instanceof HTMLCanvasElement) {
-            var data = null;
-            if (image._data) {
-                data = image._data._data;
-            }
+            var data = image.data;
             _glTexImage2D(target, level, internalformat, image.width, image.height, 0, format, type, data, image._alignment);
         } else if (image instanceof ImageData) {
             _glTexImage2D(target, level, internalformat, image.width, image.height, 0, format, type, image._data, 0);
@@ -4843,10 +4824,7 @@ gl.texSubImage2D = function (target, level, xoffset, yoffset, width, height, for
         if (image instanceof HTMLImageElement) {
             _glTexSubImage2D(target, level, xoffset, yoffset, image.width, image.height, image._glFormat, image._glType, image._data, image._alignment);
         } else if (image instanceof HTMLCanvasElement) {
-            var data = null;
-            if (image._data) {
-                data = image._data._data;
-            }
+            var data = image.data;
             _glTexSubImage2D(target, level, xoffset, yoffset, image.width, image.height, format, type, data, image._alignment);
         } else if (image instanceof ImageData) {
             _glTexSubImage2D(target, level, xoffset, yoffset, image.width, image.height, format, type, image._data, 0);
@@ -5770,7 +5748,7 @@ jsb.unregisterChildRefsForNode = function (node, recursive) {
 };
 
 },{}],37:[function(require,module,exports){
-(function (global,setImmediate){
+(function (global){
 "use strict";
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -5890,8 +5868,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }();"Promise" in l ? l.Promise.prototype["finally"] || (l.Promise.prototype["finally"] = e) : l.Promise = t;
 });
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("timers").setImmediate)
-},{"timers":43}],38:[function(require,module,exports){
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],38:[function(require,module,exports){
 'use strict';
 
 function DOMParser(options) {
@@ -8246,269 +8224,4 @@ function split(source, start) {
 
 exports.XMLReader = XMLReader;
 
-},{}],42:[function(require,module,exports){
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}],43:[function(require,module,exports){
-(function (setImmediate,clearImmediate){
-var nextTick = require('process/browser.js').nextTick;
-var apply = Function.prototype.apply;
-var slice = Array.prototype.slice;
-var immediateIds = {};
-var nextImmediateId = 0;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) { timeout.close(); };
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// That's not how node.js implements it but the exposed api is the same.
-exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
-  var id = nextImmediateId++;
-  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
-
-  immediateIds[id] = true;
-
-  nextTick(function onNextTick() {
-    if (immediateIds[id]) {
-      // fn.call() is faster so we optimize for the common use-case
-      // @see http://jsperf.com/call-apply-segu
-      if (args) {
-        fn.apply(null, args);
-      } else {
-        fn.call(null);
-      }
-      // Prevent ids from leaking
-      exports.clearImmediate(id);
-    }
-  });
-
-  return id;
-};
-
-exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
-  delete immediateIds[id];
-};
-}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":42,"timers":43}]},{},[4]);
+},{}]},{},[4]);

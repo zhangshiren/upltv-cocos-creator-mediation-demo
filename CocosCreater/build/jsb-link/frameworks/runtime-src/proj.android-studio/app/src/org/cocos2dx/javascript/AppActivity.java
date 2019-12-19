@@ -27,20 +27,12 @@ package org.cocos2dx.javascript;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
-import android.Manifest;
-import android.content.ContextWrapper;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
+
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 
 import com.up.ads.UPAdsSdk;
-
-import adam.lean.inland.BuildConfig;
 
 public class AppActivity extends Cocos2dxActivity {
 
@@ -57,16 +49,15 @@ public class AppActivity extends Cocos2dxActivity {
         }
         // DO OTHER INITIALIZATION BELOW
         SDKWrapper.getInstance().init(this);
-    }
 
+    }
     
     @Override
     public Cocos2dxGLSurfaceView onCreateView() {
         Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
         // TestCpp should create stencil buffer
         glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
-
-        SDKWrapper.getInstance().setGLSurfaceView(glSurfaceView);
+        SDKWrapper.getInstance().setGLSurfaceView(glSurfaceView, this);
 
         return glSurfaceView;
     }
@@ -76,6 +67,7 @@ public class AppActivity extends Cocos2dxActivity {
         super.onResume();
         SDKWrapper.getInstance().onResume();
         UPAdsSdk.onApplicationResume();
+
     }
 
     @Override
@@ -89,6 +81,7 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onDestroy() {
         super.onDestroy();
         SDKWrapper.getInstance().onDestroy();
+
     }
 
     @Override

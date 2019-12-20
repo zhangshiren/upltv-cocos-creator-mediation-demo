@@ -675,18 +675,24 @@ var upltv = upltv || {
         if (cc.sys.os === cc.sys.OS_IOS) {
             // this.upltvbridge = upltvoc;
             if (undefined != this.upltvbridge && this.upltvbridge != null) {
-            if (iosAppKey!=undefined && iosAppKey!=""){
-            if (iosZone==undefined || (iosZone<0 || iosZone>2))
-            {
-               printLog("please set correct iosZone for initializing upsdk");
-               return;
-            }
-            } else {
-               printLog("please set correct iosAppKey for initializing upsdk");
-               return;
-            }
+
+                if (iosAppKey == undefined || iosAppKey == "") {
+                    cc.log("===> js initSdk failed, iosAppKey is undefined or empty.");
+                    return;
+                }
+
+                if (typeof iosAppKey != "string") {
+                    cc.log("===> js initSdk failed, iosAppKey is not string type.");
+                    return;
+                }
+
+                if (iosZone == undefined || (iosZone != 0 && iosZone != 1 && iosZone != 2)) {
+                    cc.log("===> js initSdk WARNING: iosZone iswrong value, will be setted to 0");
+                    iosZone = 0;
+                }
+
                 this.upltvbridge.setShowLog(isShowLog);
-                this.upltvbridge.initIosSDK(zone, vokecall, callname);
+                this.upltvbridge.initIosSDK(iosAppKey, iosZone, vokecall, callname);
             }
         } else if (cc.sys.os === cc.sys.OS_ANDROID) {
             if(androidAppKey==undefined && androidAppKey==""){
@@ -1516,18 +1522,18 @@ var upltv = upltv || {
     setAppsFlyerUID: function (uid) {
         loadJsBridgeObject();
         if (arguments.length == 0 || undefined == uid) {
-            printLog("===> setAppsFlyerUID(), the uid can't be nil.")
-            return
+            printLog("===> setAppsFlyerUID(), the uid can't be nil.");
+            return;
         }
 
         if (typeof uid != "string") {
-            printLog("===> setAppsFlyerUID(), the uid must be string type")
-            return
+            printLog("===> setAppsFlyerUID(), the uid must be string type");
+            return;
         }
 
         if (uid == "") {
-            printLog("===> setAppsFlyerUID(), the uid can't be empty")
-            return
+            printLog("===> setAppsFlyerUID(), the uid can't be empty");
+            return;
         }
 
         if (undefined != this.upltvbridge) {
@@ -1543,17 +1549,17 @@ var upltv = upltv || {
         loadJsBridgeObject();
         if (arguments.length == 0 || undefined == ajid) {
             printLog("===> setAdjustId(), the ajid can't be nil.");
-            return
+            return;
         }
 
         if (typeof ajid != "string") {
             printLog("===> setAdjustId(), the ajid must be string type");
-            return
+            return;
         }
 
         if (ajid == "") {
             printLog("===> setAdjustId(), the ajid can't be empty");
-            return
+            return;
         }
 
         if (undefined != this.upltvbridge) {

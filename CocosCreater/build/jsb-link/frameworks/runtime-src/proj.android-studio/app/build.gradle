@@ -146,7 +146,7 @@ dependencies {
 //    implementation fileTree(dir: 'libs', include: ['*.jar','*.aar'])
 //    implementation fileTree(dir: "/Applications/CocosCreator.app/Contents/Resources/cocos2d-x/cocos/platform/android/java/libs", include: ['*.jar'])
     implementation project(':libcocos2dx')
-    implementation(name: 'UPAdsSdk_CocosCreator_3101.1', ext: 'aar')
+    implementation(name: 'OpenUpSDK_CocosCreator_3102.1', ext: 'aar')
 //    //networks
     implementation(name: 'adcolony_ads', ext: 'aar')
     implementation(name: 'applovin_ads', ext: 'aar')
@@ -156,6 +156,7 @@ dependencies {
     implementation(name: 'ironsource_ads', ext: 'aar')
     implementation(name: 'unity_ads', ext: 'aar')
     implementation(name: 'vungle_ads', ext: 'aar')
+    implementation(name: 'mintegral_ads', ext: 'aar')
 
     // admob
     implementation 'com.google.android.gms:play-services-ads:17.2.0'

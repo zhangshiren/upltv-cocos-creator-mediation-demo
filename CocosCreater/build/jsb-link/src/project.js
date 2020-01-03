@@ -1,48 +1,50 @@
-window.__require = function t(i, e, n) {
-function o(l, c) {
-if (!e[l]) {
-if (!i[l]) {
-var a = l.split("/");
-a = a[a.length - 1];
-if (!i[a]) {
-var d = "function" == typeof __require && __require;
-if (!c && d) return d(a, !0);
-if (s) return s(a, !0);
-throw new Error("Cannot find module '" + l + "'");
+window.__require = function e(n, i, o) {
+function t(s, l) {
+if (!i[s]) {
+if (!n[s]) {
+var d = s.split("/");
+d = d[d.length - 1];
+if (!n[d]) {
+var r = "function" == typeof __require && __require;
+if (!l && r) return r(d, !0);
+if (c) return c(d, !0);
+throw new Error("Cannot find module '" + s + "'");
 }
 }
-var r = e[l] = {
+var a = i[s] = {
 exports: {}
 };
-i[l][0].call(r.exports, function(t) {
-return o(i[l][1][t] || t);
-}, r, r.exports, t, i, e, n);
+n[s][0].call(a.exports, function(e) {
+return t(n[s][1][e] || e);
+}, a, a.exports, e, n, i, o);
 }
-return e[l].exports;
+return i[s].exports;
 }
-for (var s = "function" == typeof __require && __require, l = 0; l < n.length; l++) o(n[l]);
-return o;
+for (var c = "function" == typeof __require && __require, s = 0; s < o.length; s++) t(o[s]);
+return t;
 }({
-HelloWorld: [ function(t, i, e) {
+HelloWorld: [ function(e, n, i) {
 "use strict";
-cc._RF.push(i, "d92acejs95ELLuigN2QigjN", "HelloWorld");
-var n = t("UPLTV").upltv;
-cc.bridgeInterface = t("UPLTV").bridgeInterface;
+cc._RF.push(n, "d92acejs95ELLuigN2QigjN", "HelloWorld");
+var o = e("OpenUpSDK").openup;
+cc.bridgeInterface = e("OpenUpSDK").bridgeInterface;
 cc.Class({
 extends: cc.Component,
 properties: {
 initSdk: cc.Button,
-initSDKByCall: cc.Button,
+oneKeyInspect: cc.Button,
 initGDPR: cc.Button,
 initABTest: cc.Button,
 getABConfig: cc.Button,
-rdDebugUI: cc.Button,
 rdLoadCall: cc.Button,
+rdShowCall: cc.Button,
 rdIsReady: cc.Button,
 rdShow: cc.Button,
 rewardPlaceId: "rewardID",
-ILDebugUI: cc.Button,
+androidAppKey: "3db370851fa6",
+iosAppKey: "888889",
 ILLoadCall: cc.Button,
+ILShowCall: cc.Button,
 ILIsReady: cc.Button,
 ILShow: cc.Button,
 ilPlaceId: "sample_inter",
@@ -52,7 +54,7 @@ hideAllBanner: cc.Button,
 removeAllBanner: cc.Button,
 bannerPlaceId: "sample_banner",
 IsLogOpened: cc.Button,
-setIsChild: cc.Button,
+bannerCall: cc.Button,
 label: {
 default: null,
 type: cc.Label
@@ -66,587 +68,665 @@ this.ilViewFunc();
 this.bannerViewFunc();
 },
 initSDKFunc: function() {
-var t = this;
-this.initSdk.node.on("click", function(i) {
-n.intSdk(0);
-t.label.string = "广告初始化成功";
-});
-this.initSDKByCall.node.on("click", function(i) {
-t.label.string = "广告初始化";
-n.intSdk(0, function(i) {
-cc.log("===> js intSdk result:, %s", i);
-t.label.string = "js intSdk result:" + i;
+var e = this;
+this.initSdk.node.on("click", function(n) {
+cc.log("===> js intSdk result");
+o.initSdk(e.androidAppKey, e.iosAppKey, 0, function(n) {
+e.label.string = "js intSdk result:" + n;
+cc.log("===> js intSdk result:, %s", n);
 });
 });
-this.IsLogOpened.node.on("click", function(i) {
-var e = n.isLogOpened();
-cc.log("===> js IsLogOpened result:, %s", e);
-t.label.string = "js IsLogOpened result:" + e;
+this.oneKeyInspect.node.on("click", function(n) {
+e.label.string = "autoOneKeyInspect clicked";
+o.autoOneKeyInspect();
 });
-this.setIsChild.node.on("click", function(t) {
-cc.log("===> js setBirthday ===");
-n.setBirthday(2008, 7);
+this.IsLogOpened.node.on("click", function(n) {
+var i = o.isLogOpened();
+cc.log("===> js IsLogOpened result:, %s", i);
+e.label.string = "js IsLogOpened result:" + i;
 });
-this.initGDPR.node.on("click", function(i) {
+this.initGDPR.node.on("click", function(n) {
 cc.log("===> js GDPR start");
-var e = n.getAccessPrivacyInfoStatus();
-cc.log("=====> js getAccessPrivacyInfoStatus status: %d ", e);
-e == n.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown ? n.isEuropeanUnionUser(function(i) {
-i ? n.notifyAccessPrivacyInfoStatus(function(i) {
-cc.log("=====> js notifyAccessPrivacyInfoStatusCallBack callback: %d ", i);
-n.intSdk(0, function(i) {
-cc.log("===> js intSdk result:, %s", i);
-t.label.string = "js intSdk result:" + i;
+var i = o.getAccessPrivacyInfoStatus();
+cc.log("=====> js getAccessPrivacyInfoStatus status: %d ", i);
+i == o.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown ? o.isEuropeanUnionUser(function(n) {
+n ? o.notifyAccessPrivacyInfoStatus(function(n) {
+cc.log("=====> js notifyAccessPrivacyInfoStatusCallBack callback: %d ", n);
+o.initSdk(e.androidAppKey, e.iosAppKey, 0, function(n) {
+cc.log("===> js intSdk result:, %s", n);
+e.label.string = "js intSdk result:" + n;
 });
-}) : n.intSdk(0, function(i) {
-cc.log("===> js intSdk result:, %s", i);
-t.label.string = "js intSdk result:" + i;
+}) : o.initSdk(e.androidAppKey, e.iosAppKey, 0, function(n) {
+cc.log("===> js intSdk result:, %s", n);
+e.label.string = "js intSdk result:" + n;
 });
-}) : n.intSdk(0, function(i) {
-cc.log("===> js intSdk result:, %s", i);
-t.label.string = "js intSdk result:" + i;
+}) : o.initSdk(e.androidAppKey, e.iosAppKey, 0, function(n) {
+cc.log("===> js intSdk result:, %s", n);
+e.label.string = "js intSdk result:" + n;
 });
 });
 },
 abTestFunc: function() {
-var t = this;
-this.initABTest.node.on("click", function(i) {
-n.initAbtConfigJson("u89731", !0, 0, "Facebook", "M", -1, [ "This is the first element.", "The second one.", "The last one." ]);
-t.label.string = "ABTest初始化成功";
+var e = this;
+this.initABTest.node.on("click", function(n) {
+o.initAbtConfigJson("u89731", !0, 0, "Facebook", "M", -1, [ "This is the first element.", "The second one.", "The last one." ]);
+e.label.string = "ABTest初始化成功";
 });
-this.getABConfig.node.on("click", function(i) {
-var e = n.getAbtConfig("pass");
-cc.log("===> js getAbtConfig rr 3333: %s", e);
-t.label.string = "js getAbtConfig ：" + e;
+this.getABConfig.node.on("click", function(n) {
+var i = o.getAbtConfig("pass");
+cc.log("===> js getAbtConfig rr 3333: %s", i);
+e.label.string = "js getAbtConfig ：" + i;
 });
 },
 rewardViedoFunc: function() {
-var t = this;
-this.rdDebugUI.node.on("click", function(t) {
-n.showRewardDebugUI();
-});
-this.rdLoadCall.node.on("click", function(i) {
-n.setRewardVideoLoadCallback(function(i, e) {
-cc.log("===> js RewardVideo LoadCallback Success at: %s", i);
-t.label.string = "js RewardVideo LoadCallback Success at:" + i;
-}, function(i, e) {
-cc.log("===> js RewardVideo LoadCallback Fail at: %s", i);
-t.label.string = "js RewardVideo LoadCallback Fail at:" + i;
+var e = this;
+this.rdShowCall.node.on("click", function(n) {
+o.setRewardVideoShowCallback(function(n, i) {
+var t = "unkown";
+n == o.AdEventType.VIDEO_EVENT_WILL_SHOW ? t = "Will_Show" : n == o.AdEventType.VIDEO_EVENT_DID_SHOW ? t = "Did_Show" : n == o.AdEventType.VIDEO_EVENT_DID_CLICK ? t = "Did_Click" : n == o.AdEventType.VIDEO_EVENT_DID_CLOSE ? t = "Did_Close" : n == o.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD ? t = "Did_Given_Reward" : n == o.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD && (t = "Did_Abandon_Reward");
+cc.log("===> js RewardVideo Show Callback, event: %s, at: %s", t, i);
+e.label.string = "js RewardVideo Show Callback: " + t;
 });
 });
-this.rdIsReady.node.on("click", function(i) {
-var e = n.isRewardReady();
-cc.log("===> js isRewardReady r: %s", e.toString());
-t.label.string = "js isRewardReady: " + e.toString();
+this.rdLoadCall.node.on("click", function(n) {
+o.setRewardVideoLoadCallback(function(n, i) {
+cc.log("===> js RewardVideo LoadCallback Success at: %s", n);
+e.label.string = "js RewardVideo LoadCallback Success at:" + n;
+}, function(n, i) {
+cc.log("===> js RewardVideo LoadCallback Fail at: %s", n);
+e.label.string = "js RewardVideo LoadCallback Fail at:" + n;
 });
-this.rdShow.node.on("click", function(i) {
-n.setRewardVideoShowCallback(function(i, e) {
-var o = "unkown";
-i == n.AdEventType.VIDEO_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.VIDEO_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.VIDEO_EVENT_DID_CLOSE ? o = "Did_Close" : i == n.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD ? o = "Did_Given_Reward" : i == n.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD && (o = "Did_Abandon_Reward");
-cc.log("===> js RewardVideo Show Callback, event: %s, at: %s", o, e);
-t.label.string = "js RewardVideo Show Callback: " + o;
 });
-var e = n.isRewardReady();
-cc.log("===> js isRewardReady r: %s", e);
-t.label.sting = "js isRewardReady r:" + e;
-if (1 == e) {
+this.rdIsReady.node.on("click", function(n) {
+var i = o.isRewardReady();
+cc.log("===> js isRewardReady r: %s", i.toString());
+e.label.string = "js isRewardReady: " + i.toString();
+});
+this.rdShow.node.on("click", function(n) {
+var i = o.isRewardReady();
+cc.log("===> js isRewardReady r: %s", i);
+e.label.sting = "js isRewardReady r:" + i;
+if (1 == i) {
 cc.log("===> js showRewardVideo call");
-t.label.string = "js showRewardVideo 成功";
-n.showRewardVideo(t.rewardPlaceId);
+e.label.string = "js showRewardVideo 成功";
+o.showRewardVideo(e.rewardPlaceId);
 }
 });
 },
 ilViewFunc: function() {
-var t = this;
-this.ILDebugUI.node.on("click", function(t) {
-n.showInterstitialDebugUI();
-});
-this.ILLoadCall.node.on("click", function(i) {
-n.setInterstitialLoadCallback(t.ilPlaceId, function(i, e) {
-cc.log("===> js il load callback success: %s at placementid:%s", e, i);
-t.label.string = "js il load callback success: " + i;
-}, function(i, e) {
-cc.log("===> js il load callback fail: %s at placementid:%s", e, i);
-t.label.string = "js il load callback fail: " + i;
+var e = this;
+this.ILShowCall.node.on("click", function(n) {
+o.setInterstitialShowCallback(e.ilPlaceId, function(n, i) {
+var t = "unkown";
+n == o.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW ? t = "Will_Show" : n == o.AdEventType.INTERSTITIAL_EVENT_DID_SHOW ? t = "Did_Show" : n == o.AdEventType.INTERSTITIAL_EVENT_DID_CLICK ? t = "Did_Click" : n == o.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE && (t = "Did_Close");
+cc.log("===> js il ad event: %s, at placementid: %s", t, i);
+e.label.string = "gagah gjahga aghajfgha gjahfgjha jkgahg agjkahga js il ad event: " + t;
 });
 });
-this.ILIsReady.node.on("click", function(i) {
-n.isInterstitialReadyAsyn(t.ilPlaceId, function(i) {
-cc.log("===> js il ad isreadyasyn: %s at placementid:%s", i, t.ilPlaceId);
-t.label.string = "js il ad isreadyasyn: " + t.ilPlaceId;
+this.ILLoadCall.node.on("click", function(n) {
+o.setInterstitialLoadCallback(e.ilPlaceId, function(n, i) {
+cc.log("===> js il load callback success: %s at placementid:%s", i, n);
+e.label.string = "js il load callback success: " + n;
+}, function(n, i) {
+cc.log("===> js il load callback fail: %s at placementid:%s", i, n);
+e.label.string = "js il load callback fail: " + n;
 });
 });
-this.ILShow.node.on("click", function(i) {
-n.setInterstitialShowCallback(t.ilPlaceId, function(i, e) {
-var o = "unkown";
-i == n.AdEventType.INTERSTITIAL_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.INTERSTITIAL_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE && (o = "Did_Close");
-cc.log("===> js il ad event: %s, at placementid: %s", o, e);
-t.label.string = "gagah gjahga aghajfgha gjahfgjha jkgahg agjkahga js il ad event: " + o;
+this.ILIsReady.node.on("click", function(n) {
+o.isInterstitialReadyAsyn(e.ilPlaceId, function(n) {
+cc.log("===> js il ad isreadyasyn: %s at placementid:%s", n, e.ilPlaceId);
+e.label.string = "js il ad isreadyasyn: " + e.ilPlaceId;
 });
-var e = n.isInterstitialReady(t.ilPlaceId);
-cc.log("===> js il ad isready: %s at placementid:%s", e, t.ilPlaceId);
-t.label.string = "js il ad isready: " + t.ilPlaceId;
-if (1 == e) {
-n.showInterstitialAd(t.ilPlaceId);
-t.label.string = "插屏展示成功";
+});
+this.ILShow.node.on("click", function(n) {
+var i = o.isInterstitialReady(e.ilPlaceId);
+cc.log("===> js il ad isready: %s at placementid:%s", i, e.ilPlaceId);
+e.label.string = "js il ad isready: " + e.ilPlaceId;
+if (1 == i) {
+o.showInterstitialAd(e.ilPlaceId);
+e.label.string = "插屏展示成功";
 }
 });
 },
 bannerViewFunc: function() {
-var t = this;
-this.showTopBanner.node.on("click", function(i) {
-n.setBannerShowCallback(t.bannerPlaceId, function(i, e) {
-var o = "unkown";
-i == n.AdEventType.BANNER_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.BANNER_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.BANNER_EVENT_DID_REMOVED && (o = "Did_Removed");
-cc.log("=====> banner event: %s, at : %s", o, e);
-t.label.string = "banner event: " + e;
+var e = this;
+this.bannerCall.node.on("click", function(n) {
+o.setBannerShowCallback(e.bannerPlaceId, function(n, i) {
+var t = "unkown";
+n == o.AdEventType.BANNER_EVENT_DID_SHOW ? t = "Did_Show" : n == o.AdEventType.BANNER_EVENT_DID_CLICK ? t = "Did_Click" : n == o.AdEventType.BANNER_EVENT_DID_REMOVED && (t = "Did_Removed");
+cc.log("=====> banner event: %s, at : %s", t, i);
+e.label.string = "banner event: " + i;
 });
-n.showBannerAdAtTop(t.bannerPlaceId);
-t.label.string = "顶部Banner展示";
 });
-this.showBottomBanner.node.on("click", function(i) {
-n.setBannerShowCallback(t.bannerPlaceId, function(i, e) {
-var o = "unkown";
-i == n.AdEventType.BANNER_EVENT_DID_SHOW ? o = "Did_Show" : i == n.AdEventType.BANNER_EVENT_DID_CLICK ? o = "Did_Click" : i == n.AdEventType.BANNER_EVENT_DID_REMOVED && (o = "Did_Removed");
-cc.log("=====> banner event: %s, at : %s", o, e);
-t.label.string = "banner event: " + e;
+this.showTopBanner.node.on("click", function(n) {
+o.showBannerAdAtTop(e.bannerPlaceId);
+e.label.string = "顶部Banner展示";
 });
-n.showBannerAdAtBottom(t.bannerPlaceId);
-t.label.string = "底部Banner展示";
+this.showBottomBanner.node.on("click", function(n) {
+o.showBannerAdAtBottom(e.bannerPlaceId);
+e.label.string = "底部Banner展示";
 });
-this.hideAllBanner.node.on("click", function(i) {
-n.hideBannerAdAtTop();
-n.hideBannerAdAtBottom();
-t.label.string = "隐藏展示";
+this.hideAllBanner.node.on("click", function(n) {
+o.hideBannerAdAtTop();
+o.hideBannerAdAtBottom();
+e.label.string = "隐藏展示";
 });
-this.removeAllBanner.node.on("click", function(i) {
-n.removeBannerAdAt(t.bannerPlaceId);
-t.label.string = "移除展示";
+this.removeAllBanner.node.on("click", function(n) {
+o.removeBannerAdAt(e.bannerPlaceId);
+e.label.string = "移除展示";
 });
 },
-update: function(t) {}
+update: function(e) {}
 });
 cc._RF.pop();
 }, {
-UPLTV: "UPLTV"
+OpenUpSDK: "OpenUpSDK"
 } ],
-UPLTVAndroid: [ function(t, i, e) {
+OpenUpAndroid: [ function(e, n, i) {
 "use strict";
-cc._RF.push(i, "8ae4aDJMkhBmIODG6mKqatW", "UPLTVAndroid");
-var n = "com/up/ads/cocosjs/JsProxy", o = !1, s = s || {
-setShowLog: function(t) {
-void 0 != t && null != t && (o = t);
+cc._RF.push(n, "6f7a4ly8GtN2Jz9mOSCTSrA", "OpenUpAndroid");
+var o = "com/openup/sdk/cocosjs/JsProxy", t = !1, c = c || {
+setShowLog: function(e) {
+void 0 != e && null != e && (t = e);
 },
-printJsLog: function(t) {
-o && void 0 != t && null != t && jsb.reflection.callStaticMethod("android/util/Log", "i", "(Ljava/lang/String;Ljava/lang/String;)I", "cocos2dx-js", t);
+printJsLog: function(e) {
+t && void 0 != e && null != e && jsb.reflection.callStaticMethod("android/util/Log", "i", "(Ljava/lang/String;Ljava/lang/String;)I", "cocos2dx-js", e);
 },
-initAndroidSDK: function(t, i, e) {
-jsb.reflection.callStaticMethod(n, "initSDKByZone", "(ILjava/lang/String;)V", t, e);
-jsb.reflection.callStaticMethod(n, "setInvokeDelegate", "(Ljava/lang/String;)V", i);
+initAndroidSDK: function(e, n, i) {
+jsb.reflection.callStaticMethod(o, "initSDK", "(Ljava/lang/String;Ljava/lang/String;)V", e, i);
+jsb.reflection.callStaticMethod(o, "setInvokeDelegate", "(Ljava/lang/String;)V", n);
 },
-initAndroidAbtConfigJson: function(t, i, e, o, s, l, c) {
-jsb.reflection.callStaticMethod(n, "initAbtConfigJsonForJs", "(Ljava/lang/String;ZILjava/lang/String;Ljava/lang/String;ILjava/lang/String;)V", t, i, e, o, s, l, c);
+initAndroidAbtConfigJson: function(e, n, i, t, c, s, l) {
+jsb.reflection.callStaticMethod(o, "initAbtConfigJsonForJs", "(Ljava/lang/String;ZILjava/lang/String;Ljava/lang/String;ILjava/lang/String;)V", e, n, i, t, c, s, l);
 },
-getAndroidAbtConfig: function(t) {
-return jsb.reflection.callStaticMethod(n, "getAbtConfig", "(Ljava/lang/String;)Ljava/lang/String;", t);
+getAndroidAbtConfig: function(e) {
+return jsb.reflection.callStaticMethod(o, "getAbtConfig", "(Ljava/lang/String;)Ljava/lang/String;", e);
 },
 showAndroidRewardDebugUI: function() {
-jsb.reflection.callStaticMethod(n, "showRewardDebugActivity", "()V");
+jsb.reflection.callStaticMethod(o, "showRewardDebugActivity", "()V");
 },
 setAndroidRewardVideoLoadCallback: function() {
-jsb.reflection.callStaticMethod(n, "setRewardVideoLoadCallback", "()V");
+jsb.reflection.callStaticMethod(o, "setRewardVideoLoadCallback", "()V");
 },
 isAndroidRewardReady: function() {
-return jsb.reflection.callStaticMethod(n, "isRewardReady", "()Z");
+return jsb.reflection.callStaticMethod(o, "isRewardReady", "()Z");
 },
-showAndroidRewardVideo: function(t) {
-null == t && (t = "reward_video");
-jsb.reflection.callStaticMethod(n, "showRewardVideo", "(Ljava/lang/String;)V", t);
+showAndroidRewardVideo: function(e) {
+null == e && (e = "reward_video");
+jsb.reflection.callStaticMethod(o, "showRewardVideo", "(Ljava/lang/String;)V", e);
 },
-setAndroidInterstitialLoadCallback: function(t) {
-jsb.reflection.callStaticMethod(n, "setInterstitialCallbackAt", "(Ljava/lang/String;)V", t);
+setAndroidInterstitialLoadCallback: function(e) {
+jsb.reflection.callStaticMethod(o, "setInterstitialCallbackAt", "(Ljava/lang/String;)V", e);
 },
-isAndroidInterstitialReadyAsyn: function(t, i) {
-jsb.reflection.callStaticMethod(n, "isInterstitialReadyForJs", "(Ljava/lang/String;Ljava/lang/String;)V", t, i);
+isAndroidInterstitialReadyAsyn: function(e, n) {
+jsb.reflection.callStaticMethod(o, "isInterstitialReadyForJs", "(Ljava/lang/String;Ljava/lang/String;)V", e, n);
 },
-isAndroidInterstitialReady: function(t) {
-return jsb.reflection.callStaticMethod(n, "isInterstitialReady", "(Ljava/lang/String;)Z", t);
+isAndroidInterstitialReady: function(e) {
+return jsb.reflection.callStaticMethod(o, "isInterstitialReady", "(Ljava/lang/String;)Z", e);
 },
-showAndroidInterstitialAd: function(t) {
-jsb.reflection.callStaticMethod(n, "showInterstitialForJs", "(Ljava/lang/String;)V", t);
+showAndroidInterstitialAd: function(e) {
+jsb.reflection.callStaticMethod(o, "showInterstitialForJs", "(Ljava/lang/String;)V", e);
 },
 showAndroidInterstitialDebugUI: function() {
-jsb.reflection.callStaticMethod(n, "showInterstitialDebugActivityForJs", "()V");
+jsb.reflection.callStaticMethod(o, "showInterstitialDebugActivityForJs", "()V");
 },
-removeAndroidBannerAdAt: function(t) {
-jsb.reflection.callStaticMethod(n, "removeBanner", "(Ljava/lang/String;)V", t);
+removeAndroidBannerAdAt: function(e) {
+jsb.reflection.callStaticMethod(o, "removeBanner", "(Ljava/lang/String;)V", e);
 },
-showAndroidBannerAdAtTop: function(t) {
-jsb.reflection.callStaticMethod(n, "showTopBanner", "(Ljava/lang/String;)V", t);
+showAndroidBannerAdAtTop: function(e) {
+jsb.reflection.callStaticMethod(o, "showTopBanner", "(Ljava/lang/String;)V", e);
 },
-showAndroidBannerAdAtBottom: function(t) {
-jsb.reflection.callStaticMethod(n, "showBottomBanner", "(Ljava/lang/String;)V", t);
+showAndroidBannerAdAtBottom: function(e) {
+jsb.reflection.callStaticMethod(o, "showBottomBanner", "(Ljava/lang/String;)V", e);
 },
 hideAndroidBannerAdAtTop: function() {
-jsb.reflection.callStaticMethod(n, "hideTopBanner", "()V");
+jsb.reflection.callStaticMethod(o, "hideTopBanner", "()V");
 },
 hideAndroidBannerAdAtBottom: function() {
-jsb.reflection.callStaticMethod(n, "hideBottomBanner", "()V");
+jsb.reflection.callStaticMethod(o, "hideBottomBanner", "()V");
 },
-showAndroidIconAdAt: function(t, i, e, o, s, l) {
-jsb.reflection.callStaticMethod(n, "showIconAd", "(IIIIILjava/lang/String;)V", t, i, e, o, s, l);
+showAndroidIconAdAt: function(e, n, i, t, c, s) {
+jsb.reflection.callStaticMethod(o, "showIconAd", "(IIIIILjava/lang/String;)V", e, n, i, t, c, s);
 },
-removeAndroidIconAdAt: function(t) {
-jsb.reflection.callStaticMethod(n, "removeIconAd", "(Ljava/lang/String;)V", t);
+removeAndroidIconAdAt: function(e) {
+jsb.reflection.callStaticMethod(o, "removeIconAd", "(Ljava/lang/String;)V", e);
 },
 loadAndroidAdsByManual: function() {
-jsb.reflection.callStaticMethod(n, "loadAnroidAdsByManual", "()V");
+jsb.reflection.callStaticMethod(o, "loadAnroidAdsByManual", "()V");
 },
 exitAndroidApp: function() {
-jsb.reflection.callStaticMethod(n, "exitAndroidApp", "()V");
+jsb.reflection.callStaticMethod(o, "exitAndroidApp", "()V");
 },
-setAndroidManifestPackageName: function(t) {
-jsb.reflection.callStaticMethod(n, "setManifestPackageName", "(Ljava/lang/String;)V", t);
+setAndroidManifestPackageName: function(e) {
+jsb.reflection.callStaticMethod(o, "setManifestPackageName", "(Ljava/lang/String;)V", e);
 },
 onAndroidBackPressed: function() {
-jsb.reflection.callStaticMethod(n, "onBackPressed", "()V");
+jsb.reflection.callStaticMethod(o, "onBackPressed", "()V");
 },
-setAndroidCustomerId: function(t) {
-jsb.reflection.callStaticMethod(n, "setCustomerIdForJs", "(Ljava/lang/String;)V", t);
+setAndroidCustomerId: function(e) {
+jsb.reflection.callStaticMethod(o, "setCustomerIdForJs", "(Ljava/lang/String;)V", e);
 },
-updateAndroidAccessPrivacyInfoStatus: function(t) {
-jsb.reflection.callStaticMethod(n, "updateAccessPrivacyInfoStatus", "(I)V", t);
+updateAndroidAccessPrivacyInfoStatus: function(e) {
+jsb.reflection.callStaticMethod(o, "updateAccessPrivacyInfoStatus", "(I)V", e);
 },
 getAndroidAccessPrivacyInfoStatus: function() {
-return jsb.reflection.callStaticMethod(n, "getAccessPrivacyInfoStatus", "()I");
+return jsb.reflection.callStaticMethod(o, "getAccessPrivacyInfoStatus", "()I");
 },
-notifyAndroidAccessPrivacyInfoStatus: function(t, i) {
-jsb.reflection.callStaticMethod(n, "notifyAccessPrivacyInfoStatus", "(Ljava/lang/String;I)V", t, i);
+notifyAndroidAccessPrivacyInfoStatus: function(e, n) {
+jsb.reflection.callStaticMethod(o, "notifyAccessPrivacyInfoStatus", "(Ljava/lang/String;I)V", e, n);
 },
-isAndroidEuropeanUnionUser: function(t, i) {
-jsb.reflection.callStaticMethod(n, "isEuropeanUnionUser", "(Ljava/lang/String;I)V", t, i);
+isAndroidEuropeanUnionUser: function(e, n) {
+jsb.reflection.callStaticMethod(o, "isEuropeanUnionUser", "(Ljava/lang/String;I)V", e, n);
 },
-reportIvokePluginMethodReceive: function(t) {
-jsb.reflection.callStaticMethod(n, "reportIvokePluginMethodReceive", "(Ljava/lang/String;)V", t);
+reportIvokePluginMethodReceive: function(e) {
+jsb.reflection.callStaticMethod(o, "reportIvokePluginMethodReceive", "(Ljava/lang/String;)V", e);
 },
-reportRDRewardClose: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardClose", "(Ljava/lang/String;)V", t);
+reportRDRewardClose: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardClose", "(Ljava/lang/String;)V", e);
 },
-reportRDRewardClick: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardClick", "(Ljava/lang/String;)V", t);
+reportRDRewardClick: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardClick", "(Ljava/lang/String;)V", e);
 },
-reportRDRewardGiven: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardGiven", "(Ljava/lang/String;)V", t);
+reportRDRewardGiven: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardGiven", "(Ljava/lang/String;)V", e);
 },
-reportRDShowDid: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDShowDid", "(Ljava/lang/String;)V", t);
+reportRDShowDid: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDShowDid", "(Ljava/lang/String;)V", e);
 },
-reportRDRewardCancel: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardCancel", "(Ljava/lang/String;)V", t);
+reportRDRewardCancel: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardCancel", "(Ljava/lang/String;)V", e);
 },
-reportILClose: function(t, i) {
-jsb.reflection.callStaticMethod(n, "reportILClose", "(Ljava/lang/String;Ljava/lang/String;)V", void 0 == i ? "" : i, t);
+reportILClose: function(e, n) {
+jsb.reflection.callStaticMethod(o, "reportILClose", "(Ljava/lang/String;Ljava/lang/String;)V", void 0 == n ? "" : n, e);
 },
-reportILClick: function(t, i) {
-jsb.reflection.callStaticMethod(n, "reportILClick", "(Ljava/lang/String;Ljava/lang/String;)V", void 0 == i ? "" : i, t);
+reportILClick: function(e, n) {
+jsb.reflection.callStaticMethod(o, "reportILClick", "(Ljava/lang/String;Ljava/lang/String;)V", void 0 == n ? "" : n, e);
 },
-reportILShowDid: function(t, i) {
-jsb.reflection.callStaticMethod(n, "reportILShowDid", "(Ljava/lang/String;Ljava/lang/String;)V", void 0 == i ? "" : i, t);
+reportILShowDid: function(e, n) {
+jsb.reflection.callStaticMethod(o, "reportILShowDid", "(Ljava/lang/String;Ljava/lang/String;)V", void 0 == n ? "" : n, e);
 },
 isOnlineDebugReportEnable: function() {
-return jsb.reflection.callStaticMethod(n, "isReportOnlineEnable", "()Z");
+return jsb.reflection.callStaticMethod(o, "isReportOnlineEnable", "()Z");
 },
 isAndroidLogOpened: function() {
-return jsb.reflection.callStaticMethod(n, "isLogOpened", "()Z");
+return jsb.reflection.callStaticMethod(o, "isLogOpened", "()Z");
 },
-setAndroidIsChild: function(t) {
-jsb.reflection.callStaticMethod(n, "setIsChild", "(Z)V", t);
+setAndroidIsChild: function(e) {
+jsb.reflection.callStaticMethod(o, "setIsChild", "(Z)V", e);
 },
-setAndroidBirthday: function(t, i) {
-jsb.reflection.callStaticMethod(n, "setBirthday", "(II)V", t, i);
+setAndroidBirthday: function(e, n) {
+jsb.reflection.callStaticMethod(o, "setBirthday", "(II)V", e, n);
+},
+autoOneKeyInspectByAndroid: function() {
+jsb.reflection.callStaticMethod(o, "autoOneKeyInspect", "()V");
+},
+tellToDoctorByAndroid: function(e, n, i) {
+jsb.reflection.callStaticMethod(o, "tellToDoctor", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V", e, n, i);
+},
+setAppsFlyerUIDByAndroid: function(e) {
+jsb.reflection.callStaticMethod(o, "setAppsflyerUID", "(Ljava/lang/String;)V", e);
+},
+setAdjustIdByAndroid: function(e) {
+jsb.reflection.callStaticMethod(o, "setAdjustID", "(Ljava/lang/String;)V", e);
 }
 };
-i.exports = s;
+n.exports = c;
 cc._RF.pop();
 }, {} ],
-UPLTVIos: [ function(t, i, e) {
+OpenUpIos: [ function(e, n, i) {
 "use strict";
-cc._RF.push(i, "65bbaI2Vx5PO4k9Msc0YwHQ", "UPLTVIos");
-var n = "UpAdsBrigeJs", o = !1, s = s || {
-setShowLog: function(t) {
-void 0 != t && null != t && (o = t);
+cc._RF.push(n, "c4619jIgY1PupGVIi+6C1j5", "OpenUpIos");
+var o = "OpenUpBrigeCreatorJs", t = !1, c = c || {
+setShowLog: function(e) {
+void 0 != e && null != e && (t = e);
 },
-printJsLog: function(t) {
-o && void 0 != t && null != t && jsb.reflection.callStaticMethod(n, "printJsLog:", t);
+printJsLog: function(e) {
+t && void 0 != e && null != e && jsb.reflection.callStaticMethod(o, "printJsLog:", e);
 },
-initIosSDK: function(t, i, e) {
-void 0 != e && null != e ? jsb.reflection.callStaticMethod(n, "initSdkByJs:withCallback:", t, e) : jsb.reflection.callStaticMethod(n, "initSdkByJs:", t);
-jsb.reflection.callStaticMethod(n, "setVokeMethod:", i);
+initIosSDK: function(e, n, i, t) {
+void 0 != t && null != t ? jsb.reflection.callStaticMethod(o, "initSdkByJsWithAppKey:zone:withCallback:", e, n, t) : jsb.reflection.callStaticMethod(o, "initSdkByJsWithAppKey:zone:", e, n);
+jsb.reflection.callStaticMethod(o, "setVokeMethod:", i);
 },
-initIosAbtConfigJson: function(t, i, e, o, s, l, c) {
-jsb.reflection.callStaticMethod(n, "initAbtConfigJsonByJs:complete:paid:channel:gender:age:tags:", t, i, e, o, s, l, c);
+initIosAbtConfigJson: function(e, n, i, t, c, s, l) {
+jsb.reflection.callStaticMethod(o, "initAbtConfigJsonByJs:complete:paid:channel:gender:age:tags:", e, n, i, t, c, s, l);
 },
-getIosAbtConfig: function(t) {
-return jsb.reflection.callStaticMethod(n, "getIosAbtConfigByJs:", t);
+getIosAbtConfig: function(e) {
+return jsb.reflection.callStaticMethod(o, "getIosAbtConfigByJs:", e);
 },
 showIosRewardDebugUI: function() {
-jsb.reflection.callStaticMethod(n, "showRewardDebugActivityByJs");
+jsb.reflection.callStaticMethod(o, "showRewardDebugActivityByJs");
 },
 setIosRewardVideoLoadCallback: function() {
-jsb.reflection.callStaticMethod(n, "setRewardVideoLoadCallbackByJs");
+jsb.reflection.callStaticMethod(o, "setRewardVideoLoadCallbackByJs");
 },
 isIosRewardReady: function() {
-return jsb.reflection.callStaticMethod(n, "isIosRewardReadyByJs");
+return jsb.reflection.callStaticMethod(o, "isIosRewardReadyByJs");
 },
-showIosRewardVideo: function(t) {
-jsb.reflection.callStaticMethod(n, "showIosRewardVideoByJs:", t);
+showIosRewardVideo: function(e) {
+jsb.reflection.callStaticMethod(o, "showIosRewardVideoByJs:", e);
 },
-isIosInterstitialReadyAsyn: function(t, i) {
-jsb.reflection.callStaticMethod(n, "isInterstitialReadyAsynByJs:callback:", t, i);
+isIosInterstitialReadyAsyn: function(e, n) {
+jsb.reflection.callStaticMethod(o, "isInterstitialReadyAsynByJs:callback:", e, n);
 },
-isIosInterstitialReady: function(t) {
-return jsb.reflection.callStaticMethod(n, "isInterstitialReadyByJs:", t);
+isIosInterstitialReady: function(e) {
+return jsb.reflection.callStaticMethod(o, "isInterstitialReadyByJs:", e);
 },
-showIosInterstitialAd: function(t) {
-jsb.reflection.callStaticMethod(n, "showInterstitialByJs:", t);
+showIosInterstitialAd: function(e) {
+jsb.reflection.callStaticMethod(o, "showInterstitialByJs:", e);
 },
-setIosInterstitialLoadCallback: function(t) {
-jsb.reflection.callStaticMethod(n, "setInterstitialCallbackByJs:", t);
+setIosInterstitialLoadCallback: function(e) {
+jsb.reflection.callStaticMethod(o, "setInterstitialCallbackByJs:", e);
 },
 showIosInterstitialDebugUI: function() {
-jsb.reflection.callStaticMethod(n, "showInterstitialDebugActivityByJs");
+jsb.reflection.callStaticMethod(o, "showInterstitialDebugActivityByJs");
 },
-removeIosBannerAdAt: function(t) {
-jsb.reflection.callStaticMethod(n, "removeBannerByJs:", t);
+removeIosBannerAdAt: function(e) {
+jsb.reflection.callStaticMethod(o, "removeBannerByJs:", e);
 },
-showIosBannerAdAtTop: function(t) {
-jsb.reflection.callStaticMethod(n, "showTopBannerByJs:", t);
+showIosBannerAdAtTop: function(e) {
+jsb.reflection.callStaticMethod(o, "showTopBannerByJs:", e);
 },
-showIosBannerAdAtBottom: function(t) {
-jsb.reflection.callStaticMethod(n, "showBottomBannerByJs:", t);
+showIosBannerAdAtBottom: function(e) {
+jsb.reflection.callStaticMethod(o, "showBottomBannerByJs:", e);
 },
 hideIosBannerAdAtTop: function() {
-jsb.reflection.callStaticMethod(n, "hideTopBannerByJs");
+jsb.reflection.callStaticMethod(o, "hideTopBannerByJs");
 },
 hideIosBannerAdAtBottom: function() {
-jsb.reflection.callStaticMethod(n, "hideBottomBannerByJs");
+jsb.reflection.callStaticMethod(o, "hideBottomBannerByJs");
 },
-setIosTopBannerPading: function(t) {
-var i = "0";
-"number" == typeof t ? i = String(t) : "string" == typeof t && (i = t);
-jsb.reflection.callStaticMethod(n, "setTopBannerPadingForIphonexByJs:", i);
+setIosTopBannerPading: function(e) {
+var n = "0";
+"number" == typeof e ? n = String(e) : "string" == typeof e && (n = e);
+jsb.reflection.callStaticMethod(o, "setTopBannerPadingForIphonexByJs:", n);
 },
-showIosIconAdAt: function(t, i, e, o, s, l) {
-jsb.reflection.callStaticMethod(n, "showIconX:y:width:height:rotationAngle:placementId:", t, i, e, o, s, l);
+showIosIconAdAt: function(e, n, i, t, c, s) {
+jsb.reflection.callStaticMethod(o, "showIconX:y:width:height:rotationAngle:placementId:", e, n, i, t, c, s);
 },
-removeIosIconAdAt: function(t) {
-jsb.reflection.callStaticMethod(n, "removeIcon:", t);
+removeIosIconAdAt: function(e) {
+jsb.reflection.callStaticMethod(o, "removeIcon:", e);
 },
 loadIosAdsByManual: function() {
-jsb.reflection.callStaticMethod(n, "loadIosAdsByManualByJs");
+jsb.reflection.callStaticMethod(o, "loadIosAdsByManualByJs");
 },
 exitIosApp: function() {
-jsb.reflection.callStaticMethod(n, "exitIosAppByJs");
+jsb.reflection.callStaticMethod(o, "exitIosAppByJs");
 },
-updateIosAccessPrivacyInfoStatus: function(t) {
-jsb.reflection.callStaticMethod(n, "updateAccessPrivacyInfoStatusByJs:", t);
+updateIosAccessPrivacyInfoStatus: function(e) {
+jsb.reflection.callStaticMethod(o, "updateAccessPrivacyInfoStatusByJs:", e);
 },
 getIosAccessPrivacyInfoStatus: function() {
-return jsb.reflection.callStaticMethod(n, "getAccessPrivacyInfoStatusByJs");
+return jsb.reflection.callStaticMethod(o, "getAccessPrivacyInfoStatusByJs");
 },
-notifyIosAccessPrivacyInfoStatus: function(t, i) {
-jsb.reflection.callStaticMethod(n, "notifyAccessPrivacyInfoStatusByJs:callId:", t, i);
+notifyIosAccessPrivacyInfoStatus: function(e, n) {
+jsb.reflection.callStaticMethod(o, "notifyAccessPrivacyInfoStatusByJs:callId:", e, n);
 },
-isIosEuropeanUnionUser: function(t, i) {
-jsb.reflection.callStaticMethod(n, "isEuropeanUnionUserByJs:callId:", t, i);
+isIosEuropeanUnionUser: function(e, n) {
+jsb.reflection.callStaticMethod(o, "isEuropeanUnionUserByJs:callId:", e, n);
 },
-reportIvokePluginMethodReceive: function(t) {
-jsb.reflection.callStaticMethod(n, "reportIvokePluginMethodReceiveByJs:", t);
+reportIvokePluginMethodReceive: function(e) {
+jsb.reflection.callStaticMethod(o, "reportIvokePluginMethodReceiveByJs:", e);
 },
-reportRDRewardClose: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardCloseByJs:", t);
+reportRDRewardClose: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardCloseByJs:", e);
 },
-reportRDRewardClick: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardClickByJs:", t);
+reportRDRewardClick: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardClickByJs:", e);
 },
-reportRDRewardGiven: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardGivenByJs:", t);
+reportRDRewardGiven: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardGivenByJs:", e);
 },
-reportRDShowDid: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDShowDidByJs:", t);
+reportRDShowDid: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDShowDidByJs:", e);
 },
-reportRDRewardCancel: function(t) {
-jsb.reflection.callStaticMethod(n, "reportRDRewardCancelByJs:", t);
+reportRDRewardCancel: function(e) {
+jsb.reflection.callStaticMethod(o, "reportRDRewardCancelByJs:", e);
 },
-reportILClose: function(t, i) {
-jsb.reflection.callStaticMethod(n, "reportILCloseByJs:msg:", void 0 == i ? "" : i, t);
+reportILClose: function(e, n) {
+jsb.reflection.callStaticMethod(o, "reportILCloseByJs:msg:", void 0 == n ? "" : n, e);
 },
-reportILClick: function(t, i) {
-jsb.reflection.callStaticMethod(n, "reportILClickByJs:msg:", void 0 == i ? "" : i, t);
+reportILClick: function(e, n) {
+jsb.reflection.callStaticMethod(o, "reportILClickByJs:msg:", void 0 == n ? "" : n, e);
 },
-reportILShowDid: function(t, i) {
-jsb.reflection.callStaticMethod(n, "reportILShowDidByJs:msg:", void 0 == i ? "" : i, t);
+reportILShowDid: function(e, n) {
+jsb.reflection.callStaticMethod(o, "reportILShowDidByJs:msg:", void 0 == n ? "" : n, e);
 },
 isOnlineDebugReportEnable: function() {
-return jsb.reflection.callStaticMethod(n, "isReportOnlineEnableByJs");
+return jsb.reflection.callStaticMethod(o, "isReportOnlineEnableByJs");
+},
+isIosLogOpened: function() {
+return jsb.reflection.callStaticMethod(o, "isIosLogOpenedByJs");
+},
+autoOneKeyInspectByIos: function() {
+jsb.reflection.callStaticMethod(o, "autoOneKeyInspectByJs");
+},
+tellToDoctorByIos: function(e, n, i) {
+jsb.reflection.callStaticMethod(o, "tellToDoctorByJs:adid:msg:", e, n, i);
+},
+setAppsFlyerUIDByIos: function(e) {
+jsb.reflection.callStaticMethod(o, "setAppsFlyerUIDByJs:", e);
+},
+setAdjustIdByIos: function(e) {
+jsb.reflection.callStaticMethod(o, "setAdjustIdByJs:", e);
 }
 };
-i.exports = s;
+n.exports = c;
 cc._RF.pop();
 }, {} ],
-UPLTV: [ function(t, i, e) {
+OpenUpSDK: [ function(e, n, i) {
 "use strict";
-cc._RF.push(i, "b35dfmv1qtIaK8auM0v89p0", "UPLTV");
-var n = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(t) {
-return typeof t;
-} : function(t) {
-return t && "function" == typeof Symbol && t.constructor === Symbol && t !== Symbol.prototype ? "symbol" : typeof t;
-}, o = t("UPLTVIos"), s = t("UPLTVAndroid"), l = function(t) {
+cc._RF.push(n, "d322a2LzaBEsqczvEafiic9", "OpenUpSDK");
+var o = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
+return typeof e;
+} : function(e) {
+return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e;
+}, t = e("OpenUpIos"), c = e("OpenUpAndroid"), s = !1, l = function(e) {
 0;
-}, c = function(t, i, e) {
-void 0 != f && (void 0 != e ? f.onlineDebugReport(t, i, e) : f.onlineDebugReport(t, i));
+}, d = function(e, n, i) {
+void 0 != f && (void 0 != i ? f.onlineDebugReport(e, n, i) : f.onlineDebugReport(e, n));
+}, r = function(e, n, i) {
+void 0 != f && void 0 != f.openupbridge && null != f.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? f.openupbridge.tellToDoctorByAndroid(e, n, i) : cc.sys.os === cc.sys.OS_IOS && f.openupbridge.tellToDoctorByIos(e, null == n ? "" : n, null == i ? "" : i));
 }, a = {
-handleVokeParams: function(t) {
-if (void 0 != t && null != t && "string" == typeof t) {
-var i = t.indexOf(":"), e = null;
-if (!(i <= 0)) {
-var n = (e = t.substr(i + 1)).indexOf(","), o = e.substring(0, n), s = null, r = null;
-if ((i = (e = e.substr(n + 1)).indexOf(":")) > 0 && (n = (e = e.substr(i + 1)).indexOf(",")) > 0) {
-s = e.substring(0, n);
-null != (e = e.substr(n + 1)) && (i = e.indexOf(":")) > 0 && (r = e.substr(i + 1));
+handleVokeParams: function(e) {
+if (void 0 != e && null != e && "string" == typeof e) {
+var n = e.indexOf(":"), i = null;
+if (!(n <= 0)) {
+var o = (i = e.substr(n + 1)).indexOf(","), t = i.substring(0, o), c = null, _ = null;
+if ((n = (i = i.substr(o + 1)).indexOf(":")) > 0 && (o = (i = i.substr(n + 1)).indexOf(",")) > 0) {
+c = i.substring(0, o);
+null != (i = i.substr(o + 1)) && (n = i.indexOf(":")) > 0 && (_ = i.substr(n + 1));
 }
 0;
-var u = void 0 != f && f.isOnlineDebugReportEnable();
-u && c(a.Function_Receive_Callback, "CocosJs Receive message, callname:" + o + ", cpadid:" + s);
-if (a.Function_Reward_DidLoadFail == o) if (null != d.rewardLoadFailCall && "function" == typeof d.rewardLoadFailCall) {
-d.rewardLoadFailCall(s, r);
-d.resetRewardLoadCallback();
-} else l(); else if (a.Function_Reward_DidLoadSuccess == o) if (null != d.rewardLoadSuccessCall && "function" == typeof d.rewardLoadSuccessCall) {
-d.rewardLoadSuccessCall(s, r);
-d.resetRewardLoadCallback();
-} else l(); else if (a.Function_Reward_WillOpen == o) {
-if (null != (p = d.rewardShowCall) && "function" == typeof p) {
-p(f.AdEventType.VIDEO_EVENT_WILL_SHOW, s);
-u && c(o, "CocosJs did run callback on video willopen event.");
-} else u && c(o, "CocosJs not run callback on video willopen event.");
-} else if (a.Function_Reward_DidOpen == o) {
-if (null != (p = d.rewardShowCall) && "function" == typeof p) {
-p(f.AdEventType.VIDEO_EVENT_DID_SHOW, s);
-u && c(o, "CocosJs did run callback on video shown event.");
-} else u && c(o, "CocosJs not run callback on video shown event.");
-} else if (a.Function_Reward_DidClick == o) {
-if (null != (p = d.rewardShowCall) && "function" == typeof p) {
-p(f.AdEventType.VIDEO_EVENT_DID_CLICK, s);
-u && c(o, "CocosJs did run callback on video clicked event.");
-} else u && c(o, "CocosJs not run callback on video clicked event.");
-} else if (a.Function_Reward_DidClose == o) {
-if (null != (p = d.rewardShowCall) && "function" == typeof p) {
-p(f.AdEventType.VIDEO_EVENT_DID_CLOSE, s);
-u && c(o, "CocosJs did run callback on video closed event.");
-} else u && c(o, "CocosJs not run callback on video closed event.");
-} else if (a.Function_Reward_DidGivien == o) {
-if (null != (p = d.rewardShowCall) && "function" == typeof p) {
-p(f.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD, s);
-u && c(o, "CocosJs did run callback on video reward given event.");
-} else u && c(o, "CocosJs not run callback on video reward given event.");
-} else if (a.Function_Reward_DidAbandon == o) {
-if (null != (p = d.rewardShowCall) && "function" == typeof p) {
-p(f.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD, s);
-u && c(o, "CocosJs did run callback on video reward cancel event.");
-} else u && c(o, "CocosJs not run callback on video reward cancel event.");
-} else if (a.Function_Interstitial_DidLoadFail == o) {
-var v = s + "_Interstitial";
-if (null != (h = d.get(v))) {
-null != (p = h.interstitialLoadFailCall) && "function" == typeof p && p(s, r);
-d.remove(v);
+var p = void 0 != f && f.isOnlineDebugReportEnable();
+p && d(a.Function_Receive_Callback, "CocosJs Receive message, callname:" + t + ", cpadid:" + c);
+if (a.Action_Doctor_ON_DUTY == t) p && (s = !0); else if (a.Action_Doctor_OFF_DUTY == t) p && (s = !1); else if (a.Function_Doctor_IL_Load_Request == t) p && 1 == s && f.setInterstitialLoadCallback(a.Function_Doctor_IL_Show_AdId, function(e, n) {
+r(a.Action_Doctor_Ad_IL_LoadOk_Reply, a.Function_Doctor_IL_Show_AdId, "cocoscreator js il load ok");
+}, function(e, n) {
+r(a.Action_Doctor_Ad_IL_LoadFail_Reply, a.Function_Doctor_IL_Show_AdId, n);
+}); else if (a.Function_Doctor_RD_Load_Request == t) p && 1 == s && f.setRewardVideoLoadCallback(function(e, n) {
+r(a.Action_Doctor_Ad_RD_LoadOk_Reply, a.Function_Doctor_RD_Show_AdId, "cocoscreator js rd load ok");
+}, function(e, n) {
+r(a.Action_Doctor_Ad_RD_LoadFail_Reply, a.Function_Doctor_RD_Show_AdId, n);
+}); else if (a.Function_Doctor_RD_Show_Request == t) f.showRewardVideo(a.Function_Doctor_RD_Show_AdId); else if (a.Function_Doctor_IL_Show_Request == t) f.showInterstitialAd(a.Function_Doctor_IL_Show_AdId); else if (a.Function_Reward_DidLoadFail == t) if (null != u.rewardLoadFailCall && "function" == typeof u.rewardLoadFailCall) {
+var I = u.rewardLoadFailCall;
+u.resetRewardLoadCallback();
+I(c, _);
+} else l(); else if (a.Function_Reward_DidLoadSuccess == t) if (null != u.rewardLoadSuccessCall && "function" == typeof u.rewardLoadSuccessCall) {
+u.rewardLoadSuccessCall(c, _);
+u.resetRewardLoadCallback();
+} else l(); else if (a.Function_Reward_WillOpen == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on video willopen event.");
+r(a.Action_Doctor_Ad_RD_WillShow_Reply, a.Function_Doctor_RD_Show_AdId, "tell the rd willshow event to doctor.");
+return;
+}
+if (null != (y = u.rewardShowCall) && "function" == typeof y) {
+y(f.AdEventType.VIDEO_EVENT_WILL_SHOW, c);
+p && d(t, "CocosJs did run callback on video willopen event.");
+} else p && d(t, "CocosJs not run callback on video willopen event.");
+} else if (a.Function_Reward_DidOpen == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on video shown event.");
+r(a.Action_Doctor_Ad_RD_DidShow_Reply, a.Function_Doctor_RD_Show_AdId, "tell the rd didopen event to doctor.");
+return;
+}
+if (null != (y = u.rewardShowCall) && "function" == typeof y) {
+y(f.AdEventType.VIDEO_EVENT_DID_SHOW, c);
+p && d(t, "CocosJs did run callback on video shown event.");
+} else p && d(t, "CocosJs not run callback on video shown event.");
+} else if (a.Function_Reward_DidClick == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on video clicked event.");
+r(a.Action_Doctor_Ad_RD_DidClick_Reply, a.Function_Doctor_RD_Show_AdId, "tell the rd didclick event to doctor.");
+return;
+}
+if (null != (y = u.rewardShowCall) && "function" == typeof y) {
+y(f.AdEventType.VIDEO_EVENT_DID_CLICK, c);
+p && d(t, "CocosJs did run callback on video clicked event.");
+} else p && d(t, "CocosJs not run callback on video clicked event.");
+} else if (a.Function_Reward_DidClose == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on video closed event.");
+r(a.Action_Doctor_Ad_RD_DidClose_Reply, a.Function_Doctor_RD_Show_AdId, "tell the rd didclose event to doctor.");
+return;
+}
+if (null != (y = u.rewardShowCall) && "function" == typeof y) {
+y(f.AdEventType.VIDEO_EVENT_DID_CLOSE, c);
+p && d(t, "CocosJs did run callback on video closed event.");
+} else p && d(t, "CocosJs not run callback on video closed event.");
+} else if (a.Function_Reward_DidGivien == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on video reward given event.");
+r(a.Action_Doctor_Ad_RD_Given_Reply, a.Function_Doctor_RD_Show_AdId, "tell the rd givenreward event to doctor.");
+return;
+}
+if (null != (y = u.rewardShowCall) && "function" == typeof y) {
+y(f.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD, c);
+p && d(t, "CocosJs did run callback on video reward given event.");
+} else p && d(t, "CocosJs not run callback on video reward given event.");
+} else if (a.Function_Reward_DidAbandon == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on video reward cancel event.");
+r(a.Action_Doctor_Ad_RD_Cancel_Reply, a.Function_Doctor_RD_Show_AdId, "tell the noreward event to doctor.");
+return;
+}
+if (null != (y = u.rewardShowCall) && "function" == typeof y) {
+y(f.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD, c);
+p && d(t, "CocosJs did run callback on video reward cancel event.");
+} else p && d(t, "CocosJs not run callback on video reward cancel event.");
+} else if (a.Function_Interstitial_DidLoadFail == t) {
+var h = c + "_Interstitial";
+if (null != (g = u.get(h))) {
+var y = g.interstitialLoadFailCall;
+u.remove(h);
+null != y && "function" == typeof y && y(c, _);
 l();
 }
-} else if (a.Function_Interstitial_DidLoadSuccess == o) {
-v = s + "_Interstitial";
-if (null != (h = d.get(v))) {
-null != (p = h.interstitialLoadSuccessCall) && "function" == typeof p ? p(s, r) : l();
-d.remove(v);
+} else if (a.Function_Interstitial_DidLoadSuccess == t) {
+h = c + "_Interstitial";
+if (null != (g = u.get(h))) {
+null != (y = g.interstitialLoadSuccessCall) && "function" == typeof y ? y(c, _) : l();
+u.remove(h);
 } else l();
-} else if (a.Function_Interstitial_Willshow == o) {
-var I = !1;
-if (null != (h = d.get(s))) {
-if (null != (p = h.interstitialShowCall) && "function" == typeof p) {
-p(f.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW, s);
-if (u) {
-I = !0;
-c(o, "CocosJs did run callback on il ad willshown event at " + s, s);
+} else if (a.Function_Interstitial_Willshow == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on il ad willshown event.", a.Function_Doctor_IL_Show_AdId);
+r(a.Action_Doctor_Ad_IL_WillShow_Reply, a.Function_Doctor_IL_Show_AdId, "tell the il willshow event to doctor.");
+return;
+}
+var A = !1;
+if (null != (g = u.get(c))) {
+if (null != (y = g.interstitialShowCall) && "function" == typeof y) {
+y(f.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW, c);
+if (p) {
+A = !0;
+d(t, "CocosJs did run callback on il ad willshown event at " + c, c);
 }
 }
 }
-u && 0 == I && c(o, "CocosJs not run callback on il ad willshown event at " + s, s);
-} else if (a.Function_Interstitial_Didshow == o) {
-I = !1;
-if (null != (h = d.get(s))) {
-if (null != (p = h.interstitialShowCall) && "function" == typeof p) {
-p(f.AdEventType.INTERSTITIAL_EVENT_DID_SHOW, s);
-if (u) {
-I = !0;
-c(o, "CocosJs did run callback on il ad shown event at " + s, s);
+p && 0 == A && d(t, "CocosJs not run callback on il ad willshown event at " + c, c);
+} else if (a.Function_Interstitial_Didshow == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on il ad shown event.", a.Function_Doctor_IL_Show_AdId);
+r(a.Action_Doctor_Ad_IL_DidShow_Reply, a.Function_Doctor_IL_Show_AdId, "tell the il didshow event to doctor.");
+return;
+}
+A = !1;
+if (null != (g = u.get(c))) {
+if (null != (y = g.interstitialShowCall) && "function" == typeof y) {
+y(f.AdEventType.INTERSTITIAL_EVENT_DID_SHOW, c);
+if (p) {
+A = !0;
+d(t, "CocosJs did run callback on il ad shown event at " + c, c);
 }
 }
 }
-u && 0 == I && c(o, "CocosJs not run callback on il ad shown event at " + s, s);
-} else if (a.Function_Interstitial_Didclose == o) {
-I = !1;
-if (null != (h = d.get(s))) {
-if (null != (p = h.interstitialShowCall) && "function" == typeof p) {
-p(f.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE, s);
-if (u) {
-I = !0;
-c(o, "CocosJs did run callback on il ad closed event at " + s, s);
+p && 0 == A && d(t, "CocosJs not run callback on il ad shown event at " + c, c);
+} else if (a.Function_Interstitial_Didclose == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on il ad closed event.", a.Function_Doctor_IL_Show_AdId);
+r(a.Action_Doctor_Ad_IL_DidClose_Reply, a.Function_Doctor_IL_Show_AdId, "tell the il didclose event to doctor.");
+return;
+}
+A = !1;
+if (null != (g = u.get(c))) {
+if (null != (y = g.interstitialShowCall) && "function" == typeof y) {
+y(f.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE, c);
+if (p) {
+A = !0;
+d(t, "CocosJs did run callback on il ad closed event at " + c, c);
 }
 }
 }
-u && 0 == I && c(o, "CocosJs not run callback on il ad closed event at " + s, s);
-} else if (a.Function_Interstitial_Didclick == o) {
-I = !1;
-if (null != (h = d.get(s))) {
-if (null != (p = h.interstitialShowCall) && "function" == typeof p) {
-p(f.AdEventType.INTERSTITIAL_EVENT_DID_CLICK, s);
-if (u) {
-I = !0;
-c(o, "CocosJs did run callback on il ad clicked event at " + s, s);
+p && 0 == A && d(t, "CocosJs not run callback on il ad closed event at " + c, c);
+} else if (a.Function_Interstitial_Didclick == t) {
+if (p && 1 == s) {
+d(t, "CocosJs did run callback on il ad clicked event.", a.Function_Doctor_IL_Show_AdId);
+r(a.Action_Doctor_Ad_IL_DidClick_Reply, a.Function_Doctor_IL_Show_AdId, "tell the il didclick event to doctor.");
+return;
+}
+A = !1;
+if (null != (g = u.get(c))) {
+if (null != (y = g.interstitialShowCall) && "function" == typeof y) {
+y(f.AdEventType.INTERSTITIAL_EVENT_DID_CLICK, c);
+if (p) {
+A = !0;
+d(t, "CocosJs did run callback on il ad clicked event at " + c, c);
 }
 }
 }
-u && 0 == I && c(o, "CocosJs not run callback on il ad clicked event at " + s, s);
-} else if (a.Function_Banner_DidRemove == o) {
-if (null != (h = d.get(s))) {
-null != (p = h.bannerEventCall) && "function" == typeof p && p(f.AdEventType.BANNER_EVENT_DID_REMOVED, s);
+p && 0 == A && d(t, "CocosJs not run callback on il ad clicked event at " + c, c);
+} else if (a.Function_Banner_DidRemove == t) {
+if (null != (g = u.get(c))) {
+null != (y = g.bannerEventCall) && "function" == typeof y && y(f.AdEventType.BANNER_EVENT_DID_REMOVED, c);
 }
-d.remove(s);
-} else if (a.Function_Banner_DidClick == o) {
-if (null != (h = d.get(s))) {
-null != (p = h.bannerEventCall) && "function" == typeof p && p(f.AdEventType.BANNER_EVENT_DID_CLICK, s);
+u.remove(c);
+} else if (a.Function_Banner_DidClick == t) {
+if (null != (g = u.get(c))) {
+null != (y = g.bannerEventCall) && "function" == typeof y && y(f.AdEventType.BANNER_EVENT_DID_CLICK, c);
 }
-} else if (a.Function_Banner_DidShow == o) {
-if (null != (h = d.get(s))) {
-null != (p = h.bannerEventCall) && "function" == typeof p && p(f.AdEventType.BANNER_EVENT_DID_SHOW, s);
+} else if (a.Function_Banner_DidShow == t) {
+if (null != (g = u.get(c))) {
+null != (y = g.bannerEventCall) && "function" == typeof y && y(f.AdEventType.BANNER_EVENT_DID_SHOW, c);
 }
-} else if (a.Function_Icon_DidLoad == o) {
-if (null != (h = d.get(s))) {
-null != (p = h.iconEventCall) && "function" == typeof p && p(f.AdEventType.ICON_EVENT_DID_LOAD, s);
+} else if (a.Function_Icon_DidLoad == t) {
+if (null != (g = u.get(c))) {
+null != (y = g.iconEventCall) && "function" == typeof y && y(f.AdEventType.ICON_EVENT_DID_LOAD, c);
 }
-} else if (a.Function_Icon_DidLoadFail == o) {
-if (null != (h = d.get(s))) {
-null != (p = h.iconEventCall) && "function" == typeof p && p(f.AdEventType.ICON_EVENT_DID_LOADFAIL, s);
+} else if (a.Function_Icon_DidLoadFail == t) {
+if (null != (g = u.get(c))) {
+null != (y = g.iconEventCall) && "function" == typeof y && y(f.AdEventType.ICON_EVENT_DID_LOADFAIL, c);
 }
-} else if (a.Function_Icon_DidShow == o) {
-if (null != (h = d.get(s))) {
-null != (p = h.iconEventCall) && "function" == typeof p && p(f.AdEventType.ICON_EVENT_DID_SHOW, s);
+} else if (a.Function_Icon_DidShow == t) {
+if (null != (g = u.get(c))) {
+null != (y = g.iconEventCall) && "function" == typeof y && y(f.AdEventType.ICON_EVENT_DID_SHOW, c);
 }
-} else if (a.Function_Icon_DidClick == o) {
-var h;
-if (null != (h = d.get(s))) {
-var p;
-null != (p = h.iconEventCall) && "function" == typeof p && p(f.AdEventType.ICON_EVENT_DID_CLICK, s);
+} else if (a.Function_Icon_DidClick == t) {
+var g;
+if (null != (g = u.get(c))) {
+null != (y = g.iconEventCall) && "function" == typeof y && y(f.AdEventType.ICON_EVENT_DID_CLICK, c);
 }
-} else cc.sys.os === cc.sys.OS_ANDROID && (a.Function_ExitAd_DidShow == o ? null != d.backPressedCall && "function" == typeof d.backPressedCall ? d.backPressedCall(f.AdEventType.EXITAD_EVENT_DID_SHOW, r) : l() : a.Function_ExitAd_DidClick == o ? null != d.backPressedCall && "function" == typeof d.backPressedCall ? d.backPressedCall(f.AdEventType.EXITAD_EVENT_DID_CLICK, r) : l() : a.Function_ExitAd_DidClickMore == o ? null != d.backPressedCall && "function" == typeof d.backPressedCall ? d.backPressedCall(f.AdEventType.EXITAD_EVENT_DID_CLICKMORE, r) : l() : a.Function_ExitAd_DidExit == o ? null != d.backPressedCall && "function" == typeof d.backPressedCall ? d.backPressedCall(f.AdEventType.EXITAD_EVENT_DID_EXIT, r) : l() : a.Function_ExitAd_DidCancel == o && (null != d.backPressedCall && "function" == typeof d.backPressedCall ? d.backPressedCall(f.AdEventType.EXITAD_EVENT_DID_CANCEL, r) : l()));
+}
 }
 }
 },
@@ -668,16 +748,33 @@ Function_Reward_DidLoadFail: "reward_didloadfail",
 Function_Reward_DidLoadSuccess: "reward_didloadsuccess",
 Function_Interstitial_DidLoadFail: "interstitial_didloadfail",
 Function_Interstitial_DidLoadSuccess: "interstitial_didloadsuccess",
-Function_ExitAd_DidShow: "exitad_didshow",
-Function_ExitAd_DidClick: "exitad_didclick",
-Function_ExitAd_DidClickMore: "exitad_didclickmore",
-Function_ExitAd_DidExit: "exitad_onexit",
-Function_ExitAd_DidCancel: "exitad_oncancel",
 Function_Icon_DidLoad: "icon_didload",
 Function_Icon_DidLoadFail: "icon_didloadfail",
 Function_Icon_DidShow: "icon_didshow",
-Function_Icon_DidClick: "icon_didclick"
-}, d = {
+Function_Icon_DidClick: "icon_didclick",
+Action_Doctor_ON_DUTY: "auto_ad_checking_doctor_on_duty",
+Action_Doctor_OFF_DUTY: "auto_ad_checking_doctor_off_duty",
+Action_Doctor_Ad_IL_LoadOk_Reply: "auto_ad_il_load_ok_reply",
+Action_Doctor_Ad_IL_LoadFail_Reply: "auto_ad_il_load_fail_reply",
+Action_Doctor_Ad_IL_WillShow_Reply: "auto_ad_il_willshow_reply",
+Action_Doctor_Ad_IL_DidShow_Reply: "auto_ad_il_didshow_reply",
+Action_Doctor_Ad_IL_DidClick_Reply: "auto_ad_il_didclick_reply",
+Action_Doctor_Ad_IL_DidClose_Reply: "auto_ad_il_didclose_reply",
+Action_Doctor_Ad_RD_LoadOk_Reply: "auto_ad_rd_load_ok_reply",
+Action_Doctor_Ad_RD_LoadFail_Reply: "auto_ad_rd_load_fail_reply",
+Action_Doctor_Ad_RD_WillShow_Reply: "auto_ad_rd_willshow_reply",
+Action_Doctor_Ad_RD_DidShow_Reply: "auto_ad_rd_didshow_reply",
+Action_Doctor_Ad_RD_DidClick_Reply: "auto_ad_rd_didclick_reply",
+Action_Doctor_Ad_RD_DidClose_Reply: "auto_ad_rd_didclose_reply",
+Action_Doctor_Ad_RD_Given_Reply: "auto_ad_rd_reward_given_reply",
+Action_Doctor_Ad_RD_Cancel_Reply: "auto_ad_rd_reward_cancel_reply",
+Function_Doctor_IL_Show_AdId: "auto_sample_ad_il_show_placeid",
+Function_Doctor_RD_Show_AdId: "auto_sample_ad_rd_show_placeid",
+Function_Doctor_IL_Show_Request: "invoke_plugin_ad_il_show_request",
+Function_Doctor_RD_Show_Request: "invoke_plugin_ad_rd_show_request",
+Function_Doctor_IL_Load_Request: "invoke_plugin_ad_il_load_request",
+Function_Doctor_RD_Load_Request: "invoke_plugin_ad_rd_load_request"
+}, u = {
 map: new Object(),
 length: 0,
 rewardLoadFailCall: null,
@@ -691,219 +788,217 @@ this.rewardLoadSuccessCall = null;
 size: function() {
 return this.length;
 },
-put: function(t, i) {
-this.map["_" + t] || ++this.length;
-this.map["_" + t] = i;
+put: function(e, n) {
+this.map["_" + e] || ++this.length;
+this.map["_" + e] = n;
 },
-remove: function(t) {
-if (this.map["_" + t]) {
+remove: function(e) {
+if (this.map["_" + e]) {
 --this.length;
-return delete this.map["_" + t];
+return delete this.map["_" + e];
 }
 return !1;
 },
-exist: function(t) {
-return !!this.map["_" + t];
+exist: function(e) {
+return !!this.map["_" + e];
 },
-get: function(t) {
-return this.map["_" + t] ? this.map["_" + t] : null;
+get: function(e) {
+return this.map["_" + e] ? this.map["_" + e] : null;
 },
 print: function() {
-var t = "";
-for (var i in this.map) t += "/n" + i + "  Value:" + this.map[i];
+var e = "";
+for (var n in this.map) e += "/n" + n + "  Value:" + this.map[n];
 l();
-return t;
+return e;
 },
 test: function() {
 this.put("1", function() {});
-this.put("2", function(t) {
-cc.log("===> js map function call at 2, v type: %s", "undefined" == typeof t ? "undefined" : n(t));
+this.put("2", function(e) {
+cc.log("===> js map function call at 2, v type: %s", "undefined" == typeof e ? "undefined" : o(e));
 });
 this.put("4", function() {});
 l(this.exist("1"));
 l(this.exist("3"));
-var t = this.get("2");
-t && t("========================");
+var e = this.get("2");
+e && e("========================");
 this.print();
 this.remove("1");
 this.remove("3");
 l(this.size());
 }
-}, r = function() {
-cc.sys.os === cc.sys.OS_IOS && null != f ? void 0 != f.upltvbridge && null != f.upltvbridge || (f.upltvbridge = o) : cc.sys.os === cc.sys.OS_ANDROID && null != f && (void 0 != f.upltvbridge && null != f.upltvbridge || (f.upltvbridge = s));
-}, u = {
+}, _ = function() {
+cc.sys.os === cc.sys.OS_IOS && null != f ? void 0 != f.openupbridge && null != f.openupbridge || (f.openupbridge = t) : cc.sys.os === cc.sys.OS_ANDROID && null != f && (void 0 != f.openupbridge && null != f.openupbridge || (f.openupbridge = c));
+}, p = {
 initSdkSuccessed: !1,
 initVokeCall: null,
-gdprcallbak: null,
-initSdkCallback: function(t) {
-"true" != t && 1 != t || (this.initSdkSuccessed = !0);
-cc.log("===> js initSdkCallback..., %s", t);
+initSdkCallback: function(e) {
+"true" != e && 1 != e || (this.initSdkSuccessed = !0);
+cc.log("===> js initSdkCallback..., %s", e);
 void 0 != this.initVokeCall && null != this.initVokeCall && "function" == typeof this.initVokeCall && this.initVokeCall(this.initSdkSuccessed);
 void 0 != this.initVokeCall && (this.initVokeCall = null);
 },
-vokeMethod: function(t) {
-a.handleVokeParams(t);
+vokeMethod: function(e) {
+a.handleVokeParams(e);
 },
-vokeILReadyMethod: function(t, i) {
-this.handleILReadyMethod(t, i);
+vokeILReadyMethod: function(e, n) {
+this.handleILReadyMethod(e, n);
 },
-handleILReadyMethod: function(t, i) {
-var e = "ILReady_" + t, n = d.get(e);
-if (null != n) {
-d.remove(e);
-if ("function" == typeof n) {
-var o = !1;
-"true" != i && 1 != i || (o = !0);
-n(o);
+handleILReadyMethod: function(e, n) {
+var i = "ILReady_" + e, o = u.get(i);
+if (null != o) {
+u.remove(i);
+if ("function" == typeof o) {
+var t = !1;
+"true" != n && 1 != n || (t = !0);
+o(t);
 }
 }
 }
 }, f = f || {
-upltvbridge: null,
-intSdk: function(t, i) {
+openupbridge: null,
+initSdk: function(e, n, i, o) {
 if (1 != cc.bridgeInterface.initSdkSuccessed) {
+if (void 0 != o && null != o && "function" == typeof o) {
 l();
-if (void 0 != i && null != i && "function" == typeof i) {
-l();
-cc.bridgeInterface.initVokeCall = i;
+cc.bridgeInterface.initVokeCall = o;
 }
-var e = "cc.bridgeInterface.vokeMethod", n = "cc.bridgeInterface.initSdkCallback";
-r();
+var t = "cc.bridgeInterface.vokeMethod", c = "cc.bridgeInterface.initSdkCallback";
+_();
 if (cc.sys.os === cc.sys.OS_IOS) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-this.upltvbridge.setShowLog(!1);
-this.upltvbridge.initIosSDK(t, e, n);
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == n || "" == n) {
+cc.log("===> js initSdk failed, iosAppKey is undefined or empty.");
+return;
 }
-} else if (cc.sys.os === cc.sys.OS_ANDROID && void 0 != this.upltvbridge && null != this.upltvbridge) {
-this.upltvbridge.setShowLog(!1);
-this.upltvbridge.initAndroidSDK(t, e, n);
+if ("string" != typeof n) {
+cc.log("===> js initSdk failed, iosAppKey is not string type.");
+return;
+}
+if (void 0 == i || 0 != i && 1 != i && 2 != i) {
+cc.log("===> js initSdk WARNING: iosZone iswrong value, will be setted to 0");
+i = 0;
+}
+this.openupbridge.setShowLog(!1);
+this.openupbridge.initIosSDK(n, i, t, c);
+}
+} else if (cc.sys.os === cc.sys.OS_ANDROID) {
+if (void 0 == e && "" == e) {
+l();
+return;
+}
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+this.openupbridge.setShowLog(!1);
+this.openupbridge.initAndroidSDK(e, t, c);
+}
 }
 } else l();
 },
-initAbtConfigJson: function(t, i, e, n, o, s, l) {
-var c = null;
-if (void 0 != l && null != l && l instanceof Array) {
-var a = l.length;
-c = '{"array":[';
-for (var d = 0; d < a; d++) {
-c += '"' + l[d];
-c += d < a - 1 ? '",' : '"]}';
+initAbtConfigJson: function(e, n, i, o, t, c, s) {
+var l = null;
+if (void 0 != s && null != s && s instanceof Array) {
+var d = s.length;
+l = '{"array":[';
+for (var r = 0; r < d; r++) {
+l += '"' + s[r];
+l += r < d - 1 ? '",' : '"]}';
 }
 }
-void 0 == i && (i = !1);
-void 0 == e && (e = 0);
-void 0 == n && (n = "");
+void 0 == n && (n = !1);
+void 0 == i && (i = 0);
 void 0 == o && (o = "");
-void 0 == s && (s = -1);
-cc.sys.os === cc.sys.OS_IOS ? void 0 != this.upltvbridge && null != this.upltvbridge && this.upltvbridge.initIosAbtConfigJson(t, i, e, n, o, s, c) : cc.sys.os === cc.sys.OS_ANDROID && void 0 != this.upltvbridge && null != this.upltvbridge && this.upltvbridge.initAndroidAbtConfigJson(t, i, e, n, o, s, c);
+void 0 == t && (t = "");
+void 0 == c && (c = -1);
+cc.sys.os === cc.sys.OS_IOS ? void 0 != this.openupbridge && null != this.openupbridge && this.openupbridge.initIosAbtConfigJson(e, n, i, o, t, c, l) : cc.sys.os === cc.sys.OS_ANDROID && void 0 != this.openupbridge && null != this.openupbridge && this.openupbridge.initAndroidAbtConfigJson(e, n, i, o, t, c, l);
 },
-getAbtConfig: function(t) {
-if (void 0 != t && null != t && "string" == typeof t) if (cc.sys.os === cc.sys.OS_IOS) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-return "" == (i = this.upltvbridge.getIosAbtConfig(t)) ? null : i;
+getAbtConfig: function(e) {
+if (void 0 != e && null != e && "string" == typeof e) if (cc.sys.os === cc.sys.OS_IOS) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+return "" == (n = this.openupbridge.getIosAbtConfig(e)) ? null : n;
 }
-} else if (cc.sys.os === cc.sys.OS_ANDROID && void 0 != this.upltvbridge && null != this.upltvbridge) {
-var i;
-return "" == (i = this.upltvbridge.getAndroidAbtConfig(t)) ? null : i;
+} else if (cc.sys.os === cc.sys.OS_ANDROID && void 0 != this.openupbridge && null != this.openupbridge) {
+var n;
+return "" == (n = this.openupbridge.getAndroidAbtConfig(e)) ? null : n;
 }
 return null;
 },
 showRewardDebugUI: function() {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.showIosRewardDebugUI() : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidRewardDebugUI());
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.showIosRewardDebugUI() : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.showAndroidRewardDebugUI());
 },
-setRewardVideoLoadCallback: function(t, i) {
-if (void 0 != t && null != t && "function" == typeof t) if (void 0 != i && null != i && "function" == typeof i) {
-d.rewardLoadFailCall = void 0 == i ? null : i;
-d.rewardLoadSuccessCall = void 0 == t ? null : t;
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.setIosRewardVideoLoadCallback() : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.setAndroidRewardVideoLoadCallback());
+setRewardVideoLoadCallback: function(e, n) {
+if (void 0 != e && null != e && "function" == typeof e) if (void 0 != n && null != n && "function" == typeof n) {
+u.rewardLoadFailCall = void 0 == n ? null : n;
+u.rewardLoadSuccessCall = void 0 == e ? null : e;
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.setIosRewardVideoLoadCallback() : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.setAndroidRewardVideoLoadCallback());
 } else l(); else l();
 },
-setRewardVideoShowCallback: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t || "function" != typeof t) {
-l();
-return;
-}
-d.rewardShowCall = t;
-}
-},
-isRewardReady: function() {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (cc.sys.os === cc.sys.OS_IOS) return this.upltvbridge.isIosRewardReady();
-if (cc.sys.os === cc.sys.OS_ANDROID) return this.upltvbridge.isAndroidRewardReady();
-}
-return !1;
-},
-showRewardVideo: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-void 0 == t && (t = null);
-cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.showIosRewardVideo(t) : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidRewardVideo(t);
-}
-},
-isInterstitialReadyAsyn: function(t, i) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
-l();
-return;
-}
-if (i == t || null == i) {
-l();
-return;
-}
-if ("function" != typeof i) {
-l();
-return;
-}
-var e = "ILReady_" + t;
-d.put(e, i);
-cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.isIosInterstitialReadyAsyn(t, "cc.bridgeInterface.vokeILReadyMethod") : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.isAndroidInterstitialReadyAsyn(t, "cc.bridgeInterface.vokeILReadyMethod");
-}
-},
-isInterstitialReady: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
-l();
-return;
-}
-if (cc.sys.os === cc.sys.OS_IOS) return this.upltvbridge.isIosInterstitialReady(t);
-if (cc.sys.os === cc.sys.OS_ANDROID) return this.upltvbridge.isAndroidInterstitialReady(t);
-}
-return !1;
-},
-showInterstitialAd: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
-l();
-return;
-}
-cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.showIosInterstitialAd(t) : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidInterstitialAd(t);
-}
-},
-setInterstitialLoadCallback: function(t, i, e) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
-l();
-return;
-}
-if (void 0 == i || null == i || "function" != typeof i) {
-l();
-return;
-}
+setRewardVideoShowCallback: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
 if (void 0 == e || null == e || "function" != typeof e) {
 l();
 return;
 }
-var n = t + "_Interstitial", o = d.get(n) || {};
-o.interstitialLoadSuccessCall = i;
-o.interstitialLoadFailCall = e;
-d.put(n, o);
-l(d.size());
-cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.setIosInterstitialLoadCallback(t) : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.setAndroidInterstitialLoadCallback(t);
+u.rewardShowCall = e;
 }
 },
-setInterstitialShowCallback: function(t, i) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
+isRewardReady: function() {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (cc.sys.os === cc.sys.OS_IOS) return this.openupbridge.isIosRewardReady();
+if (cc.sys.os === cc.sys.OS_ANDROID) return this.openupbridge.isAndroidRewardReady();
+}
+return !1;
+},
+showRewardVideo: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+void 0 == e && (e = null);
+cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.showIosRewardVideo(e) : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.showAndroidRewardVideo(e);
+}
+},
+isInterstitialReadyAsyn: function(e, n) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
+l();
+return;
+}
+if (n == e || null == n) {
+l();
+return;
+}
+if ("function" != typeof n) {
+l();
+return;
+}
+var i = "ILReady_" + e;
+u.put(i, n);
+cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.isIosInterstitialReadyAsyn(e, "cc.bridgeInterface.vokeILReadyMethod") : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.isAndroidInterstitialReadyAsyn(e, "cc.bridgeInterface.vokeILReadyMethod");
+}
+},
+isInterstitialReady: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
+l();
+return;
+}
+if (cc.sys.os === cc.sys.OS_IOS) return this.openupbridge.isIosInterstitialReady(e);
+if (cc.sys.os === cc.sys.OS_ANDROID) return this.openupbridge.isAndroidInterstitialReady(e);
+}
+return !1;
+},
+showInterstitialAd: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
+l();
+return;
+}
+cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.showIosInterstitialAd(e) : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.showAndroidInterstitialAd(e);
+}
+},
+setInterstitialLoadCallback: function(e, n, i) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
+l();
+return;
+}
+if (void 0 == n || null == n || "function" != typeof n) {
 l();
 return;
 }
@@ -911,194 +1006,213 @@ if (void 0 == i || null == i || "function" != typeof i) {
 l();
 return;
 }
-var e = t, n = d.get(e) || {};
-n.interstitialShowCall = i;
-d.put(e, n);
+var o = e + "_Interstitial", t = u.get(o) || {};
+t.interstitialLoadSuccessCall = n;
+t.interstitialLoadFailCall = i;
+u.put(o, t);
+l(u.size());
+cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.setIosInterstitialLoadCallback(e) : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.setAndroidInterstitialLoadCallback(e);
+}
+},
+setInterstitialShowCallback: function(e, n) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
+l();
+return;
+}
+if (void 0 == n || null == n || "function" != typeof n) {
+l();
+return;
+}
+var i = e, o = u.get(i) || {};
+o.interstitialShowCall = n;
+u.put(i, o);
 }
 },
 showInterstitialDebugUI: function() {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.showIosInterstitialDebugUI() : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidInterstitialDebugUI());
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.showIosInterstitialDebugUI() : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.showAndroidInterstitialDebugUI());
 },
-removeBannerAdAt: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
+removeBannerAdAt: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
 l();
 return;
 }
-cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.removeIosBannerAdAt(t) : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.removeAndroidBannerAdAt(t);
+cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.removeIosBannerAdAt(e) : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.removeAndroidBannerAdAt(e);
 }
 },
-showBannerAdAtTop: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
+showBannerAdAtTop: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
 l();
 return;
 }
-cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.showIosBannerAdAtTop(t) : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidBannerAdAtTop(t);
+cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.showIosBannerAdAtTop(e) : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.showAndroidBannerAdAtTop(e);
 }
 },
-showBannerAdAtBottom: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
+showBannerAdAtBottom: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
 l();
 return;
 }
-cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.showIosBannerAdAtBottom(t) : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidBannerAdAtBottom(t);
+cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.showIosBannerAdAtBottom(e) : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.showAndroidBannerAdAtBottom(e);
 }
 },
 hideBannerAdAtTop: function() {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.hideIosBannerAdAtTop() : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.hideAndroidBannerAdAtTop());
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.hideIosBannerAdAtTop() : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.hideAndroidBannerAdAtTop());
 },
 hideBannerAdAtBottom: function() {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.hideIosBannerAdAtBottom() : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.hideAndroidBannerAdAtBottom());
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.hideIosBannerAdAtBottom() : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.hideAndroidBannerAdAtBottom());
 },
-setTopBannerPadingForIphoneX: function(t) {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.setIosTopBannerPading(t) : (cc.sys.os, 
+setTopBannerPadingForIphoneX: function(e) {
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.setIosTopBannerPading(e) : (cc.sys.os, 
 cc.sys.OS_ANDROID));
 },
-setBannerShowCallback: function(t, i) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
+setBannerShowCallback: function(e, n) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
 l();
 return;
 }
-if (void 0 == i || null == i || "function" != typeof i) {
+if (void 0 == n || null == n || "function" != typeof n) {
 l();
 return;
 }
-var e = d.get(t) || {};
-e.bannerEventCall = i;
-d.put(t, e);
+var i = u.get(e) || {};
+i.bannerEventCall = n;
+u.put(e, i);
 }
 },
-setIconCallback: function(t, i) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
+setIconCallback: function(e, n) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
 l();
 return;
 }
-if (void 0 == i || null == i || "function" != typeof i) {
+if (void 0 == n || null == n || "function" != typeof n) {
 l();
 return;
 }
-var e = d.get(t) || {};
-e.iconEventCall = i;
-d.put(t, e);
+var i = u.get(e) || {};
+i.iconEventCall = n;
+u.put(e, i);
 }
 },
-showIconAd: function(t, i, e, n, o, s) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == s || null == s) {
+showIconAd: function(e, n, i, o, t, c) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == c || null == c) {
 l();
 return;
 }
-cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.showAndroidIconAdAt(t, i, e, n, o, s);
-cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.showIosIconAdAt(t, i, e, n, o, s);
+cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.showAndroidIconAdAt(e, n, i, o, t, c);
+cc.sys.os === cc.sys.OS_IOS && this.openupbridge.showIosIconAdAt(e, n, i, o, t, c);
 }
 },
-removeIconAd: function(t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (void 0 == t || null == t) {
+removeIconAd: function(e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (void 0 == e || null == e) {
 l();
 return;
 }
-cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.removeAndroidIconAdAt(t);
-cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.removeIosIconAdAt(t);
+cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.removeAndroidIconAdAt(e);
+cc.sys.os === cc.sys.OS_IOS && this.openupbridge.removeIosIconAdAt(e);
 }
 },
 loadAdsByManual: function() {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.loadIosAdsByManual() : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.loadAndroidAdsByManual());
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.loadIosAdsByManual() : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.loadAndroidAdsByManual());
 },
 exitApp: function() {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_IOS ? this.upltvbridge.exitIosApp() : cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.exitAndroidApp());
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_IOS ? this.openupbridge.exitIosApp() : cc.sys.os === cc.sys.OS_ANDROID && this.openupbridge.exitAndroidApp());
 },
-setManifestPackageName: function(t) {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.upltvbridge.setAndroidManifestPackageName(t) : (cc.sys.os, 
+setManifestPackageName: function(e) {
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.setAndroidManifestPackageName(e) : (cc.sys.os, 
 cc.sys.OS_ANDROID));
 },
 onBackPressed: function() {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.upltvbridge.onAndroidBackPressed() : (cc.sys.os, 
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.onAndroidBackPressed() : (cc.sys.os, 
 cc.sys.OS_IOS));
 },
-setCustomerId: function(t) {
-r();
-if (void 0 != this.upltvbridge && null != this.upltvbridge) if (cc.sys.os === cc.sys.OS_ANDROID) {
-if (void 0 == t || null == t) {
+setCustomerId: function(e) {
+_();
+if (void 0 != this.openupbridge && null != this.openupbridge) if (cc.sys.os === cc.sys.OS_ANDROID) {
+if (void 0 == e || null == e) {
 l();
 return;
 }
-this.upltvbridge.setAndroidCustomerId(t);
+this.openupbridge.setAndroidCustomerId(e);
 } else cc.sys.os, cc.sys.OS_IOS;
 },
-setBackPressedCallback: function(t) {
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_ANDROID ? d.backPressedCall = void 0 == t ? null : t : (cc.sys.os, 
-cc.sys.OS_IOS));
-},
-updateAccessPrivacyInfoStatus: function(t) {
-r();
-void 0 != t && null != t && (t == f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown || t == f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted || t == f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined) ? void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.upltvbridge.updateAndroidAccessPrivacyInfoStatus(t) : cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.updateIosAccessPrivacyInfoStatus(t)) : l();
+updateAccessPrivacyInfoStatus: function(e) {
+_();
+void 0 != e && null != e && (e == f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown || e == f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted || e == f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined) ? void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.updateAndroidAccessPrivacyInfoStatus(e) : cc.sys.os === cc.sys.OS_IOS && this.openupbridge.updateIosAccessPrivacyInfoStatus(e)) : l();
 },
 getAccessPrivacyInfoStatus: function() {
-r();
-var t = 0;
-void 0 != this.upltvbridge && null != this.upltvbridge && (cc.sys.os === cc.sys.OS_ANDROID ? t = this.upltvbridge.getAndroidAccessPrivacyInfoStatus() : cc.sys.os === cc.sys.OS_IOS && (t = this.upltvbridge.getIosAccessPrivacyInfoStatus()));
-return 1 == t ? f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted : 2 == t ? f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined : f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown;
+_();
+var e = 0;
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? e = this.openupbridge.getAndroidAccessPrivacyInfoStatus() : cc.sys.os === cc.sys.OS_IOS && (e = this.openupbridge.getIosAccessPrivacyInfoStatus()));
+return 1 == e ? f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted : 2 == e ? f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined : f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown;
 },
-notifyAccessPrivacyInfoStatus: function(t) {
-r();
-if (void 0 != t && null != t) if ("function" == typeof t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-u.gdprcallbak.functionId = u.gdprcallbak.functionId + 1;
-var i = u.gdprcallbak.functionId, e = "" + i;
-d.put(e, t);
-var n = "cc.bridgeInterface.gdprcallbak.javaCall";
-cc.sys.os === cc.sys.OS_ANDROID ? this.upltvbridge.notifyAndroidAccessPrivacyInfoStatus(n, i) : cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.notifyIosAccessPrivacyInfoStatus(n, e);
+notifyAccessPrivacyInfoStatus: function(e) {
+_();
+if (void 0 != e && null != e) if ("function" == typeof e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+f.GDPRPermissionEnum.functionId = f.GDPRPermissionEnum.functionId + 1;
+var n = f.GDPRPermissionEnum.functionId, i = "" + n;
+u.put(i, e);
+var o = "openup.GDPRPermissionEnum.javaCall";
+cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.notifyAndroidAccessPrivacyInfoStatus(o, n) : cc.sys.os === cc.sys.OS_IOS && this.openupbridge.notifyIosAccessPrivacyInfoStatus(o, i);
 }
 } else l(); else l();
 },
-isEuropeanUnionUser: function(t) {
-r();
-if (void 0 != t && null != t) if ("function" == typeof t) {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-u.gdprcallbak.functionId = u.gdprcallbak.functionId + 1;
-var i = u.gdprcallbak.functionId, e = "" + i;
-d.put(e, t);
-var n = "cc.bridgeInterface.gdprcallbak.javaCall";
-cc.sys.os === cc.sys.OS_ANDROID ? this.upltvbridge.isAndroidEuropeanUnionUser(n, i) : cc.sys.os === cc.sys.OS_IOS && this.upltvbridge.isIosEuropeanUnionUser(n, e);
+isEuropeanUnionUser: function(e) {
+_();
+if (void 0 != e && null != e) if ("function" == typeof e) {
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+f.GDPRPermissionEnum.functionId = f.GDPRPermissionEnum.functionId + 1;
+var n = f.GDPRPermissionEnum.functionId, i = "" + n;
+u.put(i, e);
+var o = "openup.GDPRPermissionEnum.javaCall";
+cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.isAndroidEuropeanUnionUser(o, n) : cc.sys.os === cc.sys.OS_IOS && this.openupbridge.isIosEuropeanUnionUser(o, i);
 }
 } else l(); else l();
 },
 isOnlineDebugReportEnable: function() {
-return (cc.sys.os === cc.sys.OS_ANDROID || cc.sys.os === cc.sys.OS_IOS) && this.upltvbridge.isOnlineDebugReportEnable();
+return (cc.sys.os === cc.sys.OS_ANDROID || cc.sys.os === cc.sys.OS_IOS) && this.openupbridge.isOnlineDebugReportEnable();
 },
-onlineDebugReport: function(t, i, e) {
-cc.sys.os !== cc.sys.OS_ANDROID && cc.sys.os !== cc.sys.OS_IOS || (a.Function_Receive_Callback == t ? this.upltvbridge.reportIvokePluginMethodReceive(i) : a.Function_Reward_WillOpen == t || (a.Function_Reward_DidOpen == t ? this.upltvbridge.reportRDShowDid(i) : a.Function_Reward_DidClick == t ? this.upltvbridge.reportRDRewardClick(i) : a.Function_Reward_DidClose == t ? this.upltvbridge.reportRDRewardClose(i) : a.Function_Reward_DidGivien == t ? this.upltvbridge.reportRDRewardGiven(i) : a.Function_Reward_DidAbandon == t ? this.upltvbridge.reportRDRewardCancel(i) : a.Function_Interstitial_Willshow == t || (a.Function_Interstitial_Didshow == t ? this.upltvbridge.reportILShowDid(i, e) : a.Function_Interstitial_Didclick == t ? this.upltvbridge.reportILClick(i, e) : a.Function_Interstitial_Didclose == t && this.upltvbridge.reportILClose(i, e))));
+onlineDebugReport: function(e, n, i) {
+cc.sys.os !== cc.sys.OS_ANDROID && cc.sys.os !== cc.sys.OS_IOS || (a.Function_Receive_Callback == e ? this.openupbridge.reportIvokePluginMethodReceive(n) : a.Function_Reward_WillOpen == e || (a.Function_Reward_DidOpen == e ? this.openupbridge.reportRDShowDid(n) : a.Function_Reward_DidClick == e ? this.openupbridge.reportRDRewardClick(n) : a.Function_Reward_DidClose == e ? this.openupbridge.reportRDRewardClose(n) : a.Function_Reward_DidGivien == e ? this.openupbridge.reportRDRewardGiven(n) : a.Function_Reward_DidAbandon == e ? this.openupbridge.reportRDRewardCancel(n) : a.Function_Interstitial_Willshow == e || (a.Function_Interstitial_Didshow == e ? this.openupbridge.reportILShowDid(n, i) : a.Function_Interstitial_Didclick == e ? this.openupbridge.reportILClick(n, i) : a.Function_Interstitial_Didclose == e && this.openupbridge.reportILClose(n, i))));
 },
 isLogOpened: function() {
-if (void 0 != this.upltvbridge && null != this.upltvbridge) {
-if (cc.sys.os === cc.sys.OS_IOS) return this.upltvbridge.isIosLogOpened();
-if (cc.sys.os === cc.sys.OS_ANDROID) return this.upltvbridge.isAndroidLogOpened();
+if (void 0 != this.openupbridge && null != this.openupbridge) {
+if (cc.sys.os === cc.sys.OS_IOS) return this.openupbridge.isIosLogOpened();
+if (cc.sys.os === cc.sys.OS_ANDROID) return this.openupbridge.isAndroidLogOpened();
 }
 return !1;
 },
-setIsChild: function(t) {
-void 0 != this.upltvbridge && null != this.upltvbridge && cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.setAndroidIsChild(t);
+autoOneKeyInspect: function() {
+l();
+void 0 != this.openupbridge && null != this.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.autoOneKeyInspectByAndroid() : cc.sys.os === cc.sys.OS_IOS && this.openupbridge.autoOneKeyInspectByIos());
 },
-setBirthday: function(t, i) {
-void 0 != this.upltvbridge && null != this.upltvbridge && cc.sys.os === cc.sys.OS_ANDROID && this.upltvbridge.setAndroidBirthday(t, i);
+setAppsFlyerUID: function(e) {
+_();
+0 != arguments.length && void 0 != e && "string" == typeof e && "" != e ? void 0 != this.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.setAppsFlyerUIDByAndroid(e) : cc.sys.os === cc.sys.OS_IOS && this.openupbridge.setAppsFlyerUIDByIos(e)) : l();
+},
+setAdjustId: function(e) {
+_();
+0 != arguments.length && void 0 != e && "string" == typeof e && "" != e ? void 0 != this.openupbridge && (cc.sys.os === cc.sys.OS_ANDROID ? this.openupbridge.setAdjustIdByAndroid(e) : cc.sys.os === cc.sys.OS_IOS && this.openupbridge.setAdjustIdByIos(e)) : l();
 }
 };
-u.gdprcallbak = {
+f.GDPRPermissionEnum = {
 functionId: 0,
-javaCall: function(t, i) {
-var e = "" + t, n = d.get(e);
-if (null != n) {
-null != n && "function" == typeof n && n(i);
-d.remove(e);
+javaCall: function(e, n) {
+var i = "" + e, o = u.get(i);
+if (null != o) {
+null != o && "function" == typeof o && o(n);
+u.remove(i);
 }
 }
 };
-f.GDPRPermissionEnum = {};
 f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown = 0;
 f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted = 1;
 f.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined = 2;
@@ -1114,22 +1228,23 @@ f.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE = 7;
 f.AdEventType.BANNER_EVENT_DID_SHOW = 8;
 f.AdEventType.BANNER_EVENT_DID_CLICK = 9;
 f.AdEventType.BANNER_EVENT_DID_REMOVED = 10;
-f.AdEventType.EXITAD_EVENT_DID_SHOW = 11;
-f.AdEventType.EXITAD_EVENT_DID_CLICK = 12;
-f.AdEventType.EXITAD_EVENT_DID_CLICKMORE = 13;
-f.AdEventType.EXITAD_EVENT_DID_EXIT = 14;
-f.AdEventType.EXITAD_EVENT_DID_CANCEL = 15;
 f.AdEventType.ICON_EVENT_DID_LOAD = 16;
 f.AdEventType.ICON_EVENT_DID_LOADFAIL = 17;
 f.AdEventType.ICON_EVENT_DID_SHOW = 18;
 f.AdEventType.ICON_EVENT_DID_CLICK = 19;
 f.AdEventType.VIDEO_EVENT_WILL_SHOW = 20;
 f.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW = 21;
-i.exports.upltv = f;
-i.exports.bridgeInterface = u;
+n.exports.openup = f;
+n.exports.bridgeInterface = p;
 cc._RF.pop();
 }, {
-UPLTVAndroid: "UPLTVAndroid",
-UPLTVIos: "UPLTVIos"
-} ]
-}, {}, [ "HelloWorld", "UPLTV", "UPLTVAndroid", "UPLTVIos" ]);
+OpenUpAndroid: "OpenUpAndroid",
+OpenUpIos: "OpenUpIos"
+} ],
+"use_v2.1.x_cc.Action": [ function(e, n, i) {
+"use strict";
+cc._RF.push(n, "1207bbX+aRFrqA8Y0qtUg2C", "use_v2.1.x_cc.Action");
+cc.macro.ROTATE_ACTION_CCW = !0;
+cc._RF.pop();
+}, {} ]
+}, {}, [ "HelloWorld", "OpenUpAndroid", "OpenUpIos", "OpenUpSDK", "use_v2.1.x_cc.Action" ]);

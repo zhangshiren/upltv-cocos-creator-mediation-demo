@@ -4,8 +4,8 @@ cc._RF.push(module, 'd92acejs95ELLuigN2QigjN', 'HelloWorld', __filename);
 
 "use strict";
 
-var upltv = require("UPLTV").upltv;
-cc.bridgeInterface = require("UPLTV").bridgeInterface;
+var openup = require("OpenUpSDK").openup;
+cc.bridgeInterface = require("OpenUpSDK").bridgeInterface;
 
 cc.Class({
     extends: cc.Component,
@@ -79,7 +79,7 @@ cc.Class({
         var self = this;
         this.initSdk.node.on('click', function (event) {
             cc.log("===> js intSdk result");
-            upltv.initSdk(self.androidAppKey, self.iosAppKey, 0, function (r) {
+            openup.initSdk(self.androidAppKey, self.iosAppKey, 0, function (r) {
                 self.label.string = "js intSdk result:" + r;
                 cc.log("===> js intSdk result:, %s", r);
             });
@@ -87,38 +87,38 @@ cc.Class({
 
         this.oneKeyInspect.node.on('click', function (event) {
             self.label.string = "autoOneKeyInspect clicked";
-            upltv.autoOneKeyInspect();
+            openup.autoOneKeyInspect();
         });
 
         this.IsLogOpened.node.on("click", function (i) {
-            var b = upltv.isLogOpened();
+            var b = openup.isLogOpened();
             cc.log("===> js IsLogOpened result:, %s", b);
             self.label.string = "js IsLogOpened result:" + b;
         });
 
         this.initGDPR.node.on('click', function (event) {
             cc.log("===> js GDPR start");
-            var e = upltv.getAccessPrivacyInfoStatus();
+            var e = openup.getAccessPrivacyInfoStatus();
             cc.log("=====> js getAccessPrivacyInfoStatus status: %d ", e);
-            if (e == upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown) {
-                upltv.isEuropeanUnionUser(function (result) {
+            if (e == openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown) {
+                openup.isEuropeanUnionUser(function (result) {
                     if (result) {
-                        upltv.notifyAccessPrivacyInfoStatus(function (value) {
+                        openup.notifyAccessPrivacyInfoStatus(function (value) {
                             cc.log("=====> js notifyAccessPrivacyInfoStatusCallBack callback: %d ", value);
-                            upltv.intSdk(0, function (r) {
+                            openup.initSdk(self.androidAppKey, self.iosAppKey, 0, function (r) {
                                 cc.log("===> js intSdk result:, %s", r);
                                 self.label.string = "js intSdk result:" + r;
                             });
                         });
                     } else {
-                        upltv.intSdk(0, function (r) {
+                        openup.initSdk(self.androidAppKey, self.iosAppKey, 0, function (r) {
                             cc.log("===> js intSdk result:, %s", r);
                             self.label.string = "js intSdk result:" + r;
                         });
                     }
                 });
             } else {
-                upltv.intSdk(0, function (r) {
+                openup.initSdk(self.androidAppKey, self.iosAppKey, 0, function (r) {
                     cc.log("===> js intSdk result:, %s", r);
                     self.label.string = "js intSdk result:" + r;
                 });
@@ -130,12 +130,12 @@ cc.Class({
     abTestFunc: function abTestFunc() {
         var self = this;
         this.initABTest.node.on('click', function (event) {
-            upltv.initAbtConfigJson("u89731", true, 0, "Facebook", "M", -1, ["This is the first element.", "The second one.", "The last one."]);
+            openup.initAbtConfigJson("u89731", true, 0, "Facebook", "M", -1, ["This is the first element.", "The second one.", "The last one."]);
             self.label.string = "ABTest初始化成功";
         });
 
         this.getABConfig.node.on('click', function (event) {
-            var r = upltv.getAbtConfig("pass");
+            var r = openup.getAbtConfig("pass");
             cc.log("===> js getAbtConfig rr 3333: %s", r);
             self.label.string = "js getAbtConfig ：" + r;
         });
@@ -144,19 +144,19 @@ cc.Class({
     rewardViedoFunc: function rewardViedoFunc() {
         var self = this;
         this.rdShowCall.node.on('click', function (event) {
-            upltv.setRewardVideoShowCallback(function (type, cpid) {
+            openup.setRewardVideoShowCallback(function (type, cpid) {
                 var event = "unkown";
-                if (type == upltv.AdEventType.VIDEO_EVENT_WILL_SHOW) {
+                if (type == openup.AdEventType.VIDEO_EVENT_WILL_SHOW) {
                     event = "Will_Show";
-                } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_SHOW) {
+                } else if (type == openup.AdEventType.VIDEO_EVENT_DID_SHOW) {
                     event = "Did_Show";
-                } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_CLICK) {
+                } else if (type == openup.AdEventType.VIDEO_EVENT_DID_CLICK) {
                     event = "Did_Click";
-                } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_CLOSE) {
+                } else if (type == openup.AdEventType.VIDEO_EVENT_DID_CLOSE) {
                     event = "Did_Close";
-                } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD) {
+                } else if (type == openup.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD) {
                     event = "Did_Given_Reward";
-                } else if (type == upltv.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD) {
+                } else if (type == openup.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD) {
                     event = "Did_Abandon_Reward";
                 }
                 cc.log("===> js RewardVideo Show Callback, event: %s, at: %s", event, cpid);
@@ -166,7 +166,7 @@ cc.Class({
         });
 
         this.rdLoadCall.node.on('click', function (event) {
-            upltv.setRewardVideoLoadCallback(function (cpid, msg) {
+            openup.setRewardVideoLoadCallback(function (cpid, msg) {
                 cc.log("===> js RewardVideo LoadCallback Success at: %s", cpid);
                 self.label.string = "js RewardVideo LoadCallback Success at:" + cpid;
             }, function (cpid, msg) {
@@ -176,19 +176,19 @@ cc.Class({
         });
 
         this.rdIsReady.node.on('click', function (event) {
-            var r = upltv.isRewardReady();
+            var r = openup.isRewardReady();
             cc.log("===> js isRewardReady r: %s", r.toString());
             self.label.string = "js isRewardReady: " + r.toString();
         });
 
         this.rdShow.node.on('click', function (event) {
-            var r = upltv.isRewardReady();
+            var r = openup.isRewardReady();
             cc.log("===> js isRewardReady r: %s", r);
             self.label.sting = "js isRewardReady r:" + r;
             if (r == true) {
                 cc.log("===> js showRewardVideo call");
                 self.label.string = "js showRewardVideo 成功";
-                upltv.showRewardVideo(self.rewardPlaceId);
+                openup.showRewardVideo(self.rewardPlaceId);
             }
         });
     },
@@ -197,15 +197,15 @@ cc.Class({
     ilViewFunc: function ilViewFunc() {
         var self = this;
         this.ILShowCall.node.on('click', function (event) {
-            upltv.setInterstitialShowCallback(self.ilPlaceId, function (type, cpid) {
+            openup.setInterstitialShowCallback(self.ilPlaceId, function (type, cpid) {
                 var event = "unkown";
-                if (type == upltv.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW) {
+                if (type == openup.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW) {
                     event = "Will_Show";
-                } else if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_SHOW) {
+                } else if (type == openup.AdEventType.INTERSTITIAL_EVENT_DID_SHOW) {
                     event = "Did_Show";
-                } else if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLICK) {
+                } else if (type == openup.AdEventType.INTERSTITIAL_EVENT_DID_CLICK) {
                     event = "Did_Click";
-                } else if (type == upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE) {
+                } else if (type == openup.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE) {
                     event = "Did_Close";
                 }
                 cc.log("===> js il ad event: %s, at placementid: %s", event, cpid);
@@ -214,7 +214,7 @@ cc.Class({
         });
 
         this.ILLoadCall.node.on('click', function (event) {
-            upltv.setInterstitialLoadCallback(self.ilPlaceId, function (cpid, msg) {
+            openup.setInterstitialLoadCallback(self.ilPlaceId, function (cpid, msg) {
                 cc.log("===> js il load callback success: %s at placementid:%s", msg, cpid);
                 self.label.string = "js il load callback success: " + cpid;
             }, function (cpid, msg) {
@@ -224,18 +224,18 @@ cc.Class({
         });
 
         this.ILIsReady.node.on('click', function (event) {
-            upltv.isInterstitialReadyAsyn(self.ilPlaceId, function (r) {
+            openup.isInterstitialReadyAsyn(self.ilPlaceId, function (r) {
                 cc.log("===> js il ad isreadyasyn: %s at placementid:%s", r, self.ilPlaceId);
                 self.label.string = "js il ad isreadyasyn: " + self.ilPlaceId;
             });
         });
 
         this.ILShow.node.on('click', function (event) {
-            var r = upltv.isInterstitialReady(self.ilPlaceId);
+            var r = openup.isInterstitialReady(self.ilPlaceId);
             cc.log("===> js il ad isready: %s at placementid:%s", r, self.ilPlaceId);
             self.label.string = "js il ad isready: " + self.ilPlaceId;
             if (r == true) {
-                upltv.showInterstitialAd(self.ilPlaceId);
+                openup.showInterstitialAd(self.ilPlaceId);
                 self.label.string = "插屏展示成功";
             }
         });
@@ -244,13 +244,13 @@ cc.Class({
     bannerViewFunc: function bannerViewFunc() {
         var self = this;
         this.bannerCall.node.on('click', function (event) {
-            upltv.setBannerShowCallback(self.bannerPlaceId, function (type, cpadid) {
+            openup.setBannerShowCallback(self.bannerPlaceId, function (type, cpadid) {
                 var event = "unkown";
-                if (type == upltv.AdEventType.BANNER_EVENT_DID_SHOW) {
+                if (type == openup.AdEventType.BANNER_EVENT_DID_SHOW) {
                     event = "Did_Show";
-                } else if (type == upltv.AdEventType.BANNER_EVENT_DID_CLICK) {
+                } else if (type == openup.AdEventType.BANNER_EVENT_DID_CLICK) {
                     event = "Did_Click";
-                } else if (type == upltv.AdEventType.BANNER_EVENT_DID_REMOVED) {
+                } else if (type == openup.AdEventType.BANNER_EVENT_DID_REMOVED) {
                     event = "Did_Removed";
                 }
                 cc.log("=====> banner event: %s, at : %s", event, cpadid);
@@ -258,23 +258,23 @@ cc.Class({
             });
         });
         this.showTopBanner.node.on('click', function (event) {
-            upltv.showBannerAdAtTop(self.bannerPlaceId);
+            openup.showBannerAdAtTop(self.bannerPlaceId);
             self.label.string = "顶部Banner展示";
         });
 
         this.showBottomBanner.node.on('click', function (event) {
-            upltv.showBannerAdAtBottom(self.bannerPlaceId);
+            openup.showBannerAdAtBottom(self.bannerPlaceId);
             self.label.string = "底部Banner展示";
         });
 
         this.hideAllBanner.node.on('click', function (event) {
-            upltv.hideBannerAdAtTop();
-            upltv.hideBannerAdAtBottom();
+            openup.hideBannerAdAtTop();
+            openup.hideBannerAdAtBottom();
             self.label.string = "隐藏展示";
         });
 
         this.removeAllBanner.node.on('click', function (event) {
-            upltv.removeBannerAdAt(self.bannerPlaceId);
+            openup.removeBannerAdAt(self.bannerPlaceId);
             self.label.string = "移除展示";
         });
     },

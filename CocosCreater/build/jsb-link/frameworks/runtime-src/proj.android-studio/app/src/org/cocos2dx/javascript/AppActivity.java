@@ -32,7 +32,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Configuration;
 
-import com.up.ads.UPAdsSdk;
+import com.openup.sdk.OpenUpSDK;
 
 public class AppActivity extends Cocos2dxActivity {
 
@@ -66,7 +66,7 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onResume() {
         super.onResume();
         SDKWrapper.getInstance().onResume();
-        UPAdsSdk.onApplicationResume();
+        OpenUpSDK.onApplicationResume();
 
     }
 
@@ -74,7 +74,7 @@ public class AppActivity extends Cocos2dxActivity {
     protected void onPause() {
         super.onPause();
         SDKWrapper.getInstance().onPause();
-        UPAdsSdk.onApplicationPause();
+        OpenUpSDK.onApplicationPause();
     }
 
     @Override

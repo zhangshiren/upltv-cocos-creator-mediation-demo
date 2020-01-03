@@ -1,41 +1,39 @@
 //在使用的地方添加以下两行代码即可
-//var upltv = require("UPLTV").upltv;
-//cc.bridgeInterface = require("UPLTV").bridgeInterface;
 
-var upltvoc = require("UPLTVIos");
-var upltva = require("UPLTVAndroid");
+var openupoc = require("OpenUpIos");
+var openupja  = require("OpenUpAndroid");
 
-var isShowLog = true; // 测试时设置为true
+var isShowLog = false; // 测试时设置为true
 
 
 var doctorWorking = false; //是否打开dotor页面,add in 3008.5
 
 var printLog = function (msg) {
-    // cc.log("===> js call printJsLog() " + (upltv));
-    // cc.log("===> js call printJsLog() " + (upltv.upltvbridge));
-    if (undefined != msg && null != msg && isShowLog && upltv != undefined && upltv.upltvbridge != null) {
+    // cc.log("===> js call printJsLog() " + (openup));
+    // cc.log("===> js call printJsLog() " + (openup.openupbridge));
+    if (undefined != msg && null != msg && isShowLog && openup != undefined && openup.openupbridge != null) {
         if (cc.sys.os === cc.sys.OS_ANDROID) {
-            upltv.upltvbridge.printJsLog(msg);
+            openup.openupbridge.printJsLog(msg);
         } else if (cc.sys.os === cc.sys.OS_IOS) {
-            upltv.upltvbridge.printJsLog(msg);
+            openup.openupbridge.printJsLog(msg);
         }
     }
 };
 
 var isOnlineReportEnable = function () {
-    if (upltv != undefined) {
-        return upltv.isOnlineDebugReportEnable();
+    if (openup != undefined) {
+        return openup.isOnlineDebugReportEnable();
     } else {
         return false;
     }
 }
 
 var onlineReportCall = function (name, msg, cpid) {
-    if (upltv != undefined) {
+    if (openup != undefined) {
         if (cpid != undefined) {
-            upltv.onlineDebugReport(name, msg, cpid);
+            openup.onlineDebugReport(name, msg, cpid);
         } else {
-            upltv.onlineDebugReport(name, msg);
+            openup.onlineDebugReport(name, msg);
         }
     }
 }
@@ -55,11 +53,11 @@ var doctorOffDuty = function () {
 // add in 30085
 var tellToDoctor = function (action, placeid, msg) {
     //printLog("===> js tellToDoctor has called: " + action + "---placeid---" + placeid + "--msg---" + msg);
-    if (upltv != undefined && undefined != upltv.upltvbridge && upltv.upltvbridge != null) {
+    if (openup != undefined && undefined != openup.openupbridge && openup.openupbridge != null) {
         if (cc.sys.os === cc.sys.OS_ANDROID) {
-            upltv.upltvbridge.tellToDoctorByAndroid(action, placeid, msg)
+            openup.openupbridge.tellToDoctorByAndroid(action, placeid, msg)
         } else if (cc.sys.os === cc.sys.OS_IOS) {
-            upltv.upltvbridge.tellToDoctorByIos(action, placeid == null ? "" : placeid, msg == null ? "" : msg);
+            openup.openupbridge.tellToDoctorByIos(action, placeid == null ? "" : placeid, msg == null ? "" : msg);
         }
     }
 }
@@ -125,7 +123,7 @@ var functionNames = {
             }
         } else if (functionNames.Function_Doctor_IL_Load_Request == callname) {
             if (canreport && doctorWorking == true) {
-                upltv.setInterstitialLoadCallback(functionNames.Function_Doctor_IL_Show_AdId,
+                openup.setInterstitialLoadCallback(functionNames.Function_Doctor_IL_Show_AdId,
                     function (cpid, msg) {
                         //printLog("====> doctor receive il load success event at cpid:" );
                         tellToDoctor(functionNames.Action_Doctor_Ad_IL_LoadOk_Reply, functionNames.Function_Doctor_IL_Show_AdId, "cocoscreator js il load ok");
@@ -137,7 +135,7 @@ var functionNames = {
             }
         } else if (functionNames.Function_Doctor_RD_Load_Request == callname) {
             if (canreport && doctorWorking == true) {
-                upltv.setRewardVideoLoadCallback(
+                openup.setRewardVideoLoadCallback(
                     function (cpid, msg) {
                         //printLog("====> doctor receive video load success event at cpid:" + cpadid);
                         tellToDoctor(functionNames.Action_Doctor_Ad_RD_LoadOk_Reply, functionNames.Function_Doctor_RD_Show_AdId, "cocoscreator js rd load ok");
@@ -148,9 +146,9 @@ var functionNames = {
                     });
             }
         } else if (functionNames.Function_Doctor_RD_Show_Request == callname) {
-            upltv.showRewardVideo(functionNames.Function_Doctor_RD_Show_AdId);
+            openup.showRewardVideo(functionNames.Function_Doctor_RD_Show_AdId);
         } else if (functionNames.Function_Doctor_IL_Show_Request == callname) {
-            upltv.showInterstitialAd(functionNames.Function_Doctor_IL_Show_AdId);
+            openup.showInterstitialAd(functionNames.Function_Doctor_IL_Show_AdId);
         } else if (functionNames.Function_Reward_DidLoadFail == callname) {
             if (null != ltvMap.rewardLoadFailCall && typeof ltvMap.rewardLoadFailCall == "function") {
                 var failcall = ltvMap.rewardLoadFailCall;
@@ -174,7 +172,7 @@ var functionNames = {
             }
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
-                call(upltv.AdEventType.VIDEO_EVENT_WILL_SHOW, cpadid);
+                call(openup.AdEventType.VIDEO_EVENT_WILL_SHOW, cpadid);
                 if (canreport) {
                     onlineReportCall(callname, "CocosJs did run callback on video willopen event.");
                 }
@@ -191,7 +189,7 @@ var functionNames = {
             }
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
-                call(upltv.AdEventType.VIDEO_EVENT_DID_SHOW, cpadid);
+                call(openup.AdEventType.VIDEO_EVENT_DID_SHOW, cpadid);
                 if (canreport) {
                     onlineReportCall(callname, "CocosJs did run callback on video shown event.");
                 }
@@ -208,7 +206,7 @@ var functionNames = {
             }
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
-                call(upltv.AdEventType.VIDEO_EVENT_DID_CLICK, cpadid);
+                call(openup.AdEventType.VIDEO_EVENT_DID_CLICK, cpadid);
                 if (canreport) {
                     onlineReportCall(callname, "CocosJs did run callback on video clicked event.");
                 }
@@ -225,7 +223,7 @@ var functionNames = {
             }
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
-                call(upltv.AdEventType.VIDEO_EVENT_DID_CLOSE, cpadid);
+                call(openup.AdEventType.VIDEO_EVENT_DID_CLOSE, cpadid);
                 if (canreport) {
                     onlineReportCall(callname, "CocosJs did run callback on video closed event.");
                 }
@@ -242,7 +240,7 @@ var functionNames = {
             }
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
-                call(upltv.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD, cpadid);
+                call(openup.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD, cpadid);
                 if (canreport) {
                     onlineReportCall(callname, "CocosJs did run callback on video reward given event.");
                 }
@@ -259,7 +257,7 @@ var functionNames = {
             }
             var call = ltvMap.rewardShowCall;
             if (call != null && typeof call == "function") {
-                call(upltv.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD, cpadid);
+                call(openup.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD, cpadid);
                 if (canreport) {
                     onlineReportCall(callname, "CocosJs did run callback on video reward cancel event.");
                 }
@@ -273,11 +271,10 @@ var functionNames = {
             var v = ltvMap.get(k);
             if (null != v) {
                 var call = v.interstitialLoadFailCall;
-                 ltvMap.remove(k);
+                ltvMap.remove(k);
                 if (null != call && typeof call == "function") {
                     call(cpadid, message);
                 }
-                ltvMap.remove(k);
                 printLog("===> Interstitial_DidLoadFail at key:" + k);
             }
         } else if (functionNames.Function_Interstitial_DidLoadSuccess == callname) {
@@ -305,7 +302,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.interstitialShowCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW, cpadid);
+                    call(openup.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW, cpadid);
                     if (canreport) {
                         callReport = true;
                         onlineReportCall(callname, "CocosJs did run callback on il ad willshown event at " + cpadid, cpadid);
@@ -326,7 +323,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.interstitialShowCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.INTERSTITIAL_EVENT_DID_SHOW, cpadid);
+                    call(openup.AdEventType.INTERSTITIAL_EVENT_DID_SHOW, cpadid);
                     if (canreport) {
                         callReport = true;
                         onlineReportCall(callname, "CocosJs did run callback on il ad shown event at " + cpadid, cpadid);
@@ -347,7 +344,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.interstitialShowCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE, cpadid);
+                    call(openup.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE, cpadid);
                     if (canreport) {
                         callReport = true;
                         onlineReportCall(callname, "CocosJs did run callback on il ad closed event at " + cpadid, cpadid);
@@ -368,7 +365,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.interstitialShowCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLICK, cpadid);
+                    call(openup.AdEventType.INTERSTITIAL_EVENT_DID_CLICK, cpadid);
                     if (canreport) {
                         callReport = true;
                         onlineReportCall(callname, "CocosJs did run callback on il ad clicked event at " + cpadid, cpadid);
@@ -383,7 +380,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.bannerEventCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.BANNER_EVENT_DID_REMOVED, cpadid);
+                    call(openup.AdEventType.BANNER_EVENT_DID_REMOVED, cpadid);
                 }
             }
             ltvMap.remove(cpadid);
@@ -392,7 +389,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.bannerEventCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.BANNER_EVENT_DID_CLICK, cpadid);
+                    call(openup.AdEventType.BANNER_EVENT_DID_CLICK, cpadid);
                 }
             }
         } else if (functionNames.Function_Banner_DidShow == callname) {
@@ -400,7 +397,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.bannerEventCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.BANNER_EVENT_DID_SHOW, cpadid);
+                    call(openup.AdEventType.BANNER_EVENT_DID_SHOW, cpadid);
                 }
             }
         } else if (functionNames.Function_Icon_DidLoad == callname) {
@@ -408,7 +405,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.iconEventCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.ICON_EVENT_DID_LOAD, cpadid);
+                    call(openup.AdEventType.ICON_EVENT_DID_LOAD, cpadid);
                 }
             }
         } else if (functionNames.Function_Icon_DidLoadFail == callname) {
@@ -416,7 +413,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.iconEventCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.ICON_EVENT_DID_LOADFAIL, cpadid);
+                    call(openup.AdEventType.ICON_EVENT_DID_LOADFAIL, cpadid);
                 }
             }
         } else if (functionNames.Function_Icon_DidShow == callname) {
@@ -424,7 +421,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.iconEventCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.ICON_EVENT_DID_SHOW, cpadid);
+                    call(openup.AdEventType.ICON_EVENT_DID_SHOW, cpadid);
                 }
             }
         } else if (functionNames.Function_Icon_DidClick == callname) {
@@ -432,7 +429,7 @@ var functionNames = {
             if (null != v) {
                 var call = v.iconEventCall;
                 if (null != call && typeof call == "function") {
-                    call(upltv.AdEventType.ICON_EVENT_DID_CLICK, cpadid);
+                    call(openup.AdEventType.ICON_EVENT_DID_CLICK, cpadid);
                 }
             }
         }
@@ -580,13 +577,13 @@ var ltvMap = {
 };
 
 var loadJsBridgeObject = function () {
-    if (cc.sys.os === cc.sys.OS_IOS && null != upltv) {
-        if (undefined == upltv.upltvbridge || upltv.upltvbridge == null) {
-            upltv.upltvbridge = upltvoc;;
+    if (cc.sys.os === cc.sys.OS_IOS && null != openup) {
+        if (undefined == openup.openupbridge || openup.openupbridge == null) {
+            openup.openupbridge = openupoc;
         }
-    } else if (cc.sys.os === cc.sys.OS_ANDROID && null != upltv) {
-        if (undefined == upltv.upltvbridge || upltv.upltvbridge == null) {
-            upltv.upltvbridge = upltva;
+    } else if (cc.sys.os === cc.sys.OS_ANDROID && null != openup) {
+        if (undefined == openup.openupbridge || openup.openupbridge == null) {
+            openup.openupbridge = openupja;
         }
     }
 }
@@ -638,11 +635,11 @@ var bridgeInterface = {
     }
 };
 
-// upltv 外部调用对象，提供js api，实现游戏js与adsdk之间的互通
+// openup 外部调用对象，提供js api，实现游戏js与adsdk之间的互通
 
-var upltv = upltv || {
+var openup = openup || {
 
-    upltvbridge: null,
+    openupbridge: null,
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     // >>>> JS -- SDK初始化接口
@@ -650,11 +647,11 @@ var upltv = upltv || {
 
 
     /*
-     * 初始化upltv的聚合广告
+     * 初始化OpenUp的聚合广告
      * 即使多次调用，此方法也仅会初始化一次
-     * @param androidAppKey upltv为android应用分配的appkey，android应用必填(无android应用时，此参数须填入"android")
-     * @param iosAppKey     upltv为ios应用分配的appkey，ios应用必填(无ios应用时，此参数须填入"ios")
-     * @param iosZone       upltv为ios应用定义的发行地区(0，海外；1，中国大陆；2，根据IP自动定位区域), 无ios应用时须填入0
+     * @param androidAppKey OpenUp为android应用分配的appkey，android应用必填(无android应用时，此参数须填入"android")
+     * @param iosAppKey     OpenUp为ios应用分配的appkey，ios应用必填(无ios应用时，此参数须填入"ios")
+     * @param iosZone       OpenUp为ios应用定义的发行地区(0，海外；1，中国大陆；2，根据IP自动定位区域), 无ios应用时须填入0
      * @param callback      callback：初始的回调接口, 接口定义 callback(string)，'true'表示成功，'false'表示失败
      */
     initSdk: function (androidAppKey, iosAppKey, iosZone, callback) {
@@ -673,8 +670,7 @@ var upltv = upltv || {
         loadJsBridgeObject();
 
         if (cc.sys.os === cc.sys.OS_IOS) {
-            // this.upltvbridge = upltvoc;
-            if (undefined != this.upltvbridge && this.upltvbridge != null) {
+            if (undefined != this.openupbridge && this.openupbridge != null) {
 
                 if (iosAppKey == undefined || iosAppKey == "") {
                     cc.log("===> js initSdk failed, iosAppKey is undefined or empty.");
@@ -691,18 +687,17 @@ var upltv = upltv || {
                     iosZone = 0;
                 }
 
-                this.upltvbridge.setShowLog(isShowLog);
-                this.upltvbridge.initIosSDK(iosAppKey, iosZone, vokecall, callname);
+                this.openupbridge.setShowLog(isShowLog);
+                this.openupbridge.initIosSDK(iosAppKey, iosZone, vokecall, callname);
             }
         } else if (cc.sys.os === cc.sys.OS_ANDROID) {
             if(androidAppKey==undefined && androidAppKey==""){
                printLog("please set correct androidAppKey for initializing upsdk");
                return;
             }
-            // this.upltvbridge = upltva;
-            if (undefined != this.upltvbridge && this.upltvbridge != null) {
-                this.upltvbridge.setShowLog(isShowLog);
-                this.upltvbridge.initAndroidSDK(androidAppKey, vokecall, callname);
+            if (undefined != this.openupbridge && this.openupbridge != null) {
+                this.openupbridge.setShowLog(isShowLog);
+                this.openupbridge.initAndroidSDK(androidAppKey, vokecall, callname);
             }
         }
     },
@@ -758,12 +753,12 @@ var upltv = upltv || {
         }
 
         if (cc.sys.os === cc.sys.OS_IOS) {
-            if (undefined != this.upltvbridge && this.upltvbridge != null) {
-                this.upltvbridge.initIosAbtConfigJson(gameAccountId, isCompleteTask, isPaid, promotionChannelName, gender, age, tagstring);
+            if (undefined != this.openupbridge && this.openupbridge != null) {
+                this.openupbridge.initIosAbtConfigJson(gameAccountId, isCompleteTask, isPaid, promotionChannelName, gender, age, tagstring);
             }
         } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-            if (undefined != this.upltvbridge && this.upltvbridge != null) {
-                this.upltvbridge.initAndroidAbtConfigJson(gameAccountId, isCompleteTask, isPaid, promotionChannelName, gender, age, tagstring);
+            if (undefined != this.openupbridge && this.openupbridge != null) {
+                this.openupbridge.initAndroidAbtConfigJson(gameAccountId, isCompleteTask, isPaid, promotionChannelName, gender, age, tagstring);
             }
         }
     },
@@ -776,8 +771,8 @@ var upltv = upltv || {
     getAbtConfig: function (cpPlaceId) {
         if (undefined != cpPlaceId && null != cpPlaceId && typeof cpPlaceId == "string") {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                if (undefined != this.upltvbridge && this.upltvbridge != null) {
-                    var r = this.upltvbridge.getIosAbtConfig(cpPlaceId);
+                if (undefined != this.openupbridge && this.openupbridge != null) {
+                    var r = this.openupbridge.getIosAbtConfig(cpPlaceId);
                     if (r == "") {
                         return null;
                     } else {
@@ -785,8 +780,8 @@ var upltv = upltv || {
                     }
                 }
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                if (undefined != this.upltvbridge && this.upltvbridge != null) {
-                    var r = this.upltvbridge.getAndroidAbtConfig(cpPlaceId);
+                if (undefined != this.openupbridge && this.openupbridge != null) {
+                    var r = this.openupbridge.getAndroidAbtConfig(cpPlaceId);
                     if (r == "") {
                         return null;
                     } else {
@@ -805,13 +800,13 @@ var upltv = upltv || {
 
     // 打开激励视屏的debug界面
     showRewardDebugUI: function () {
-        //upltvbridge:showAndroidRewardDebugUI()
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        //openupbridge:showAndroidRewardDebugUI()
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.showIosRewardDebugUI();
+                this.openupbridge.showIosRewardDebugUI();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.showAndroidRewardDebugUI();
+                this.openupbridge.showAndroidRewardDebugUI();
             }
         }
     },
@@ -832,12 +827,12 @@ var upltv = upltv || {
 
         ltvMap.rewardLoadFailCall = locadfail == undefined ? null : locadfail;
         ltvMap.rewardLoadSuccessCall = loadsuccess == undefined ? null : loadsuccess;
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.setIosRewardVideoLoadCallback();
+                this.openupbridge.setIosRewardVideoLoadCallback();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.setAndroidRewardVideoLoadCallback();
+                this.openupbridge.setAndroidRewardVideoLoadCallback();
             }
         }
     },
@@ -847,7 +842,7 @@ var upltv = upltv || {
     // 回调接口功能顺序：展示回调，点击回调，关闭回调，激励发放成功回调，激励发放失败回调
     // 回调接口参数：事件类型，广告位，showCall(type, cpadid)
     setRewardVideoShowCallback: function (showCall) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == showCall || null == showCall || typeof showCall != "function") {
                 printLog("===> setRewardVideoShowCallback(), the showCall can't be undefined or null or non-function type.");
                 return;
@@ -886,12 +881,12 @@ var upltv = upltv || {
     // 同步返回boolean结果，true 表示广告准备就绪可以展示，false表示广告还在请求中无法展示
     // 通常在showRewardVideo(cpPlaceId)前，调用此方法
     isRewardReady: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                return this.upltvbridge.isIosRewardReady();
+                return this.openupbridge.isIosRewardReady();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                return this.upltvbridge.isAndroidRewardReady();
+                return this.openupbridge.isAndroidRewardReady();
             }
         }
         return false;
@@ -901,17 +896,17 @@ var upltv = upltv || {
     // 参数cpPlaceId：激励视屏展示时的广告位，用于业务打点，便于区分收益来源
     showRewardVideo: function (cpPlaceId) {
         //printLog("===> showIosRewardVideo : " + cpPlaceId);
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (undefined == cpPlaceId) {
                 cpPlaceId = null;
             }
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.showIosRewardVideo(cpPlaceId);
+                this.openupbridge.showIosRewardVideo(cpPlaceId);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
                 //printLog("===> showAndroidRewardVideo "+ cpPlaceId);
-                this.upltvbridge.showAndroidRewardVideo(cpPlaceId);
+                this.openupbridge.showAndroidRewardVideo(cpPlaceId);
             }
         }
     },
@@ -927,7 +922,7 @@ var upltv = upltv || {
     // 参数cpPlaceId：广告位
     // 参数callback：回调接口，如callback(true) 或 callback(false)
     isInterstitialReadyAsyn: function (cpPlaceId, callback) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("Please set the Paramer cpPlaceId's value in function isInterstitialReadyAsyn()");
                 return;
@@ -946,9 +941,9 @@ var upltv = upltv || {
             ltvMap.put(key, callback);
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.isIosInterstitialReadyAsyn(cpPlaceId, "cc.bridgeInterface.vokeILReadyMethod");
+                this.openupbridge.isIosInterstitialReadyAsyn(cpPlaceId, "cc.bridgeInterface.vokeILReadyMethod");
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.isAndroidInterstitialReadyAsyn(cpPlaceId, "cc.bridgeInterface.vokeILReadyMethod");
+                this.openupbridge.isAndroidInterstitialReadyAsyn(cpPlaceId, "cc.bridgeInterface.vokeILReadyMethod");
             }
         }
 
@@ -958,15 +953,15 @@ var upltv = upltv || {
     // 同步返回boolean结果，true 表示广告准备就绪可以展示，false表示广告还在请求中无法展示
     // 参数cpPlaceId：广告位
     isInterstitialReady: function (cpPlaceId) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> isInterstitialReady(), the cpPlaceId can't be undefined or null.");
                 return;
             }
             if (cc.sys.os === cc.sys.OS_IOS) {
-                return this.upltvbridge.isIosInterstitialReady(cpPlaceId);
+                return this.openupbridge.isIosInterstitialReady(cpPlaceId);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                return this.upltvbridge.isAndroidInterstitialReady(cpPlaceId);
+                return this.openupbridge.isAndroidInterstitialReady(cpPlaceId);
             }
         }
         return false;
@@ -974,15 +969,15 @@ var upltv = upltv || {
 
     // 根据广告位，展示某个插屏广告
     showInterstitialAd: function (cpPlaceId) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("Please set the Paramer cpPlaceId's value in function showInterstitialAd()");
                 return;
             }
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.showIosInterstitialAd(cpPlaceId);
+                this.openupbridge.showIosInterstitialAd(cpPlaceId);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.showAndroidInterstitialAd(cpPlaceId);
+                this.openupbridge.showAndroidInterstitialAd(cpPlaceId);
             }
         }
     },
@@ -991,7 +986,7 @@ var upltv = upltv || {
     // 用于监听插屏广告的加载结果（成功或失败）
     // 此接口一旦回调，内部会自动释放，再次监听时需要重新设定回调接口
     setInterstitialLoadCallback: function (cpPlaceId, loadsuccess, locadfail) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> setIntersitialLoadCall(), the cpPlaceId can't be undefined or null.");
@@ -1016,9 +1011,9 @@ var upltv = upltv || {
             printLog("===> setIntersitialLoadCall() ltvMap size: " + ltvMap.size());
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.setIosInterstitialLoadCallback(cpPlaceId);
+                this.openupbridge.setIosInterstitialLoadCallback(cpPlaceId);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.setAndroidInterstitialLoadCallback(cpPlaceId);
+                this.openupbridge.setAndroidInterstitialLoadCallback(cpPlaceId);
             }
         }
     },
@@ -1029,7 +1024,7 @@ var upltv = upltv || {
     // 回调接口参数：事件类型，广告位，showCall(type, cpPlaceId)
     setInterstitialShowCallback: function (cpPlaceId, showCall) {
 
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> setInterstitialShowCallback(), the cpPlaceId can't be undefined or null.");
                 return;
@@ -1063,11 +1058,11 @@ var upltv = upltv || {
     },
 
     showInterstitialDebugUI: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.showIosInterstitialDebugUI();
+                this.openupbridge.showIosInterstitialDebugUI();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.showAndroidInterstitialDebugUI();
+                this.openupbridge.showAndroidInterstitialDebugUI();
             }
         }
     },
@@ -1079,22 +1074,22 @@ var upltv = upltv || {
 
     // 移除某个广告位的banner广告
     removeBannerAdAt: function (cpPlaceId) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> removeBannerAdAt(), the cpPlaceId can't be undefined or null.");
                 return;
             }
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.removeIosBannerAdAt(cpPlaceId);
+                this.openupbridge.removeIosBannerAdAt(cpPlaceId);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.removeAndroidBannerAdAt(cpPlaceId);
+                this.openupbridge.removeAndroidBannerAdAt(cpPlaceId);
             }
         }
     },
 
     // 将某个广告位的banner广告展示在屏幕顶部
     showBannerAdAtTop: function (cpPlaceId) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> showBannerAdAtTop(), the cpPlaceId can't be undefined or null.");
@@ -1102,16 +1097,16 @@ var upltv = upltv || {
             }
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.showIosBannerAdAtTop(cpPlaceId);
+                this.openupbridge.showIosBannerAdAtTop(cpPlaceId);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.showAndroidBannerAdAtTop(cpPlaceId);
+                this.openupbridge.showAndroidBannerAdAtTop(cpPlaceId);
             }
         }
     },
 
     // 将某个广告位的banner广告展示在屏幕底部
     showBannerAdAtBottom: function (cpPlaceId) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> showBannerAdAtBottom(), the cpPlaceId can't be undefined or null.");
@@ -1119,51 +1114,51 @@ var upltv = upltv || {
             }
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.showIosBannerAdAtBottom(cpPlaceId);
+                this.openupbridge.showIosBannerAdAtBottom(cpPlaceId);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.showAndroidBannerAdAtBottom(cpPlaceId);
+                this.openupbridge.showAndroidBannerAdAtBottom(cpPlaceId);
             }
         }
     },
 
     // 隐藏当前屏幕的顶部banner广告
     hideBannerAdAtTop: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.hideIosBannerAdAtTop();
+                this.openupbridge.hideIosBannerAdAtTop();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.hideAndroidBannerAdAtTop();
+                this.openupbridge.hideAndroidBannerAdAtTop();
             }
         }
     },
 
     // 隐藏当前屏幕的底部广告
     hideBannerAdAtBottom: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.hideIosBannerAdAtBottom();
+                this.openupbridge.hideIosBannerAdAtBottom();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.hideAndroidBannerAdAtBottom();
+                this.openupbridge.hideAndroidBannerAdAtBottom();
             }
         }
     },
 
     setTopBannerPadingForIphoneX: function (padding) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.setIosTopBannerPading(padding);
+                this.openupbridge.setIosTopBannerPading(padding);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
 
             }
         }
     },
 
-    // 设置某个banner广告位的展示的回调接口，回调接口会被保存只有调用upltv:removeBannerAdAt(cpPlaceId)才会被删除
+    // 设置某个banner广告位的展示的回调接口，回调接口会被保存只有调用OpenUp:removeBannerAdAt(cpPlaceId)才会被删除
     // 参数cpPlaceId：banner广告位
     // 参数bannerCall：banner回调接口
     // 回调接口参数：事件类型，广告位，bannerCall(type, cpPlaceId)
     setBannerShowCallback: function (cpPlaceId, bannerCall) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> setBannerShowCallback(), the cpPlaceId can't be undefined or null.");
                 return;
@@ -1202,12 +1197,12 @@ var upltv = upltv || {
     // >>>> JS -- SDK Icon广告相关接口
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-    // 设置某个icon广告位的展示的回调接口，回调接口会被保存只有调用upltv:removeIconAd(cpPlaceId)才会被删除
+    // 设置某个icon广告位的展示的回调接口，回调接口会被保存只有调用openup:removeIconAd(cpPlaceId)才会被删除
     // 参数cpPlaceId：icon广告位
     // 参数bannerCall：icon回调接口
     // 回调接口参数：事件类型，广告位，iconCall(type, cpPlaceId)
     setIconCallback: function (cpPlaceId, iconCall) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> setIconCallback(), the cpPlaceId can't be undefined or null.");
                 return;
@@ -1227,7 +1222,7 @@ var upltv = upltv || {
 
     // 展示icon广告
     showIconAd: function (x, y, width, height, rotationAngle, cpPlaceId) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> showIconAd(), the cpPlaceId can't be undefined or null.");
@@ -1235,56 +1230,56 @@ var upltv = upltv || {
             }
 
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.showAndroidIconAdAt(x, y, width, height, rotationAngle, cpPlaceId);
+                this.openupbridge.showAndroidIconAdAt(x, y, width, height, rotationAngle, cpPlaceId);
             }
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.showIosIconAdAt(x, y, width, height, rotationAngle, cpPlaceId);
+                this.openupbridge.showIosIconAdAt(x, y, width, height, rotationAngle, cpPlaceId);
             }
         }
     },
 
     // 移除icon广告
     removeIconAd: function (cpPlaceId) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (undefined == cpPlaceId || null == cpPlaceId) {
                 printLog("===> removeIconAd(), the cpPlaceId can't be undefined or null.");
                 return;
             }
 
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.removeAndroidIconAdAt(cpPlaceId);
+                this.openupbridge.removeAndroidIconAdAt(cpPlaceId);
             }
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.removeIosIconAdAt(cpPlaceId);
+                this.openupbridge.removeIosIconAdAt(cpPlaceId);
             }
         }
     },
 
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    // >>>> JS -- SDK 手动控制Upltv广告的加载
+    // >>>> JS -- SDK 手动控制openup广告的加载
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
     // 满足需求：不希望在初始化自动加载广告，且要求根据游戏自主选择合适的时机进行广告加载
-    // 设置条件：当sdk默认禁用广告自动加载的功能，且upltv后台云配也关闭此功能时
+    // 设置条件：当sdk默认禁用广告自动加载的功能，且openup后台云配也关闭此功能时
     // 如果以上条件不成立，即使调用以下方法，SDK也会自动忽略
     loadAdsByManual: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.loadIosAdsByManual();
+                this.openupbridge.loadIosAdsByManual();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.loadAndroidAdsByManual();
+                this.openupbridge.loadAndroidAdsByManual();
             }
         }
     },
 
     exitApp: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.exitIosApp();
+                this.openupbridge.exitIosApp();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.exitAndroidApp();
+                this.openupbridge.exitAndroidApp();
             }
         }
     },
@@ -1296,9 +1291,9 @@ var upltv = upltv || {
     // 仅用于android平台
     // 当mainifest的packagename与实际的名字不一致时，需要通过此方法设置当前Manifest中定义的PackageName
     setManifestPackageName: function (pkg) {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.setAndroidManifestPackageName(pkg);
+                this.openupbridge.setAndroidManifestPackageName(pkg);
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
 
             }
@@ -1306,11 +1301,11 @@ var upltv = upltv || {
     },
 
     // 仅用于android平台
-    // 用于展示upltv在安卓平台的退出广告
+    // 用于展示openup在安卓平台的退出广告
     onBackPressed: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.onAndroidBackPressed();
+                this.openupbridge.onAndroidBackPressed();
             } else if (cc.sys.os === cc.sys.OS_IOS) {
 
             }
@@ -1322,14 +1317,14 @@ var upltv = upltv || {
     setCustomerId: function (androidid) {
         loadJsBridgeObject();
 
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
                 if (undefined == androidid || null == androidid) {
                     printLog("===> setCustomerId(), the anroidid can't be null");
                     return;
                 }
 
-                this.upltvbridge.setAndroidCustomerId(androidid);
+                this.openupbridge.setAndroidCustomerId(androidid);
             } else if (cc.sys.os === cc.sys.OS_IOS) {
 
             }
@@ -1343,7 +1338,7 @@ var upltv = upltv || {
 
     // 外部进行GDPR授权时，将用户授权结果同步到UPSDK时，调用此方法
     // 请在初始UPSDK之前调用
-    // @param gdprPermissionEnumValue，取upltv.GDPRPermissionEnum定义的值
+    // @param gdprPermissionEnumValue，取openup.GDPRPermissionEnum定义的值
     // Version 3003 and above support this method
     updateAccessPrivacyInfoStatus: function (gdprPermissionEnumValue) {
 
@@ -1354,18 +1349,18 @@ var upltv = upltv || {
             return;
         }
 
-        if (gdprPermissionEnumValue != upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown &&
-            gdprPermissionEnumValue != upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted &&
-            gdprPermissionEnumValue != upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined) {
+        if (gdprPermissionEnumValue != openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown &&
+            gdprPermissionEnumValue != openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted &&
+            gdprPermissionEnumValue != openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined) {
             printLog("===> updateAccessPrivacyInfoStatus(), the gdprPermissionEnumValue is a wrong type.");
             return;
         }
 
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.updateAndroidAccessPrivacyInfoStatus(gdprPermissionEnumValue);
+                this.openupbridge.updateAndroidAccessPrivacyInfoStatus(gdprPermissionEnumValue);
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.updateIosAccessPrivacyInfoStatus(gdprPermissionEnumValue);
+                this.openupbridge.updateIosAccessPrivacyInfoStatus(gdprPermissionEnumValue);
             }
         }
     },
@@ -1376,20 +1371,20 @@ var upltv = upltv || {
     getAccessPrivacyInfoStatus: function () {
         loadJsBridgeObject();
         var status = 0;
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                status = this.upltvbridge.getAndroidAccessPrivacyInfoStatus();
+                status = this.openupbridge.getAndroidAccessPrivacyInfoStatus();
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-                status = this.upltvbridge.getIosAccessPrivacyInfoStatus();
+                status = this.openupbridge.getIosAccessPrivacyInfoStatus();
             }
         }
 
         if (status == 1) {
-            return upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted;
+            return openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted;
         } else if (status == 2) {
-            return upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined;
+            return openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined;
         } else {
-            return upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown;
+            return openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown;
         }
     },
 
@@ -1412,16 +1407,16 @@ var upltv = upltv || {
             return;
         }
 
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
-            upltv.GDPRPermissionEnum.functionId = upltv.GDPRPermissionEnum.functionId + 1;
-            var callId = upltv.GDPRPermissionEnum.functionId;
+        if (undefined != this.openupbridge && this.openupbridge != null) {
+            openup.GDPRPermissionEnum.functionId = openup.GDPRPermissionEnum.functionId + 1;
+            var callId = openup.GDPRPermissionEnum.functionId;
             var key = "" + callId;
             ltvMap.put(key, callback);
-            var call = "upltv.GDPRPermissionEnum.javaCall";
+            var call = "openup.GDPRPermissionEnum.javaCall";
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.notifyAndroidAccessPrivacyInfoStatus(call, callId);
+                this.openupbridge.notifyAndroidAccessPrivacyInfoStatus(call, callId);
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.notifyIosAccessPrivacyInfoStatus(call, key);
+                this.openupbridge.notifyIosAccessPrivacyInfoStatus(call, key);
             }
         }
     },
@@ -1440,16 +1435,16 @@ var upltv = upltv || {
             return;
         }
 
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
-            upltv.GDPRPermissionEnum.functionId = upltv.GDPRPermissionEnum.functionId + 1;
-            var callId = upltv.GDPRPermissionEnum.functionId;
+        if (undefined != this.openupbridge && this.openupbridge != null) {
+            openup.GDPRPermissionEnum.functionId = openup.GDPRPermissionEnum.functionId + 1;
+            var callId = openup.GDPRPermissionEnum.functionId;
             var key = "" + callId;
             ltvMap.put(key, callback);
-            var call = "upltv.GDPRPermissionEnum.javaCall";
+            var call = "openup.GDPRPermissionEnum.javaCall";
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.isAndroidEuropeanUnionUser(call, callId);
+                this.openupbridge.isAndroidEuropeanUnionUser(call, callId);
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.isIosEuropeanUnionUser(call, key);
+                this.openupbridge.isIosEuropeanUnionUser(call, key);
             }
         }
     },
@@ -1457,7 +1452,7 @@ var upltv = upltv || {
     isOnlineDebugReportEnable: function () {
         if (cc.sys.os === cc.sys.OS_ANDROID ||
             cc.sys.os === cc.sys.OS_IOS) {
-            return this.upltvbridge.isOnlineDebugReportEnable();
+            return this.openupbridge.isOnlineDebugReportEnable();
         } else {
             return false;
         }
@@ -1468,23 +1463,23 @@ var upltv = upltv || {
             cc.sys.os === cc.sys.OS_IOS) {
             //cc.log("===> js onlineDebugReport function : %s", callname);
             if (functionNames.Function_Receive_Callback == callname) {
-                this.upltvbridge.reportIvokePluginMethodReceive(msg);
+                this.openupbridge.reportIvokePluginMethodReceive(msg);
             } else if (functionNames.Function_Reward_WillOpen == callname) {} else if (functionNames.Function_Reward_DidOpen == callname) {
-                this.upltvbridge.reportRDShowDid(msg);
+                this.openupbridge.reportRDShowDid(msg);
             } else if (functionNames.Function_Reward_DidClick == callname) {
-                this.upltvbridge.reportRDRewardClick(msg);
+                this.openupbridge.reportRDRewardClick(msg);
             } else if (functionNames.Function_Reward_DidClose == callname) {
-                this.upltvbridge.reportRDRewardClose(msg);
+                this.openupbridge.reportRDRewardClose(msg);
             } else if (functionNames.Function_Reward_DidGivien == callname) {
-                this.upltvbridge.reportRDRewardGiven(msg);
+                this.openupbridge.reportRDRewardGiven(msg);
             } else if (functionNames.Function_Reward_DidAbandon == callname) {
-                this.upltvbridge.reportRDRewardCancel(msg);
+                this.openupbridge.reportRDRewardCancel(msg);
             } else if (functionNames.Function_Interstitial_Willshow == callname) {} else if (functionNames.Function_Interstitial_Didshow == callname) {
-                this.upltvbridge.reportILShowDid(msg, cpid);
+                this.openupbridge.reportILShowDid(msg, cpid);
             } else if (functionNames.Function_Interstitial_Didclick == callname) {
-                this.upltvbridge.reportILClick(msg, cpid);
+                this.openupbridge.reportILClick(msg, cpid);
             } else if (functionNames.Function_Interstitial_Didclose == callname) {
-                this.upltvbridge.reportILClose(msg, cpid);
+                this.openupbridge.reportILClose(msg, cpid);
             }
         }
     },
@@ -1496,12 +1491,12 @@ var upltv = upltv || {
     // 判断SDK是否开启了Debug log
     // 同步返回boolean结果，true 表示已开启，false表示未开启
     isLogOpened: function () {
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
 
             if (cc.sys.os === cc.sys.OS_IOS) {
-                return this.upltvbridge.isIosLogOpened();
+                return this.openupbridge.isIosLogOpened();
             } else if (cc.sys.os === cc.sys.OS_ANDROID) {
-                return this.upltvbridge.isAndroidLogOpened();
+                return this.openupbridge.isAndroidLogOpened();
             }
         }
         return false;
@@ -1510,11 +1505,11 @@ var upltv = upltv || {
     // 打开自动测试页面
     autoOneKeyInspect: function () {
         printLog("===> called autoOneKeyInspect");
-        if (undefined != this.upltvbridge && this.upltvbridge != null) {
+        if (undefined != this.openupbridge && this.openupbridge != null) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.autoOneKeyInspectByAndroid();
+                this.openupbridge.autoOneKeyInspectByAndroid();
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.autoOneKeyInspectByIos();
+                this.openupbridge.autoOneKeyInspectByIos();
             }
         }
     },
@@ -1536,11 +1531,11 @@ var upltv = upltv || {
             return;
         }
 
-        if (undefined != this.upltvbridge) {
+        if (undefined != this.openupbridge) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.setAppsFlyerUIDByAndroid(uid);
+                this.openupbridge.setAppsFlyerUIDByAndroid(uid);
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.setAppsFlyerUIDByIos(uid);
+                this.openupbridge.setAppsFlyerUIDByIos(uid);
             }
         }
     },
@@ -1562,17 +1557,17 @@ var upltv = upltv || {
             return;
         }
 
-        if (undefined != this.upltvbridge) {
+        if (undefined != this.openupbridge) {
             if (cc.sys.os === cc.sys.OS_ANDROID) {
-                this.upltvbridge.setAdjustIdByAndroid(ajid);
+                this.openupbridge.setAdjustIdByAndroid(ajid);
             } else if (cc.sys.os === cc.sys.OS_IOS) {
-                this.upltvbridge.setAdjustIdByIos(ajid);
+                this.openupbridge.setAdjustIdByIos(ajid);
             }
         }
     }
 };
 
-upltv.GDPRPermissionEnum = {
+openup.GDPRPermissionEnum = {
     functionId: 0,
     javaCall: function (callId, value) {
         var key = "" + callId;
@@ -1586,37 +1581,37 @@ upltv.GDPRPermissionEnum = {
     }
 };
 
-upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown = 0;
-upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted = 1;
-upltv.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined = 2;
+openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusUnkown = 0;
+openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusAccepted = 1;
+openup.GDPRPermissionEnum.UPAccessPrivacyInfoStatusDefined = 2;
 
-upltv.AdEventType = {};
+openup.AdEventType = {};
 // 激励视屏回调事件类型
-upltv.AdEventType.VIDEO_EVENT_DID_SHOW = 0;
-upltv.AdEventType.VIDEO_EVENT_DID_CLICK = 1;
-upltv.AdEventType.VIDEO_EVENT_DID_CLOSE = 2;
-upltv.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD = 3;
-upltv.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD = 4;
+openup.AdEventType.VIDEO_EVENT_DID_SHOW = 0;
+openup.AdEventType.VIDEO_EVENT_DID_CLICK = 1;
+openup.AdEventType.VIDEO_EVENT_DID_CLOSE = 2;
+openup.AdEventType.VIDEO_EVENT_DID_GIVEN_REWARD = 3;
+openup.AdEventType.VIDEO_EVENT_DID_ABANDON_REWARD = 4;
 
 // 插屏回调事件类型
-upltv.AdEventType.INTERSTITIAL_EVENT_DID_SHOW = 5;
-upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLICK = 6;
-upltv.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE = 7;
+openup.AdEventType.INTERSTITIAL_EVENT_DID_SHOW = 5;
+openup.AdEventType.INTERSTITIAL_EVENT_DID_CLICK = 6;
+openup.AdEventType.INTERSTITIAL_EVENT_DID_CLOSE = 7;
 
 // Banner广告事件类型
-upltv.AdEventType.BANNER_EVENT_DID_SHOW = 8;
-upltv.AdEventType.BANNER_EVENT_DID_CLICK = 9;
-upltv.AdEventType.BANNER_EVENT_DID_REMOVED = 10;
+openup.AdEventType.BANNER_EVENT_DID_SHOW = 8;
+openup.AdEventType.BANNER_EVENT_DID_CLICK = 9;
+openup.AdEventType.BANNER_EVENT_DID_REMOVED = 10;
 
 
 // icon广告事件类型
-upltv.AdEventType.ICON_EVENT_DID_LOAD = 16;
-upltv.AdEventType.ICON_EVENT_DID_LOADFAIL = 17;
-upltv.AdEventType.ICON_EVENT_DID_SHOW = 18;
-upltv.AdEventType.ICON_EVENT_DID_CLICK = 19;
+openup.AdEventType.ICON_EVENT_DID_LOAD = 16;
+openup.AdEventType.ICON_EVENT_DID_LOADFAIL = 17;
+openup.AdEventType.ICON_EVENT_DID_SHOW = 18;
+openup.AdEventType.ICON_EVENT_DID_CLICK = 19;
 
-upltv.AdEventType.VIDEO_EVENT_WILL_SHOW = 20;
-upltv.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW = 21;
+openup.AdEventType.VIDEO_EVENT_WILL_SHOW = 20;
+openup.AdEventType.INTERSTITIAL_EVENT_WILL_SHOW = 21;
 
-module.exports.upltv = upltv;
+module.exports.openup = openup;
 module.exports.bridgeInterface = bridgeInterface;
